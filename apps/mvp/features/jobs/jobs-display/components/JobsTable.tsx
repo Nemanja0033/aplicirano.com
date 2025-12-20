@@ -41,7 +41,7 @@ export function JobsTable({ jobs }: { jobs: Job[], isLoading: boolean }) {
 
   return (
         <main className="w-full">
-          <form ref={updateFormRef} action={bulkUpdateJobStatuses} className="w-full">
+          {/* <form ref={updateFormRef} action={bulkUpdateJobStatuses} className="w-full"> */}
           <section className="md:w-full w-fit grid gap-5 p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
             <div className="grid gap-1 w-full border-b py-3">
               <h1 className="font-bold text-2xl">Applied Jobs</h1>
@@ -119,7 +119,7 @@ export function JobsTable({ jobs }: { jobs: Job[], isLoading: boolean }) {
               </TableRow>
             </TableFooter>
           </Table>
-        </form>
+        {/* </form> */}
       </main>
   )
 }
