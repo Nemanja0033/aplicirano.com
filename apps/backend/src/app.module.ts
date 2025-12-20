@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { FirebaseModule } from './firebase/firebase.module';
 import { PrismaModule } from './database/prisma.module';
-import { JobApplicationsController } from './job-applications/job-applications.controller';
 import { JobApplicationsModule } from './job-applications/job-applications.module';
 
 @Module({
