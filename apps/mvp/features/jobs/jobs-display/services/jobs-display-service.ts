@@ -1,6 +1,6 @@
 export async function fetchJobs(token: string | null){
     try{
-        const res = await fetch('/api/jobs', {
+        const res = await fetch('http://localhost:3000/jobs', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

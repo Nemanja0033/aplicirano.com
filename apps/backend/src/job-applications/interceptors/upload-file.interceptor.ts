@@ -25,7 +25,7 @@ import {
   
             if (!isValidMime || !isValidExt) {
               return cb(
-                new BadRequestException('Only .txt files are allowed'),
+                new BadRequestException('Invalid file format. Only .txt files are allowed'),
                 false,
               );
             }

@@ -1,11 +1,13 @@
-import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import * as admin from "firebase-admin";
+import { JobApplicationsRepository } from "src/job-applications/repositories/job-application.repository";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
         @Inject('FIREBASE_ADMIN')
-        private readonly firebaseAdmin: typeof admin
+        private readonly firebaseAdmin: typeof admin,
+        private readonly jobRepo: JobApplicationsRepository
     ) {}
     
     async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -27,7 +29,14 @@ export class AuthGuard implements CanActivate {
             .auth()
             .verifyIdToken(token);
 
+            const user = await this.jobRepo.findUserByFirebaseUid(decoded.uid);
+
+            if(!user){
+                throw new ForbiddenException("User not registered");
+            }
+
             req.user = {
+                id: user.id,
                 uid: decoded.uid,
                 email: decoded.email,
             };

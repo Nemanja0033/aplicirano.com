@@ -24,10 +24,12 @@ export class JobApplicationsRepository {
         });
     }
 
-    async batchInsert(jobs: JobType[]): Promise<any> {
-        return this.db.job.createMany({ 
+    async batchInsert(jobs: JobType[]): Promise<number> {
+        const result = await this.db.job.createMany({ 
             data: jobs,
         });
+
+        return result.count;
     }
 
     async insertSingle(job: JobType) : Promise<Job> {

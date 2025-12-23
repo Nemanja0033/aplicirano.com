@@ -6,19 +6,18 @@ import { User } from 'src/common/decorators/user.decorator';
 
 @Controller('jobs')
 @UseGuards(AuthGuard)
-// @UseInterceptors(UploadFileInterceptor())
 
 export class JobApplicationsController {
     constructor (private readonly jobService: JobApplicationsService) {}
     
     @Get()
-    async getJobs(@User() user: { uid: string }) {
-        return this.jobService.getJobs(user.uid) 
+    async getJobs(@User() user: { id: string }) {
+        return this.jobService.getJobs(user.id) 
     }
 
     @Post('batch')
     @UseInterceptors(UploadFileInterceptor())
-    async batchUploadJobs(@UploadedFile() file, @User() user: { uid: string }){
-        
+    async uploadJobsFromFile(@UploadedFile() file, @User() user: { id: string }){
+        return this.jobService.uploadJobsFromFile(file, user.id)
     }
 }
