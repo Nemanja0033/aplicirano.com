@@ -41,7 +41,7 @@ export function FileImportForm({ isDisabled }: { isDisabled: boolean }) {
 
     // get current user and token
     try {
-      const res = await fetch("http://localhost:3000/jobs/batch", {
+      const res = await fetch("/api/jobs/batch", {
         method: "POST",
         body: formData,
         headers: {
