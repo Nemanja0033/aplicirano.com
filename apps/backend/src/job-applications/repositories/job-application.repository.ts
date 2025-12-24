@@ -18,9 +18,8 @@ export class JobApplicationsRepository {
 
     async getAll(userId: string): Promise<Job[]> {
         return this.db.job.findMany({
-            where: {
-                userId
-            }
+            where: { userId },
+            orderBy: { appliedAt: "desc" }
         });
     }
 
