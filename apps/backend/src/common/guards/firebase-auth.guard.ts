@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import * as admin from "firebase-admin";
-import { JobApplicationsRepository } from "src/job-applications/repositories/job-application.repository";
+import { JobApplicationsRepository } from "../../domain/job-applications/repositories/job-application.repository";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -29,16 +29,23 @@ export class AuthGuard implements CanActivate {
             .auth()
             .verifyIdToken(token);
 
+            const userData = await admin.auth().getUser(decoded.uid);
+
+            console.log("@user data", userData);
+
+            // Check if is not registered
             const user = await this.jobRepo.findUserByFirebaseUid(decoded.uid);
 
             if(!user){
                 throw new ForbiddenException("User not registered");
             }
 
+            // TODO DEBUG DISPLAY NAME MISSING
             req.user = {
                 id: user.id,
                 uid: decoded.uid,
                 email: decoded.email,
+                username: userData.displayName
             };
 
             return true

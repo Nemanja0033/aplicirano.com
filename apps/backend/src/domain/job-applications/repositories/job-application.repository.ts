@@ -1,12 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { Job, User } from "@prisma/client";
-import { PrismaService } from "src/database/prisma.service";
+import { JobCreateInput, JobCreateManyInput } from "generated/prisma/models";
+import { PrismaService } from "src/infrastrucutre/database/prisma.service";
 
-interface JobType {
-    title: string;
-    userId: string;
-    status: string
-}
+// interface JobType {
+//     title: string;
+//     userId: string;
+//     status: string
+// }
 
 @Injectable()
 export class JobApplicationsRepository {
@@ -23,7 +24,8 @@ export class JobApplicationsRepository {
         });
     }
 
-    async batchInsert(jobs: JobType[]): Promise<number> {
+    // TODO check if possible to apply Type from ORM?
+    async batchInsert(jobs: JobCreateManyInput[]): Promise<number> {
         const result = await this.db.job.createMany({ 
             data: jobs,
         });
@@ -31,7 +33,7 @@ export class JobApplicationsRepository {
         return result.count;
     }
 
-    async insertSingle(job: JobType) : Promise<Job> {
+    async insertSingle(job: JobCreateInput) : Promise<Job> {
         return this.db.job.create({
             data: job
         });
