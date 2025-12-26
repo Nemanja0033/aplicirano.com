@@ -3,12 +3,6 @@ import { Job, User } from "@prisma/client";
 import { JobCreateInput, JobCreateManyInput } from "generated/prisma/models";
 import { PrismaService } from "src/infrastrucutre/database/prisma.service";
 
-// interface JobType {
-//     title: string;
-//     userId: string;
-//     status: string
-// }
-
 @Injectable()
 export class JobApplicationsRepository {
     constructor(private readonly db: PrismaService){}
@@ -38,12 +32,5 @@ export class JobApplicationsRepository {
             data: job
         });
 
-    }
-
-    // Just for now, query for user here
-    async findUserByFirebaseUid(uid: string) : Promise<User | null> {
-        return this.db.user.findUnique({
-            where: { firebaseUid: uid }
-        });
     }
 }

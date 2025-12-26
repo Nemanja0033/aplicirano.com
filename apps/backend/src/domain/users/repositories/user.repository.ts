@@ -7,7 +7,6 @@ export class UserRepository {
     constructor(private readonly db: PrismaService) {}
 
     async createUser(user: { uid: string, email: string, username: string}): Promise<User>{
-        console.log("@USER IN REPO", user)
         return this.db.user.create({
             data: {
                 firebaseUid: user.uid,

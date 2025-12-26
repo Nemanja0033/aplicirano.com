@@ -1,18 +1,20 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import * as admin from "firebase-admin";
-import { JobApplicationsRepository } from "src/domain/job-applications/repositories/job-application.repository";
+import { UserRepository } from "src/domain/users/repositories/user.repository";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
     constructor(
         @Inject('FIREBASE_ADMIN')
         private readonly firebaseAdmin: typeof admin,
-        private readonly jobRepo: JobApplicationsRepository
+        private readonly userRepo: UserRepository
     ) {}
     
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const req = context.switchToHttp().getRequest();
         const authHeader = req.headers['authorization'];
+        const queryPram = req.query;
+        const { user_exist } = queryPram;
 
         if(!authHeader){
             throw new UnauthorizedException('Missing Authorization header');
@@ -29,7 +31,21 @@ export class AuthGuard implements CanActivate {
             .auth()
             .verifyIdToken(token);
 
-            const user = await this.jobRepo.findUserByFirebaseUid(decoded.uid);
+            const userData = await admin.auth().getUser(decoded.uid);
+
+            // If user are registring
+            if(user_exist === "false"){
+                req.user = {
+                    uid: decoded.uid,
+                    email: decoded.email,
+                    username: userData.displayName
+                };
+                
+                return true;
+            }
+
+            // If user is already registered.
+            const user = await this.userRepo.findUserByFirebaseUid(decoded.uid);
 
             if(!user){
                 throw new ForbiddenException("User not registered");
@@ -39,11 +55,12 @@ export class AuthGuard implements CanActivate {
                 id: user.id,
                 uid: decoded.uid,
                 email: decoded.email,
+                username: userData.displayName
             };
 
-            return true
+            return true;
         }
-        catch{
+        catch(err){
             throw new UnauthorizedException('Invalid Firebase token');
         }
     }

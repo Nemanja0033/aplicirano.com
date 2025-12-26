@@ -6,7 +6,6 @@ import { UsersModule } from './domain/users/users.module';
 import { FirebaseModule } from './infrastrucutre/firebase/firebase.module';
 import { AuthGuard } from './application/common/guards/firebase-auth.guard';
 import { PrismaExceptionFilter } from './application/common/filters/prisma-exception.filter';
-import { JobApplicationsRepository } from './domain/job-applications/repositories/job-application.repository';
 
 @Module({
   imports: [
@@ -19,7 +18,7 @@ import { JobApplicationsRepository } from './domain/job-applications/repositorie
     UsersModule,
   ],
   providers: [
-    JobApplicationsRepository,
+    UsersModule,
     AuthGuard,
     PrismaExceptionFilter,
   ],
