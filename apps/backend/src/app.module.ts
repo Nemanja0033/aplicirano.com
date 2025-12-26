@@ -6,6 +6,7 @@ import { UsersModule } from './domain/users/users.module';
 import { FirebaseModule } from './infrastrucutre/firebase/firebase.module';
 import { AuthGuard } from './application/common/guards/firebase-auth.guard';
 import { PrismaExceptionFilter } from './application/common/filters/prisma-exception.filter';
+import { JobApplicationStatsModule } from './domain/job-application-stats/job-application-stats.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { PrismaExceptionFilter } from './application/common/filters/prisma-excep
     PrismaModule,
     JobApplicationsModule,
     UsersModule,
+    JobApplicationStatsModule,
   ],
   providers: [
     UsersModule,

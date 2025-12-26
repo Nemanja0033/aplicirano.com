@@ -48,7 +48,7 @@ export class AuthGuard implements CanActivate {
             const user = await this.userRepo.findUserByFirebaseUid(decoded.uid);
 
             if(!user){
-                throw new ForbiddenException("User not registered");
+                throw new UnauthorizedException("User not registered");
             }
 
             req.user = {
