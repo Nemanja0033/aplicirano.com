@@ -7,6 +7,8 @@ import { FirebaseModule } from './infrastrucutre/firebase/firebase.module';
 import { AuthGuard } from './application/common/guards/firebase-auth.guard';
 import { PrismaExceptionFilter } from './application/common/filters/prisma-exception.filter';
 import { JobApplicationStatsModule } from './domain/job-application-stats/job-application-stats.module';
+import { ChatbotModule } from './domain/chatbot/chatbot.module';
+import { OpenAiModule } from './infrastrucutre/openai/openai.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { JobApplicationStatsModule } from './domain/job-application-stats/job-ap
     JobApplicationsModule,
     UsersModule,
     JobApplicationStatsModule,
+    ChatbotModule,
+    OpenAiModule,
   ],
   providers: [
     UsersModule,

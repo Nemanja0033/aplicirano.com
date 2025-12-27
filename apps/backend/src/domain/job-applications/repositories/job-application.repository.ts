@@ -1,15 +1,12 @@
 import { Injectable } from "@nestjs/common";
-import { Job, User } from "@prisma/client";
+import { Job } from "@prisma/client";
+import { startOfDay, endOfDay } from "date-fns";
 import { JobCreateInput, JobCreateManyInput } from "generated/prisma/models";
 import { PrismaService } from "src/infrastrucutre/database/prisma.service";
 
 @Injectable()
 export class JobApplicationsRepository {
     constructor(private readonly db: PrismaService){}
-
-    async getMockJobs(): Promise<any> {
-        return this.db.job.findMany()
-    }
 
     async getAll(userId: string): Promise<Job[]> {
         return this.db.job.findMany({
@@ -18,7 +15,28 @@ export class JobApplicationsRepository {
         });
     }
 
-    // TODO check if possible to apply Type from ORM?
+    // Find all user jobs with interview status
+    async getInterviewJobs(userId: string): Promise<Job[]> {
+        return this.db.job.findMany({
+            where: {
+                userId,
+                status: "INTERVIEW"
+            }
+        })
+    }
+
+    async getJobsByDateRange(userId: string, start: string, end: string): Promise<Job[]> {
+        return this.db.job.findMany({
+            where: {
+                userId,
+                appliedAt: {
+                    gte: startOfDay(start),
+                    lte: endOfDay(end)
+                }
+            },
+        })
+    }
+
     async batchInsert(jobs: JobCreateManyInput[]): Promise<number> {
         const result = await this.db.job.createMany({ 
             data: jobs,

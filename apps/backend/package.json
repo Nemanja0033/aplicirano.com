@@ -32,6 +32,7 @@
     "date-fns": "^4.1.0",
     "firebase-admin": "^13.6.0",
     "multer": "^2.0.2",
+    "openai": "^6.15.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

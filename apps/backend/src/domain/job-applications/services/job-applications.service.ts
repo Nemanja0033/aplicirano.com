@@ -7,10 +7,6 @@ export class JobApplicationsService {
     private readonly repo: JobApplicationsRepository,
   ) {}
 
-  async getMockJobs(){
-    return await this.repo.getMockJobs();
-  }
-
   async getJobs(userId: string) {
     return await this.repo.getAll(userId);
   }

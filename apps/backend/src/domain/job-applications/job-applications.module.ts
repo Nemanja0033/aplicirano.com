@@ -5,6 +5,7 @@ import { JobApplicationsRepository } from './repositories/job-application.reposi
 
 @Module({
   controllers: [JobApplicationsController],
-  providers: [JobApplicationsService, JobApplicationsRepository]
+  providers: [JobApplicationsService, JobApplicationsRepository],
+  exports: [JobApplicationsRepository]
 })
 export class JobApplicationsModule {}
