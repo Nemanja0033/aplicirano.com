@@ -1,12 +1,9 @@
 import { Controller, Get, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { AuthGuard } from 'src/firebase/firebase-auth.guard';
-import { UploadFileInterceptor } from '../interceptors/upload-file.interceptor';
-import { JobApplicationsService } from '../service/job-applications.service';
-import { User } from 'src/common/decorators/user.decorator';
+import { UploadFileInterceptor } from '../../../application/common/interceptors/upload-file.interceptor';
+import { JobApplicationsService } from '../services/job-applications.service';
+import { User } from 'src/application/common/decorators/user.decorator';
 
 @Controller('jobs')
-@UseGuards(AuthGuard)
-
 export class JobApplicationsController {
     constructor (private readonly jobService: JobApplicationsService) {}
     

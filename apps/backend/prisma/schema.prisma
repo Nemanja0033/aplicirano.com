@@ -9,7 +9,7 @@ datasource db {
 
 model Job {
   id        String   @id @default(uuid())
-  title     String   @unique
+  title     String   
   appliedAt DateTime @default(now())
   status    String   @default("APPLIED")
   userId    String

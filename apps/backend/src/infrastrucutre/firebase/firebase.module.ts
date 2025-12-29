@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import * as admin from 'firebase-admin';
-import { initializeFirebaseAdmin } from 'src/config/firebase-config';
+import { initializeFirebaseAdmin } from 'src/infrastrucutre/firebase/firebase-config';
 
 @Global()
 @Module({

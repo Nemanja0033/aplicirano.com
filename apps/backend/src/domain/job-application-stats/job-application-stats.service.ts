@@ -1,54 +1,23 @@
-import { db } from "@/lib/db";
-import { admin } from "@/lib/firebaseAdmin";
-import { endOfDay, format, startOfDay } from "date-fns";
-import { NextResponse } from "next/server";
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { StatsQueryDto } from './dto/stats-query.dto';
+import { format } from 'date-fns';
+import { JobApplicationStatsRepository } from './repositories/job-application-stats.repository';
 
-export async function GET(req: Request){
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) {
-        return NextResponse.json({ error: "Missing Authorization header" }, { status: 401 });
-    }
+@Injectable()
+export class JobApplicationStatsService {
+    constructor(private readonly jobrepo: JobApplicationStatsRepository){}
 
-    const token = authHeader.split(" ")[1];
-    if (!token) {
-        return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
+    async getJobApplicationStats(statsQuery: StatsQueryDto, user: { id: string }){
+        const { start, end } = statsQuery;
 
-    const decoded = await admin.auth().verifyIdToken(token);
-    const userData = await admin.auth().getUser(decoded.uid)
-        
-    const user = await db.user.findUnique({
-        where: { firebaseUid: userData.uid }
-    });
+        if(!start || !end){
+            throw new BadRequestException("Missing date range");
+        }
 
-    if(!user){
-        return NextResponse.json({ error: "User dont exist!"}, { status: 404 });
-    }
-    const { searchParams } = new URL(req.url);
-    const start = searchParams.get("start");
-    const end = searchParams.get("end");
-
-    if(!start || !end){
-        return NextResponse.json({ error: "Missing date range" }, { status: 400 });
-    }
-
-    try{
-        const jobs = await db.job.findMany({
-            where: {
-                userId: user.id,
-                appliedAt: {
-                    gte: startOfDay(start),
-                    lte: endOfDay(end)
-                }
-            },
-            orderBy: {
-                appliedAt: 'asc'
-            }
-        });
+        const jobs = await this.jobrepo.getAllJobsByDateRange(start, end, user.id);
 
         if (jobs.length === 0) {
-            return NextResponse.json(
-              {
+            return  {
                 totalApplies: 0,
                 totalInterviews: [],
                 totalRejected: [],
@@ -56,9 +25,7 @@ export async function GET(req: Request){
                 appliesPerDay: {},
                 activeDays: [],
                 interviewsPercentage: 0,
-              },
-              { status: 200 }
-            );
+              }
         }
 
         const allAppliedDates = [jobs[0].appliedAt];
@@ -70,7 +37,7 @@ export async function GET(req: Request){
             }
         }
 
-        // Data that will be send to client 
+          // Data that will be send to client 
         //  1. Total Applies amount
         //  2. Total Rejected amount
         //  3. Total Interviews amount 
@@ -95,9 +62,16 @@ export async function GET(req: Request){
             appliesPerDay[format(totalApplyingDays[i], 'yyyy-MM-dd')] = jobsAppliedOnSameDate.length;
         }
 
-        return NextResponse.json({ totalApplies, totalInterviews, totalRejected, averageAppliesPerDay, appliesPerDay, activeDays, interviewsPercentage }, { status: 200 });
-    }
-    catch(err){
-        return NextResponse.json({ error: err }, { status: 500 });
+        return {
+            totalApplies,
+            totalRejected,
+            totalInterviews,
+            totalApplyingDays,
+            averageAppliesPerDay,
+            activeDays,
+            appliesPerDay,
+            interviewsPercentage
+        }
+
     }
 }
