@@ -7,7 +7,7 @@ export function useAuth(){
             const signInObserver = await signInWithPopup(auth, provider);
             const token = await signInObserver.user.getIdToken();
 
-            await fetch("http://localhost:3000/users/register?user_exist=false", {
+            await fetch("api/auth/", {
                 method: "POST",
                 headers: {
                   Authorization: `Bearer ${token}`,

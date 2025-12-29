@@ -1,5 +1,5 @@
 export async function fetchStats(token: string | null, startDate: string, endDate: string) {
-    const res = await fetch(`http://localhost:3000/stats?start=${startDate}&end=${endDate}`, {
+    const res = await fetch(`api/jobs/stats?start=${startDate}&end=${endDate}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }

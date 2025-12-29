@@ -61,7 +61,7 @@ export default function ChatbotPage() {
 
     try {
       const res = await axios.post(
-            "http://localhost:3000/chatbot",
+            "api/chatbot",
             { message: input },
             {
                 headers: {
