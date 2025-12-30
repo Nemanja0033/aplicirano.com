@@ -101,5 +101,23 @@ export function sanitizeLabColors(root: HTMLElement = document.body) {
   
     console.info('✅ LAB colors sanitized with safe fallbacks');
   }
+
+export function getStatsInsightsColor(label: string | undefined){
+  let color: string = 'text-primary';
+
+  if(!label) return color;
   
-  
+  if(label.includes("Applies")){
+    color = 'text-blue-700';
+  }
+
+  if(label.includes("Rejections")){
+    color = 'text-red-500'
+  }
+
+  if(label.includes("Interviews")){
+    color = 'text-green-500'
+  }
+
+  return color;
+}
