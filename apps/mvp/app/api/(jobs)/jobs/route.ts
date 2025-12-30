@@ -31,7 +31,7 @@ export async function GET(req: Request){
           orderBy: { appliedAt: "desc"}
         });
 
-        return NextResponse.json({ jobs }, { status: 200});
+        return NextResponse.json(jobs, { status: 200});
     }
     catch(err){
         return NextResponse.json({ error: err }, { status: 500 });
