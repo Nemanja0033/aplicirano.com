@@ -1,7 +1,7 @@
 
 const   StatsNav = ({ range, onChange }: { range: any, onChange: (e: any) => void }) => {
   return (
-    <section className='flex bg-white shadow-md dark:bg-sidebar p-5 rounded-lg w-full justify-between'>
+    <section className='flex bg-white shadow-md dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] p-5 rounded-lg w-full justify-between'>
         <div className="grid p-1">
           <h1 className="font-bold text-2xl">Statistics</h1>
           <p className="text-muted-foreground text-sm">Track your job search metrics and progress</p>
@@ -9,13 +9,13 @@ const   StatsNav = ({ range, onChange }: { range: any, onChange: (e: any) => voi
             <div className='flex gap-2 items-center'>
                 <select
                     aria-label="Select date range view applied jobs stats"
-                    className="border-2 bg-accent rounded-md px-3 py-2"
+                    className="border-2 rounded-md px-3 py-2 dark:border-[#151046] dark:border-2"
                     value={range}
                     onChange={onChange}
                     >
-                    <option value="7d">Last 7 days</option>
-                    <option value="30d">Last 30 days</option>
-                    <option value="90d">Last 90 days</option>
+                    <option value="7d" className="bg-[#100c28]">Last 7 days</option>
+                    <option value="30d" className="bg-[#100c28]">Last 30 days</option>
+                    <option value="90d" className="bg-[#100c28]">Last 90 days</option>
                 </select>
             </div>
     </section>

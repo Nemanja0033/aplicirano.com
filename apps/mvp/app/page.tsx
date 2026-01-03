@@ -83,7 +83,7 @@ export default function Home() {
   <main className="w-full h-screen flex justify-center">
     <div className="w-md:w-6xl p-3 items-start overflow-auto">
     {pageContent.map((c) => (
-      <Card className="md:w-[1200px] mb-3 h-auto">
+      <Card className="md:w-[1200px] dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] mb-3 h-auto">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg"><c.icon strokeWidth={1} className="text-primary" /> {c.title}</CardTitle>
           <CardDescription>
