@@ -7,14 +7,16 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
 const JobChart = ({ data }: { data: StatsData | undefined }) => {
   return (
-    <Card className='w-full h-auto'>
+    <Card className='w-full h-auto dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216]'>
         <Bar data={{
              labels: Object.keys(data?.appliesPerDay),
              datasets: [
                         {
                             label: "Applications per day",
                             data: Object.values(data?.appliesPerDay),
-                            backgroundColor: '#413aa1'
+                            backgroundColor: '#413aa1',
+                            borderRadius: 10,
+                            maxBarThickness: 100
                         },
                     ]
             }}/>

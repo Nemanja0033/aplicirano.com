@@ -95,12 +95,12 @@ export default function ChatbotPage() {
   return (
     <main className="w-full h-screen flex justify-center items-start overflow-auto">
       <div className="md:w-6xl w-full p-3 grid place-items-center gap-2">
-        <div className="w-full grid place-items-start p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
+        <div className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] grid place-items-start p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
           <h1 className="text-2xl font-bold">AI Assistant</h1>
           <p className="text-muted-foreground text-sm">Get AI-powered help with your job applications</p>
         </div>
 
-        <div className="w-full p-5 bg-white dark:bg-sidebar overflow-auto rounded-xl border h-[80vh]">
+        <div className="w-full p-5 dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-white dark:bg-sidebar overflow-auto rounded-xl border h-[80vh]">
           <div className="flex flex-col gap-6">
             {messages.map((m, i) => (
               <div
@@ -137,7 +137,7 @@ export default function ChatbotPage() {
           </div>
         </div>
 
-        <div className="w-full bg-white dark:bg-sidebar p-3 items-center rounded-lg flex gap-3 relative">
+        <div className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-white dark:bg-sidebar p-3 items-center rounded-lg flex gap-3 relative">
           <Textarea
             disabled={!token}
             value={prompt}

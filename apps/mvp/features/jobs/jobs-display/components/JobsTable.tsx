@@ -41,7 +41,7 @@ export function JobsTable({ jobs }: { jobs: Job[], isLoading: boolean }) {
   return (
         <main className="w-full">
           {/* <form ref={updateFormRef} action={bulkUpdateJobStatuses} className="w-full"> */}
-          <section className="md:w-full w-fit grid gap-5 p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
+          <section className="md:w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] w-fit grid gap-5 p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
             <div className="grid gap-1 w-full border-b py-3">
               <h1 className="font-bold text-2xl">Applied Jobs</h1>
               <p className="text-muted-foreground text-sm">Manage and track all your job applications in one place</p>
@@ -78,7 +78,7 @@ export function JobsTable({ jobs }: { jobs: Job[], isLoading: boolean }) {
             </div>
           </section>
 
-          <Table ref={tableRef} className="mt-5 md:w-full w-fit bg-white dark:bg-sidebar rounded-lg shadow-md">
+          <Table ref={tableRef} className="mt-5 dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] md:w-full w-fit bg-white dark:bg-sidebar rounded-lg shadow-md">
             <TableCaption>A list of your recent job applications.</TableCaption>
             <TableHeader>
               <TableRow data-html2canvas-ignore>
@@ -92,7 +92,7 @@ export function JobsTable({ jobs }: { jobs: Job[], isLoading: boolean }) {
             </TableHeader>
             <TableBody>
               {jobsToDisplay.map((job: Job) => (
-                <TableRow className={`${selectedRows.includes(job.id) ? 'bg-accent' : ''}`} key={job.id}>
+                <TableRow className={`${selectedRows.includes(job.id) ? 'dark:bg-gradient-to-b from-[#100c28] to-[#010216]' : ''}`} key={job.id}>
                   <TableCell><input aria-label="select job for action" data-html2canvas-ignore value={job.id} checked={selectedRows.includes(job.id)} onChange={(e) => checkSingleRow(e, job.id)} type="checkbox" /></TableCell>
                   <TableCell className="font-medium">{job.title}</TableCell>
                   <TableCell className="font-medium text-muted-foreground md:flex hidden">{new Date(job.appliedAt).toLocaleDateString()}</TableCell>

@@ -17,7 +17,7 @@ const ranges = {
 
 export default function StatsPage(){
     const { token, loading: isUserLoading } = useFirebaseUser();
-    const [range, setRange] = useState<keyof typeof ranges>("7d")
+    const [range, setRange] = useState<keyof typeof ranges>("90d")
     const endDate = formatISO(new Date(), { representation: "date" })
     const startDate = formatISO(subDays(new Date(), ranges[range]), { representation: "date" })
     const { data, isLoading } = useStats(token, startDate, endDate);

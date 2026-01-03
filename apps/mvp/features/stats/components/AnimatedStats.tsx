@@ -13,7 +13,7 @@ const AnimatedNumber = ({ value }: { value: number }) => {
     return controls.stop
   }, [value])
 
-  return <motion.b className="text-xl">{rounded}</motion.b>
+  return <motion.b className="text-2xl">{rounded}</motion.b>
 }
 
 export default AnimatedNumber
