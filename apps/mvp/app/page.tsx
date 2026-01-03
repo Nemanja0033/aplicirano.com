@@ -65,19 +65,20 @@ export default function Home() {
 
   if(!token){
     return(
-      <div className="w-full h-[60vh] flex justify-center items-center">
+      <div className="w-full h-screen flex justify-center items-center">
         <div className="grid gap-2">
-          <span className="text-gray-400 text-2xl font-semibold">Please Sign In To Continue</span>
-          <Button onClick={handleSignIn} className="animate-pulse">Sign In With Google</Button>
+          {/* <span className="text-4xl font-semibold text-primary">Please Sign In To Continue</span> */}
+          <img src="auth-anim.svg" className="w-96" alt="" />
+          <Button onClick={handleSignIn} className="p-7">Sign In With Google</Button>
         </div>
       </div>
     )
   }
 
   const pageContent = [
-    { title: "Jobs List", url: '/jobs', insight: `${jobs.jobsCount} Tracked Jobs`, description: "Import, export your applied jobs, sort and update everything in one place.", icon: ScrollText },
-    { title: "Statistics", url: "/stats", insight: statsInsight, description: "Explore the statistics of your applied jobs, have insight into numbers, dates, and calculations.", icon: ChartBar },
-    { title: "JobTrack Ai", url: "/chatbot", insight: `JobTrakify AI boosts job wins! Need help?`, description: "Chat with our AI assistant, ask about your active applications, prepare cover letters, resumes and more.", icon: BotIcon }
+    { title: "Jobs List", img: '/stats.png', cta: "Add Jobs", url: '/jobs', insight: `${jobs.jobsCount} Tracked Jobs`, description: "Import, export your applied jobs, sort and update everything in one place.", icon: ScrollText },
+    { title: "Statistics", img: "/jobs.png", cta: "See Insights", url: "/stats", insight: statsInsight, description: "Explore the statistics of your applied jobs, have insight into numbers, dates, and calculations.", icon: ChartBar },
+    { title: "JobTrack Ai", img: "/ai.png", cta: "Try Ai Assistant", url: "/chatbot", insight: `JobTrakify AI boosts job wins! Need help?`, description: "Chat with our AI assistant, ask about your active applications, prepare cover letters, resumes and more.", icon: BotIcon }
   ]
   return (
   <main className="w-full h-screen flex justify-center">
@@ -95,7 +96,7 @@ export default function Home() {
         </CardContent>
         <CardFooter>
           <Link href={c.url}>
-            <Button>Explore more <ArrowRight /></Button>
+            <Button>{c.cta} <ArrowRight /></Button>
           </Link>
         </CardFooter>
       </Card>
