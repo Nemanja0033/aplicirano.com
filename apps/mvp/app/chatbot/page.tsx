@@ -69,7 +69,7 @@ export default function ChatbotPage() {
                 },
             }
         );
-        const msg = res?.data ?? "Sorry, no response.";
+        const msg = res?.data.message ?? "Sorry, no response.";
 
         setMessages((prev) => [...prev, { role: "ai", content: msg }]);
     } catch (err) {

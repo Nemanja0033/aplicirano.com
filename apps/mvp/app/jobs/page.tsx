@@ -1,22 +1,21 @@
 "use client"
 import Loader from "@/components/Loader";
+import { useAuthContext } from "@/context/AuthProvider";
 import { JobsTable } from "@/features/jobs/jobs-display/components/JobsTable";
 import { fetchJobs } from "@/features/jobs/jobs-display/services/jobs-display-service";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useFirebaseUser } from "@/hooks/useFirebaseUser";
 import { useQuery } from "@tanstack/react-query";
 
 export default function JobsPage(){
-    const { user, token, loading: isUserLoading } = useFirebaseUser();
+    const { user, token } = useAuthContext();
     const { data, isLoading, isPending } = useQuery({
-      queryKey: ['jobs', user?.email],
+      queryKey: ['jobs'],
       queryFn: () => fetchJobs(token),
       staleTime: 60 * 5000,
-      enabled: !!token
     });
     const isMobile = useIsMobile();
   
-    if(isLoading || isUserLoading){
+    if(isPending){
       return <Loader type="NORMAL" />
     }
   

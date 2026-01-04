@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/sidebar"
 import SignInButton from "../features/auth/components/AuthToggler"
 import { usePathname } from "next/navigation"
+import Link from "next/link"
 
 const items = [
   {
@@ -61,13 +62,13 @@ export function AppSidebar() {
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton className={`${pathname === item.url.slice(0) ? 'bg-primary/20 text-primary' : ''}`} asChild>
-                      <a
+                      <Link
                         href={item.url}
                         className="flex items-center text-lg gap-3 px-3 py-2 rounded-md transition-colors"
                       >
                         <item.icon size={40} />
                         <span className="text-md font-medium">{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
