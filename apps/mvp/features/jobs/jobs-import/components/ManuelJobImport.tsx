@@ -57,7 +57,7 @@ const ManuelJobImport = ({ isDisabled }: { isDisabled: boolean }) => {
                     message: "Company name require minimum 2 characters"
                   },
                   maxLength: {
-                    value: 15,
+                    value: 35,
                     message: "Company name accepts maximum 15 characters"
                   }
                 })} id="company" className="w-full" />

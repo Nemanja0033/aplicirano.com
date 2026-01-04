@@ -1,19 +1,12 @@
 "use server"
 import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
 
-export async function bulkUpdateJobStatuses(formData: FormData) {
-  const ids = formData.getAll("ids") as string[];
-
-  for (const id of ids) {
-    const status = formData.get(`status-${id}`) as any;
-    if (!status) continue;
-
+export async function bulkUpdateJobStatuses(rowsWithStatus: { id: string, status: "INTERVIEW" | "APPLIED" | "REJECTED"}[]) {
+  for (const row of rowsWithStatus) {
+    const { id, status } = row
     await db.job.update({
-      where: { id },
+      where: { id},
       data: { status },
     });
   }
-
-  redirect("/"); 
 }

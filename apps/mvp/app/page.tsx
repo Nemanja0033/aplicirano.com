@@ -10,7 +10,6 @@ import { useFirebaseUser } from "@/hooks/useFirebaseUser";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowRight, BotIcon, ChartBar, ScrollText } from "lucide-react"
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -95,9 +94,9 @@ export default function Home() {
           <motion.span key={c.insight} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className={`text-xl font-semibold ${getStatsInsightsColor(c.insight)}`}><span className="text-2xl" style={{ textShadow: "0 0 10px rgba(59,130,246,0.7)" }}>{c.insight}</span></motion.span>
         </CardContent>
         <CardFooter>
-          <Link href={c.url}>
+          <a href={c.url}>
             <Button>{c.cta} <ArrowRight /></Button>
-          </Link>
+          </a>
         </CardFooter>
       </Card>
     ))}
