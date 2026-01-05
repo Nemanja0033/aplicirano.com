@@ -51,6 +51,14 @@ export async function POST(req: Request) {
         where: { firebaseUid: userData.uid }
     })
 
+    if(!user){
+      return NextResponse.json({ error: "User not registered" }, { status: 401 });
+    }
+
+    if(user.apiCredits === 0){
+      return NextResponse.json({ error: "You reached a ai chatbot limit" }, { status: 400 })
+    }
+
     const jobs = await db.job.findMany({
       where: { 
         userId: user?.id,
@@ -104,7 +112,18 @@ export async function POST(req: Request) {
 
     const answer = response.choices[0].message;
 
-    return NextResponse.json({ message: answer.content });
+    const userApiCredits = await db.user.update({
+      where: {
+        id: user?.id
+      },
+      data: {
+        apiCredits: {
+          decrement: 1
+        }
+      }
+    })
+
+    return NextResponse.json({ message: answer.content, userApiCredits });
   } catch (error: any) {
     console.error("Chat API Error:", error);
     return NextResponse.json(
