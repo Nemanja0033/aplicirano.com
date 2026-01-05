@@ -19,7 +19,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import SignInButton from "../features/auth/components/AuthToggler"
+import SignInButton from "../features/user/components/AuthToggler"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 

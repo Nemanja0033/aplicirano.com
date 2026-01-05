@@ -14,7 +14,9 @@ export interface JobImportForm {
   appliedAt: Date;
 }
 
-const ManuelJobImport = ({ isDisabled }: { isDisabled: boolean }) => {
+// *TODO* Refactor, avoid any type casting!
+
+const ManuelJobImport = ({ isDisabled, currentUser }: { isDisabled: boolean, currentUser: any }) => {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -25,11 +27,13 @@ const ManuelJobImport = ({ isDisabled }: { isDisabled: boolean }) => {
     formState: { errors, isSubmitting }
    } = useForm<JobImportForm>({ mode: "onSubmit" });
 
+   console.log(currentUser)
+
   const handleSubmitJob = async (data: JobImportForm) => {
     try{
       const jobObject = { company: data.company, appliedAt: date }
       await postSingleJob(jobObject, token);
-      queryClient.invalidateQueries({ queryKey: ['jobs', user?.email]})
+      queryClient.invalidateQueries({ queryKey: ['jobs']})
       setIsModalOpen(false);
     }
     catch(err){
@@ -39,7 +43,7 @@ const ManuelJobImport = ({ isDisabled }: { isDisabled: boolean }) => {
 
   return (
     <>
-        <Button type="button" disabled={isDisabled} onClick={() => setIsModalOpen(true)}>+ Add Job</Button>
+        <Button type="button" disabled={isDisabled || currentUser.jobsLimit === 0} onClick={() => setIsModalOpen(true)}>+ Add Job</Button>
         <AlertDialog onOpenChange={setIsModalOpen} open={isModalOpen}>
         <AlertDialogContent>
             <AlertDialogHeader>

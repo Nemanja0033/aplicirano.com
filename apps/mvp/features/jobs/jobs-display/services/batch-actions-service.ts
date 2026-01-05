@@ -40,3 +40,4 @@ export async function deleteRecords(recordsIds: string[], token: string) {
     throw new Error("Error while deleting records");
   }
 }
+  

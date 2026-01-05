@@ -1,8 +1,11 @@
 "use client"
+import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { fetchCurrentUserData } from "@/features/user/service/user-service";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useFirebaseUser } from "@/hooks/useFirebaseUser";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Send, Sparkle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -12,6 +15,8 @@ interface Message {
   role: Role;
   content: string;
 }
+
+// *TODO* Refactor
 
 const aiWelcomeMessage =
   "Hello I'm TrakifyAI! I can help you with your job application process. Do you want me to check you recent job applications or anything else?";
@@ -83,6 +88,16 @@ export default function ChatbotPage() {
         setPrompt("");
     }
   }
+  
+  const { data: currentUserData, isLoading: isUserLoading } = useQuery({
+    queryKey: ['me'],
+    queryFn: () => fetchCurrentUserData(token as any),
+    enabled: !!token
+  })
+
+  if(isUserLoading){
+    return <Loader type="NORMAL" />
+  }
     
   // if(isMobile){
   //   return(
@@ -139,14 +154,14 @@ export default function ChatbotPage() {
 
         <div className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-white dark:bg-sidebar p-3 items-center rounded-lg flex gap-3 relative">
           <Textarea
-            disabled={!token}
+            disabled={!token || currentUserData.apiCredits === 0}
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             className="max-h-20 rounded-xl bg-accent/40 max-w-[1010px] pr-32"
             placeholder="Type your message..."
             aria-label="Type your message"
           />
-          <Button aria-label="send the message" name="send-message-button" className="absolute right-3 h-16 w-20 top-3" onClick={() => sendPrompt(prompt)} size="lg" disabled={isLoading || !token}>
+          <Button aria-label="send the message" name="send-message-button" className="absolute right-3 h-16 w-20 top-3" onClick={() => sendPrompt(prompt)} size="lg" disabled={isLoading || !token || currentUserData.apiCredits === 0}>
             <Send />
           </Button>
         </div>

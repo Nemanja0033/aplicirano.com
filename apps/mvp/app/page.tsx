@@ -10,6 +10,8 @@ import {
 import { getStatsInsightsColor } from "@/helpers";
 import { ArrowRight, BotIcon, ChartBar, ScrollText } from "lucide-react";
 
+// *TODO* Add two card sections: Profile stats (api credits & info), Usage stats plan usage, jobs limit, ai chat limits
+
 export default function Home() {
   // const { user, token } = useAuthContext();
   // const { data: jobs, isLoading: isJobsLoading, isPending } = useQuery({
@@ -109,7 +111,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="gap-5 grid md:grid-cols-2">
+        <div className="gap-5 grid md:grid-cols-3">
           {pageContent.map((c) => (
             <Card className="dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216]">
               <CardHeader>
