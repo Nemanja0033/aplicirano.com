@@ -25,12 +25,12 @@ import Link from "next/link"
 
 const items = [
   {
-    title: "Home",
+    title: "Početna",
     url: "/",
     icon: Home
   },
   {
-    title: "Jobs List",
+    title: "Lista poslova",
     url: "/jobs",
     icon: ScrollText,
   },
@@ -40,7 +40,7 @@ const items = [
     icon: BotIcon,
   },
   {
-    title: "Statistics",
+    title: "Statistika",
     url: "/stats",
     icon: ChartBar
   }
@@ -54,8 +54,9 @@ export function AppSidebar() {
       <SidebarContent className="flex flex-col justify-between h-full px-2 py-4">
         <div>
           <SidebarGroup>
-            <SidebarGroupLabel className="flex gap-2 items-center text-2xl p-10.5 text-primary font-bold px-3 mb-2 border-b rounded-none">
-              <span className="bg-primary rounded-lg text-white p-1 text-md">JT</span> JobTrakify
+            <SidebarGroupLabel className="flex gap-2 items-center justify-center text-2xl py-7 text-primary font-bold px-3 mb-2 border-b rounded-none">
+              {/* <span className="bg-primary rounded-lg text-white p-1 text-md">JT</span> JobTrakify */}
+              <img className="w-full mr-20" src='/logo.svg' />
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>

@@ -83,7 +83,7 @@ export default function Home() {
     {
       title: "Statistika",
       img: "/jobs.png",
-      cta: "See Insights",
+      cta: "Vidi statistiku",
       url: "/stats",
       insight: "Prati svoj proces efikasno",
       color: "text-green-300",
