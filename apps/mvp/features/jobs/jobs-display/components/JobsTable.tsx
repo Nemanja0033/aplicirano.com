@@ -23,7 +23,14 @@ import { getBadgeLightColor } from "@/helpers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import UpdateJobsStatus from "./UpdateJobsStatus";
 
-export function JobsTable({ jobs }: { jobs: Job[]; isLoading: boolean }) {
+export function JobsTable({
+  jobs,
+  currentUser,
+}: {
+  jobs: Job[];
+  isLoading: boolean;
+  currentUser: any;
+}) {
   const [isTableReady, setIsTableReady] = useState(false);
   const {
     filteredData: jobsToDisplay,
@@ -33,7 +40,13 @@ export function JobsTable({ jobs }: { jobs: Job[]; isLoading: boolean }) {
     changeStatus,
     setIsStatusChanged,
   } = useFilters(jobs, "JOBS");
-  const { checkAllRows, checkSingleRow, checkRowsWithStatus, selectedRows, selectedRowsWithStatus } = useSelectRows();
+  const {
+    checkAllRows,
+    checkSingleRow,
+    checkRowsWithStatus,
+    selectedRows,
+    selectedRowsWithStatus,
+  } = useSelectRows();
   const isMobile = useIsMobile();
   const tableRef = useRef<any>(null);
 
@@ -68,9 +81,20 @@ export function JobsTable({ jobs }: { jobs: Job[]; isLoading: boolean }) {
             <div className="flex">
               {selectedRows.length === 0 && !isStatusChanged && (
                 <div className="flex gap-2">
-                  <ManuelJobImport isDisabled={selectedRows.length > 0} />
-                  <FileImportForm type="TXT" isDisabled={selectedRows.length > 0} />
-                  <FileImportForm type="CSV" isDisabled={selectedRows.length > 0} />
+                  <ManuelJobImport
+                    currentUser={currentUser}
+                    isDisabled={selectedRows.length > 0}
+                  />
+                  <FileImportForm
+                    currentUser={currentUser}
+                    type="TXT"
+                    isDisabled={selectedRows.length > 0}
+                  />
+                  <FileImportForm
+                    currentUser={currentUser}
+                    type="CSV"
+                    isDisabled={selectedRows.length > 0}
+                  />
                   <ExportToPdf
                     isDisabled={selectedRows.length > 0}
                     elementRef={tableRef.current}
@@ -84,7 +108,10 @@ export function JobsTable({ jobs }: { jobs: Job[]; isLoading: boolean }) {
               )}
 
               {isStatusChanged && (
-                <UpdateJobsStatus setIsStatusChanged={setIsStatusChanged} selectedRowsWithStatus={selectedRowsWithStatus} />
+                <UpdateJobsStatus
+                  setIsStatusChanged={setIsStatusChanged}
+                  selectedRowsWithStatus={selectedRowsWithStatus}
+                />
               )}
             </div>
           )}
@@ -138,7 +165,13 @@ export function JobsTable({ jobs }: { jobs: Job[]; isLoading: boolean }) {
                   <input type="hidden" name="ids" value={job.id} />
                   <select
                     aria-label="change the status of job"
-                    onChange={(e) => {setIsStatusChanged(true); checkRowsWithStatus({ id: job.id, status: e.target.value as any})}}
+                    onChange={(e) => {
+                      setIsStatusChanged(true);
+                      checkRowsWithStatus({
+                        id: job.id,
+                        status: e.target.value as any,
+                      });
+                    }}
                     className={`cursor-pointer text-[13px] w-28 p-1 rounded-2xl dark:opacity-75 ${getBadgeLightColor(job.status)} bg-accent`}
                     defaultValue={job.status}
                     name={`status-${job.id}`}
@@ -159,7 +192,9 @@ export function JobsTable({ jobs }: { jobs: Job[]; isLoading: boolean }) {
           <TableFooter data-html2canvas-ignore>
             <TableRow>
               <TableCell colSpan={5}>
-                <span className="font-medium">Total {jobsToDisplay.length}</span>
+                <span className="font-medium">
+                  Total {jobsToDisplay.length}
+                </span>
               </TableCell>
             </TableRow>
           </TableFooter>

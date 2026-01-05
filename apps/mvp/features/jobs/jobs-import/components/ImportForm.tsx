@@ -12,12 +12,16 @@ const initialFormState = {
   fileName: "",
 };
 
+// TODO avoid any use proper type for currentUser
+
 export function FileImportForm({
   isDisabled,
   type,
+  currentUser
 }: {
   isDisabled: boolean;
   type: "TXT" | "CSV";
+  currentUser: any
 }) {
   const [formState, setFormState] = useState(initialFormState);
   const queryClient = useQueryClient();
@@ -140,7 +144,7 @@ export function FileImportForm({
         <div className="items-center gap-2 flex">
           <input
             onChange={() => setIsSubmitButtonHidden(false)}
-            disabled={isDisabled}
+            disabled={isDisabled || currentUser.jobsLimit === 0}
             type="file"
             id={type === "TXT" ? "text" : "csv-file"}
             accept={type === "TXT" ? ".txt" : ".csv"}
@@ -149,14 +153,11 @@ export function FileImportForm({
           />
           <label htmlFor={type === "TXT" ? "text" : "csv-file"}>
             <Button
-              disabled={isDisabled}
+              disabled={isDisabled || currentUser.jobsLimit === 0}
               className={`${isDisabled && "opacity-50"}`}
               type="button"
-              asChild
             >
-              <span>
                 <Upload /> {type === "CSV" ? "Import CSV" : "Import TXT"}
-              </span>
             </Button>
           </label>
 

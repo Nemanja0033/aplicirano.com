@@ -14,7 +14,7 @@ const JobChart = ({ data }: { data: StatsData | undefined }) => {
                         {
                             label: "Applications per day",
                             data: Object.values(data?.appliesPerDay),
-                            backgroundColor: '#413aa1',
+                            backgroundColor: '#677fed',
                             borderRadius: 10,
                             maxBarThickness: 100
                         },

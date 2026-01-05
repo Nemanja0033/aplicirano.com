@@ -2,22 +2,34 @@ import { db } from "@/lib/db";
 import { admin } from "@/lib/firebaseAdmin";
 import { NextResponse } from "next/server";
 
-// This messy code is ok only in beta version, future scaling will require migrating whole backend to another technology.
+// ======================================================
+// NOTE: This messy code is ok only in beta version,
+// future scaling will require migrating whole backend
+// to another technology.
+// ======================================================
+
+// ======================================================
+// GET endpoint - Fetch jobs for authenticated user
+// ======================================================
 export async function GET(req: Request){
     try{
+        // --- Authorization header check ---
         const authHeader = req.headers.get("Authorization");
         if (!authHeader) {
           return NextResponse.json({ error: "Missing Authorization header" }, { status: 401 });
         }
 
+        // --- Extract token ---
         const token = authHeader.split(" ")[1];
         if (!token) {
           return NextResponse.json({ error: "Invalid token" }, { status: 401 });
         }
 
+        // --- Verify token and get user data ---
         const decoded = await admin.auth().verifyIdToken(token);
         const userData = await admin.auth().getUser(decoded.uid)
         
+        // --- Find user in DB ---
         const user = await db.user.findUnique({
           where: { firebaseUid: userData.uid }
         });
@@ -26,35 +38,43 @@ export async function GET(req: Request){
           return NextResponse.json({ error: "User dont exist!"}, { status: 404 });
         }
 
+        // --- Fetch jobs for user ---
         const jobs = await db.job.findMany({
           where: { userId: user.id },
           orderBy: { appliedAt: "desc"}
         });
 
+        // --- Return jobs ---
         return NextResponse.json(jobs, { status: 200});
     }
     catch(err){
+        // --- Error handling ---
         return NextResponse.json({ error: err }, { status: 500 });
     }
 }
 
+// ======================================================
+// POST endpoint - Upload jobs from TXT file
+// ======================================================
 export async function POST(req: Request) {
     try {
+      // --- Authorization header check ---
       const authHeader = req.headers.get("Authorization");
-      
       if (!authHeader) {
         return NextResponse.json({ error: "Missing Authorization header" }, { status: 401 });
       }
 
+      // --- Extract token ---
       const token = authHeader.split(" ")[1];
-
       if (!token) {
         return NextResponse.json({ error: "Invalid token" }, { status: 401 });
       }
-      // ** Get user data and uid
+
+      // --- Verify token and get user data ---
       const decoded = await admin.auth().verifyIdToken(token);
       const userData = await admin.auth().getUser(decoded.uid)
 
+      // --- Get uploaded file ---
       const formData = await req.formData();
       const file = formData.get("text") as File;
   
@@ -62,9 +82,8 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "No file received" }, { status: 400 });
       }
 
-      // ** Check file size 
+      // --- File size validation ---
       const MAX_SIZE = 1 * 1024 * 1024; // 1MB
-
       if (file.size > MAX_SIZE) {
         return NextResponse.json(
           { error: "File too large. Maximum allowed size is 1MB." },
@@ -72,10 +91,9 @@ export async function POST(req: Request) {
         );
       }
 
-      // ** Check file format
+      // --- File format validation ---
       const allowedMime = ["text/plain"];
       const allowedExtensions = [".txt"];
-
       const fileName = file.name.toLowerCase();
       const isValidMime = allowedMime.includes(file.type);
       const isValidExt = allowedExtensions.some((ext) => fileName.endsWith(ext));
@@ -87,6 +105,7 @@ export async function POST(req: Request) {
         );
       }
 
+      // --- Find user in DB ---
       const user = await db.user.findUnique({
         where: { firebaseUid: userData.uid }
       });
@@ -94,9 +113,13 @@ export async function POST(req: Request) {
       if(!user){
         return NextResponse.json({ error: "No user found" }, { status: 404 });
       }
+
+      // --- Check for jobs limit ---
+      if(user.jobsLimit === 0){
+        return NextResponse.json({ error: "Jobs limit reached"}, { status: 400 })
+      }
   
-      // ** Safe parse and store jobs data.
-      // ** Validate length manualy
+      // --- Parse file content and validate ---
       const text = await file.text();
       const jobs = text
         .split("-")
@@ -106,15 +129,31 @@ export async function POST(req: Request) {
       if(jobs.length > 50){
         return NextResponse.json({ error: "Title limts is 50 per upload!" }, { status: 400 });
       }
-  
-      await Promise.all(
+
+      const createdJobs = await Promise.all(
         jobs.map((title) =>
-          db.job.create({ data: { title, status: "APPLIED", userId: user.id  } })
+          db.job.create({ data: { title, status: "APPLIED", userId: user.id } })
         )
       );
+      
+      const jobsInserted = createdJobs.length;
+
+      const userJobsLimitLeft = await db.user.update({
+        where: { id: user.id },
+        data: {
+          jobsLimit: {
+            decrement: jobsInserted
+          }
+        }
+      });
   
-      return NextResponse.json({ succes: true }, { status: 201 });
+      // --- Return success response ---
+      return NextResponse.json(
+        { succes: true, jobsInserted, jobsLimit: userJobsLimitLeft.jobsLimit },
+        { status: 201 }
+      );
     } catch (err) {
+      // --- Error handling ---
       console.error("Upload error:", err);
       return NextResponse.json({ error: err }, { status: 500 });
     }
