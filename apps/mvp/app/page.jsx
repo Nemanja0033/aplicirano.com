@@ -106,7 +106,7 @@ export default function ApliciranoLanding() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-block mb-6 px-4 py-2 bg-purple-100 rounded-full text-purple-700 font-medium text-sm">
-              ✨ Alat koji IT profesionalci vole
+              ✨ Dostupno od 31. Januara!
             </div>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
               Aplicirano - lakši način da pratiš{' '}
