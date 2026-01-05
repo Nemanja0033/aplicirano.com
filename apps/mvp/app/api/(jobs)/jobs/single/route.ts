@@ -7,8 +7,6 @@ export async function POST(req: Request){
         const body = await req.json();
         const { company, appliedAt } = body.data;
 
-        console.log("@DATA sent to server", company, appliedAt)
-
         const authHeader = req.headers.get("Authorization");
         if (!authHeader) {
           return NextResponse.json({ error: "Missing Authorization header" }, { status: 401 });
@@ -30,6 +28,10 @@ export async function POST(req: Request){
           return NextResponse.json({ error: "User dont exist!"}, { status: 404 });
         }
 
+        if(user.jobsLimit === 0){
+          return NextResponse.json({ errro: "Jobs limt reached"}, { status: 400 });
+        }
+
         if(!company){
             return NextResponse.json({ error: "Company name is required! "}, { status: 400 });
         }
@@ -42,7 +44,18 @@ export async function POST(req: Request){
             }
         });
 
-        return NextResponse.json({ succes: true }, { status: 201 });
+        const decrementJobsCredit = await db.user.update({
+          where: {
+            id: user.id
+          },
+          data: {
+            jobsLimit: {
+              decrement: 1
+            }
+          }
+        });
+
+        return NextResponse.json({ succes: true, jobCreditsLeft: decrementJobsCredit.jobsLimit }, { status: 201 });
     }
     catch(err){
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
