@@ -94,7 +94,7 @@ export default function ChatbotPage() {
 
   return (
     <main className="w-full h-screen flex justify-center items-start overflow-auto">
-      <div className="md:w-6xl w-full p-3 grid place-items-center gap-2">
+      <div className="md:w-6xl w-full p-3 grid place-items-center gap-5">
         <div className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] grid place-items-start p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
           <h1 className="text-2xl font-bold">AI Assistant</h1>
           <p className="text-muted-foreground text-sm">Get AI-powered help with your job applications</p>
