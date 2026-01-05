@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import { AppSidebar } from '@/components/app-sidebar'
 import Navbar from '@/components/Navbar'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
@@ -8,26 +9,32 @@ import { ThemeProvider } from 'next-themes'
 import React, { useState } from 'react'
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthProvider } from '@/context/AuthProvider'
+import { usePathname } from 'next/navigation'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
-    const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient());
+  const pathname = usePathname();
 
-    return (
-        <>
-                <AuthProvider>
-                    <QueryClientProvider client={queryClient}>
-                        <ThemeProvider attribute="class" defaultTheme="dark">
-                            <Navbar />
-                            <SidebarProvider>
-                            <AppSidebar />
-                            <SidebarTrigger />
-                            {children}
-                            </SidebarProvider>
-                            <ReactQueryDevtools initialIsOpen={false} />
-                        </ThemeProvider>
-                    </QueryClientProvider>
-                </AuthProvider>
-        </>
+  return (
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="dark">
+          {pathname === '/' ? (
+            children
+          ) : (
+            <>
+              <Navbar />
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarTrigger />
+                {children}
+              </SidebarProvider>
+            </>
+          )}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </AuthProvider>
   )
 }
 

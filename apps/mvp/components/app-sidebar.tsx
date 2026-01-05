@@ -26,7 +26,7 @@ import Link from "next/link"
 const items = [
   {
     title: "Početna",
-    url: "/",
+    url: "/dashboard",
     icon: Home
   },
   {
