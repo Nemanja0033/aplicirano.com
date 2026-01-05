@@ -12,6 +12,7 @@ export default function JobsPage(){
       queryKey: ['jobs'],
       queryFn: () => fetchJobs(token),
       staleTime: 60 * 5000,
+      enabled: !!token
     });
     const isMobile = useIsMobile();
   

@@ -70,7 +70,7 @@ export default function Home() {
   }
 
   const pageContent = [
-    { title: "Jobs List", img: '/stats.png', cta: "Add Jobs", url: '/jobs', insight: `${jobs?.length} Tracked Jobs`, description: "Import, export your applied jobs, sort and update everything in one place.", icon: ScrollText },
+    { title: "Jobs List", img: '/stats.png', cta: "Add Jobs", url: '/jobs', insight: `${stats?.totalApplies} Tracked Jobs`, description: "Import, export your applied jobs, sort and update everything in one place.", icon: ScrollText },
     { title: "Statistics", img: "/jobs.png", cta: "See Insights", url: "/stats", insight: statsInsight, description: "Explore the statistics of your applied jobs, have insight into numbers, dates, and calculations.", icon: ChartBar },
     { title: "JobTrack Ai", img: "/ai.png", cta: "Try Ai Assistant", url: "/chatbot", insight: `JobTrakify AI boosts job wins! Need help?`, description: "Chat with our AI assistant, ask about your active applications, prepare cover letters, resumes and more.", icon: BotIcon }
   ]
