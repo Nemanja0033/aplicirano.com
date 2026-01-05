@@ -106,14 +106,28 @@ export async function POST(req: Request) {
       if(jobs.length > 50){
         return NextResponse.json({ error: "Title limts is 50 per upload!" }, { status: 400 });
       }
+
+      let jobsInserted = 0;
   
       await Promise.all(
-        jobs.map((title) =>
+        jobs.map((title) => {
+          jobsInserted++;
           db.job.create({ data: { title, status: "APPLIED", userId: user.id  } })
-        )
+        })
       );
+
+      const userJobsLimitLeft = await db.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          jobsLimit: {
+            decrement: jobsInserted
+          }
+        }
+      })
   
-      return NextResponse.json({ succes: true }, { status: 201 });
+      return NextResponse.json({ succes: true, jobsInserted, jobsLimit: userJobsLimitLeft.jobsLimit }, { status: 201 });
     } catch (err) {
       console.error("Upload error:", err);
       return NextResponse.json({ error: err }, { status: 500 });
