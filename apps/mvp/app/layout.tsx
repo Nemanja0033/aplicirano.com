@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Aplicirano | Skup Alata Lakse Trazenje Posla",
+  title: "Aplicirano | Skup Alata Za Lakse Trazenje Posla",
   description:
     "Pratite i upravljajte svojim prijavama za posao na jednom mestu. Aplicirano vam pomaže da ostanete organizovani, steknete uvide i poboljšate potragu za poslom uz pametnu analitiku i AI podršku.",
 };
