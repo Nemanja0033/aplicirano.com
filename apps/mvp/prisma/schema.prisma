@@ -8,23 +8,36 @@ datasource db {
 }
 
 model Job {
-  id        String   @id @default(uuid())
-  title     String
-  appliedAt DateTime @default(now())
-  status    String   @default("APPLIED")
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id         String   @id @default(uuid())
+  title      String
+  appliedAt  DateTime @default(now())
+  status     String   @default("APPLIED")
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  profileId  String? 
+  profile    Profile? @relation(fields  : [profileId], references: [id])
 }
 
 model User {
-  id          String  @id @default(uuid())
-  firebaseUid String  @unique
-  email       String  @unique
+  id          String    @id @default(uuid())
+  firebaseUid String    @unique
+  email       String    @unique
   username    String
   avatarUrl   String?
-  apiCredits  Int     @default(10)
-  jobsLimit   Int     @default(100)
+  apiCredits  Int       @default(10)
+  jobsLimit   Int       @default(100)
   jobs        Job[]
+  profiles    Profile[] // novi odnos
+}
+
+model Profile {
+  id         String   @id @default(uuid())
+  name       String
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  jobs       Job[]
+  jobsLimit  Int      @default(100) // limit po profilu
+  createdAt  DateTime @default(now())
 }
 
 enum JobStatus {

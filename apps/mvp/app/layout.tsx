@@ -11,9 +11,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "JobTrakify | Dashboard",
-  description: "Track and manage your job applications"
-}
+  title: "Aplicirano | Skup Alata Lakse Trazenje Posla",
+  description:
+    "Pratite i upravljajte svojim prijavama za posao na jednom mestu. Aplicirano vam pomaže da ostanete organizovani, steknete uvide i poboljšate potragu za poslom uz pametnu analitiku i AI podršku.",
+};
+
 
 export default function RootLayout({
   children,
