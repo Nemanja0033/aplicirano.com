@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Send, Sparkle } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type Role = "user" | "ai";
 interface Message {
@@ -27,6 +28,12 @@ export default function ChatbotPage() {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const isMobile = useIsMobile();
+
+  const { data: currentUserData, isLoading: isUserLoading } = useQuery({
+    queryKey: ['me'],
+    queryFn: () => fetchCurrentUserData(token as any),
+    enabled: !!token
+  })
 
   useEffect(() => {
     const stored = sessionStorage.getItem("chatMessages");
@@ -58,6 +65,14 @@ export default function ChatbotPage() {
     return () => document.removeEventListener("keydown", handleKeydown);
   }, []);
 
+  useEffect(() => {
+    if (currentUserData?.apiCredits === 0) {
+      toast.warning(
+        "You have reached your Ai tokens limit. Please upgrade to Pro to continue."
+      );
+    }
+  }, [currentUserData])
+
   async function sendPrompt(input: string) {
     if (!input.trim()) return;
     setIsLoading(true);
@@ -88,12 +103,6 @@ export default function ChatbotPage() {
         setPrompt("");
     }
   }
-  
-  const { data: currentUserData, isLoading: isUserLoading } = useQuery({
-    queryKey: ['me'],
-    queryFn: () => fetchCurrentUserData(token as any),
-    enabled: !!token
-  })
 
   if(isUserLoading){
     return <Loader type="NORMAL" />
