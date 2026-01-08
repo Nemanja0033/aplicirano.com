@@ -1,0 +1,19 @@
+{
+    "pageTitle": "Statistics",
+    "pageSubtitle": "Track your job search metrics and progress",
+    "dateRangeOptions": {
+      "7d": "Last 7 days",
+      "30d": "Last 30 days",
+      "90d": "Last 90 days"
+    },
+    "grid": {
+      "totalApplied": "Total Applied",
+      "totalActiveDays": "Total Active Days",
+      "totalInterviews": "Total Interviews",
+      "totalRejections": "Total Rejections",
+      "averageApplies": "Average Applies",
+      "perDaySuffix": "/ per day",
+      "interviewsRate": "Interviews Rate"
+    }
+  }
+  

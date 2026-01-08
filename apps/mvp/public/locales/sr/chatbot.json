@@ -1,0 +1,16 @@
+{
+    "pageTitle": "AI Asistent",
+    "pageSubtitle": "Dobij AI pomoć za tvoje prijave za posao",
+    "thinking": "Razmišljam...",
+    "input": {
+      "placeholder": "Unesite poruku...",
+      "ariaLabel": "Unesite poruku",
+      "sendButtonAria": "pošalji poruku",
+      "sendButtonLabel": "Pošalji"
+    },
+    "messages": {
+      "userAvatarAlt": "avatar korisnika",
+      "aiAvatarAlt": "avatar asistenta"
+    }
+  }
+  

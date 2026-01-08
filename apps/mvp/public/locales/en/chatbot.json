@@ -1,0 +1,16 @@
+{
+    "pageTitle": "AI Assistant",
+    "pageSubtitle": "Get AI-powered help with your job applications",
+    "thinking": "Thinking...",
+    "input": {
+      "placeholder": "Type your message...",
+      "ariaLabel": "Type your message",
+      "sendButtonAria": "send the message",
+      "sendButtonLabel": "Send"
+    },
+    "messages": {
+      "userAvatarAlt": "user avatar",
+      "aiAvatarAlt": "assistant avatar"
+    }
+  }
+  

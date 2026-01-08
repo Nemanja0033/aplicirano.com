@@ -1,0 +1,20 @@
+{
+    "pageTitle": "Applied Jobs",
+    "pageSubtitle": "Manage and track all your job applications in one place",
+    "tableCaption": "A list of your recent job applications.",
+    "headers": {
+      "company": "Company",
+      "appliedAt": "Applied At",
+      "status": "Status"
+    },
+    "row": {
+      "totalLabel": "Total {{count}}"
+    },
+    "statusOptions": {
+      "APPLIED": "APPLIED",
+      "INTERVIEW": "INTERVIEW",
+      "REJECTED": "REJECTED",
+      "OFFER": "OFFER"
+    }
+  }
+  

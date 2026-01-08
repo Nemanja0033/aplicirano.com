@@ -1,0 +1,25 @@
+{
+    "siteTitle": "Aplicirano",
+    "siteSubtitle": "Sve prijave, statistika i pametni alati na jednom mestu.",
+    "cards": {
+      "applications": {
+        "title": "Prijave za posao",
+        "cta": "Dodaj prijavu",
+        "insight": "Uvezi prijave iz CSV ili TXT fajla i uštedi vreme.",
+        "description": "Sve tvoje prijave na jednom mestu. Dodaj, uvezi, ažuriraj statuse i ostani organizovan tokom celog procesa"
+      },
+      "statistics": {
+        "title": "Statistika",
+        "cta": "Vidi statistiku",
+        "insight": "Prati svoj proces efikasno",
+        "description": "Pregled rezultata tvog traženja posla. Vidi koliko prijava si poslao, gde dobijaš odgovore i koliko proces zaista traje."
+      },
+      "ai": {
+        "title": "JobTrack Ai",
+        "cta": "Isprobaj AI asistenta",
+        "insight": "Vaš pomoćnik u potrazi za posao",
+        "description": "Tvoj AI asistent za traženje posla. Postavljaj pitanja o svojim prijavama, pripremaj cover lettere, unapredi CV i planiraj sledeće korake."
+      }
+    }
+  }
+  
