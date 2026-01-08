@@ -32,10 +32,15 @@ export function useSelectRows() {
     });
   };
 
+  const resetRows = () => {
+    setSelectedRows([])
+  }
+
   return {
     checkAllRows,
     checkSingleRow,
     checkRowsWithStatus,
+    resetRows,
     selectedRows,
     selectedRowsWithStatus
   };

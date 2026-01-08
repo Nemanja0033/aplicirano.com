@@ -22,6 +22,7 @@ import ImportGuideModal from "../../jobs-import/components/ImportGuideModal";
 import { getBadgeLightColor } from "@/helpers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import UpdateJobsStatus from "./UpdateJobsStatus";
+import { toast } from "sonner";
 
 export function JobsTable({
   jobs,
@@ -44,6 +45,7 @@ export function JobsTable({
     checkAllRows,
     checkSingleRow,
     checkRowsWithStatus,
+    resetRows,
     selectedRows,
     selectedRowsWithStatus,
   } = useSelectRows();
@@ -55,6 +57,12 @@ export function JobsTable({
       setIsTableReady(true);
     }
   }, []);
+
+  useEffect(() => {
+    if(currentUser?.jobsLimit === 0 ){
+      toast.warning("You have reached your job application limit. Please upgrade to Pro to continue.");
+    }
+  }, [currentUser]);
 
   return (
     <main className="w-full">
@@ -104,7 +112,7 @@ export function JobsTable({
               )}
 
               {selectedRows.length > 0 && !isStatusChanged && (
-                <UpdateJobStatusButtons selectedRows={selectedRows} />
+                <UpdateJobStatusButtons resetRows={resetRows} selectedRows={selectedRows} />
               )}
 
               {isStatusChanged && (
