@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -22,11 +23,15 @@ async function fetchProfilesApi(token: string | null) {
     const text = await res.text().catch(() => null);
     throw new Error(text || "Failed to fetch profiles");
   }
-  const json = await res.json();
-  return json.profiles as Profile[];
+  const data = await res.json();
+
+  return data;
 }
 
-async function createProfileApi(token: string | null, payload: { name: string }) {
+async function createProfileApi(
+  token: string | null,
+  payload: { name: string }
+) {
   if (!token) throw new Error("No token");
   const res = await fetch("/api/profiles", {
     method: "POST",
@@ -38,10 +43,16 @@ async function createProfileApi(token: string | null, payload: { name: string })
   });
   if (!res.ok) {
     const json = await res.json().catch(() => null);
-    throw new Error(json?.error || (await res.text()) || "Failed to create profile");
+    throw new Error(
+      json?.error || (await res.text()) || "Failed to create profile"
+    );
   }
   const json = await res.json();
-  return json.profile as Profile;
+  // Ako backend vraća ceo array ili objekat, prilagodi po potrebi.
+  // Pretpostavka: POST vraća { profile: {...} } ili sam objekat profila.
+  if (json?.profile) return json.profile as Profile;
+  if (json && typeof json === "object" && json.id) return json as Profile;
+  return json as Profile;
 }
 
 export default function ProfilePage() {
@@ -49,25 +60,46 @@ export default function ProfilePage() {
   const queryClient = useQueryClient();
 
   const {
-    data: profiles = [],
+    data: profiles,
     isLoading: isProfilesLoading,
     isError: isProfilesError,
     error: profilesError,
+    isFetching,
   } = useQuery({
-    queryKey: ["profiles"],
+    // uključujemo token u key da se refetchuje kad token stigne/promeni se
+    queryKey: ["profiles", token],
     queryFn: () => fetchProfilesApi(token as any),
     enabled: !!token,
     staleTime: 1000 * 60 * 2,
   });
 
+  useEffect(() => {
+    console.log("token:", token);
+  }, [token]);
+
+  useEffect(() => {
+    console.log("profiles (query data):", profiles);
+    console.log(
+      "isLoading:",
+      isProfilesLoading,
+      "isFetching:",
+      isFetching,
+      "isError:",
+      isProfilesError
+    );
+    if (isProfilesError) console.error("profilesError:", profilesError);
+  }, [profiles, isProfilesLoading, isProfilesError, profilesError, isFetching]);
+
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAddingNewProfile, setIsAddingNewProfile] = useState(false);
 
   const createMutation = useMutation({
-    mutationFn: (payload: { name: string }) => createProfileApi(token as any, payload),
+    mutationFn: (payload: { name: string }) =>
+      createProfileApi(token as any, payload),
     onSuccess: () => {
       toast.success("Profile created");
-      queryClient.invalidateQueries({ queryKey: ["profiles"] });
+      queryClient.invalidateQueries({ queryKey: ["profiles", token] });
       setName("");
     },
     onError: (err: any) => {
@@ -75,7 +107,7 @@ export default function ProfilePage() {
     },
   });
 
-  const canCreate = profiles.length < 3;
+  const canCreate = (profiles?.length ?? 0) < 3;
   const nameValid = name.trim().length > 0 && name.trim().length <= 50;
 
   async function handleCreate(e?: React.FormEvent) {
@@ -103,6 +135,25 @@ export default function ProfilePage() {
     }
   }
 
+  if (!token) {
+    return <div className="p-4">No token yet. Waiting for auth...</div>;
+  }
+
+  if (isProfilesLoading) {
+    return <div className="p-4">Loading profiles...</div>;
+  }
+
+  if (isProfilesError) {
+    return (
+      <div className="p-4">
+        <div className="text-red-600">Failed to load profiles.</div>
+        <pre className="mt-2 text-xs">
+          {String((profilesError as any)?.message || profilesError)}
+        </pre>
+      </div>
+    );
+  }
+
   return (
     <main className="w-full h-full flex justify-center items-start">
       <section className="md:w-6xl p-3 w-full grid place-items-center gap-5">
@@ -110,7 +161,8 @@ export default function ProfilePage() {
           <div className="grid gap-1 w-full">
             <h1 className="text-2xl font-bold">Profile</h1>
             <p className="text-muted-foreground text-sm">
-              Configure your applying profiles (up to 3). Profiles are personas for applying.
+              Configure your applying profiles (up to 3). Profiles are personas
+              for applying.
             </p>
           </div>
         </section>
@@ -118,30 +170,17 @@ export default function ProfilePage() {
         <section className="w-full rounded-lg bg-white shadow-md p-5 dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216]">
           <div className="grid gap-4">
             <div className="flex items-center justify-between">
-              <div>
-                <h2 className="font-semibold text-lg">Your Profiles</h2>
-                <p className="text-muted-foreground text-sm">Create and manage up to 3 profiles</p>
-              </div>
-
               <div className="text-right">
                 <span className="text-sm text-muted-foreground">
-                  {profiles.length} / 3 used
+                  {profiles?.length ?? 0} / 3 used
                 </span>
               </div>
             </div>
 
-            <div className="grid gap-2">
-              {isProfilesLoading ? (
-                <div className="p-4 rounded-md bg-gray-100 dark:bg-gray-800/40">Loading profiles...</div>
-              ) : isProfilesError ? (
-                <div className="p-4 rounded-md bg-red-50 text-red-700">Error loading profiles</div>
-              ) : profiles.length === 0 ? (
-                <div className="p-4 rounded-md bg-gray-50 dark:bg-gray-900/30 text-muted-foreground">
-                  No profiles yet. Create one to tag jobs by persona.
-                </div>
-              ) : (
+            <div className="grid">
+              {profiles && profiles.length > 0 ? (
                 <div className="grid gap-2">
-                  {profiles.map((p) => (
+                  {profiles.map((p: any) => (
                     <div
                       key={p.id}
                       className="flex items-center justify-between p-3 rounded-lg border dark:border-[#151046] bg-white dark:bg-sidebar"
@@ -155,53 +194,47 @@ export default function ProfilePage() {
                     </div>
                   ))}
                 </div>
+              ) : (
+                <div className="p-4 rounded-md bg-gray-100 dark:bg-gray-800/40">
+                  No profiles yet
+                </div>
               )}
             </div>
 
-            <form onSubmit={handleCreate} className="grid gap-3">
-              <div className="grid md:grid-cols-3 gap-3 items-end">
-                <div className="md:col-span-2 grid gap-1">
-                  <Label>Profile name</Label>
-                  <Input
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="e.g. Frontend Dev"
-                    disabled={!canCreate || isSubmitting}
-                  />
-                </div>
+           {isAddingNewProfile ? (
+             <form
+             onSubmit={handleCreate}
+             className="flex items-center justify-start w-full gap-3 h-fit"
+           >
+             <div className="grid">
+               <Input
+                 className="w-72 h-12"
+                 value={name}
+                 onChange={(e) => setName(e.target.value)}
+                 placeholder="e.g. Frontend Dev"
+                 disabled={!canCreate || isSubmitting}
+               />
+             </div>
 
-                <div className="grid gap-1">
-                  <Label>&nbsp;</Label>
-                  <div className="text-sm text-muted-foreground">Optional</div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between gap-3">
-                <div className="text-sm text-muted-foreground">
-                  <span>
-                    Profiles let you tag jobs by persona. Limits are enforced at user level.
-                  </span>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setName("")}
-                    disabled={isSubmitting}
-                  >
-                    Reset
-                  </Button>
-
-                  <Button
-                    type="submit"
-                    disabled={!canCreate || isSubmitting || !nameValid}
-                  >
-                    {isSubmitting ? "Creating..." : canCreate ? "Create Profile" : "Limit reached"}
-                  </Button>
-                </div>
-              </div>
-            </form>
+             <div className="flex items-center gap-2">
+               <Button
+                 className="h-12"
+                 type="submit"
+                 disabled={!canCreate || isSubmitting || !nameValid}
+               >
+                 {isSubmitting
+                   ? "Creating..."
+                   : canCreate
+                     ? "Create Profile"
+                     : "Limit reached"}
+               </Button>
+             </div>
+           </form>
+           ): (
+            <button onClick={() => setIsAddingNewProfile(true)} className="flex items-center justify-between p-5 hover:opacity-70 transition-all cursor-pointer rounded-lg border dark:border-[#151046] bg-white dark:bg-sidebar">
+              <span>+ Add Profile</span>
+            </button>
+           )}
           </div>
         </section>
       </section>
