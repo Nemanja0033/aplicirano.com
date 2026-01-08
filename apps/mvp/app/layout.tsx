@@ -24,6 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.className}>
+      <head>
+        <meta name="google-site-verification" content="wxR0W49xsfoSQqLV_UXyQKjTTqX4rxQ0yBMmTFSP-G4" />
+      </head>
       <body
         className={`antialiased bg-background`}
       >
