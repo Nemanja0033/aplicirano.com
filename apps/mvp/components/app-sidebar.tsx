@@ -5,7 +5,8 @@ import {
   ChartBar,
   BotIcon,
   ChartBarIncreasingIcon,
-  Home
+  Home,
+  User2
 } from "lucide-react"
 
 import {
@@ -43,6 +44,11 @@ const items = [
     title: "Statistika",
     url: "/stats",
     icon: ChartBar
+  },
+  {
+    title: "Postavke Profila",
+    url: "/profile",
+    icon: User2
   }
 ]
 
