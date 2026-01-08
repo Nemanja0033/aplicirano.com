@@ -1,0 +1,27 @@
+{
+    "dashboard": {
+      "siteTitle": "Aplicirano",
+      "siteSubtitle": "All applications, statistics and smart tools in one place.",
+      "cards": {
+        "applications": {
+          "title": "Job Applications",
+          "cta": "Add application",
+          "insight": "Import applications from CSV or TXT and save time.",
+          "description": "All your applications in one place. Add, import, update statuses and stay organized throughout the process."
+        },
+        "statistics": {
+          "title": "Statistics",
+          "cta": "View statistics",
+          "insight": "Track your process efficiently",
+          "description": "Overview of your job search results. See how many applications you've sent, where you get responses and how long the process actually takes."
+        },
+        "ai": {
+          "title": "JobTrack Ai",
+          "cta": "Try the AI assistant",
+          "insight": "Your assistant in the job search",
+          "description": "Your AI assistant for job hunting. Ask questions about your applications, prepare cover letters, improve your CV and plan next steps."
+        }
+      }
+    }
+  }
+  

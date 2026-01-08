@@ -1,0 +1,20 @@
+{
+    "pageTitle": "Prijavljeni poslovi",
+    "pageSubtitle": "Upravljaj i prati sve svoje prijave na jednom mestu",
+    "tableCaption": "Lista tvojih nedavnih prijava za posao.",
+    "headers": {
+      "company": "Kompanija",
+      "appliedAt": "Datum prijave",
+      "status": "Status"
+    },
+    "row": {
+      "totalLabel": "Ukupno {{count}}"
+    },
+    "statusOptions": {
+      "APPLIED": "PRIJAVLJENO",
+      "INTERVIEW": "INTERVJU",
+      "REJECTED": "ODBIJENO",
+      "OFFER": "PONUDA"
+    }
+  }
+  
