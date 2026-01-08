@@ -9,49 +9,67 @@ import { NextResponse } from "next/server";
 // ======================================================
 
 // ======================================================
-// GET endpoint - Fetch jobs for authenticated user
+// GET endpoint - Fetch jobs for authenticated user with pagination
 // ======================================================
-export async function GET(req: Request){
-    try{
-        // --- Authorization header check ---
-        const authHeader = req.headers.get("Authorization");
-        if (!authHeader) {
-          return NextResponse.json({ error: "Missing Authorization header" }, { status: 401 });
-        }
-
-        // --- Extract token ---
-        const token = authHeader.split(" ")[1];
-        if (!token) {
-          return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-        }
-
-        // --- Verify token and get user data ---
-        const decoded = await admin.auth().verifyIdToken(token);
-        const userData = await admin.auth().getUser(decoded.uid)
-        
-        // --- Find user in DB ---
-        const user = await db.user.findUnique({
-          where: { firebaseUid: userData.uid }
-        });
-
-        if(!user){
-          return NextResponse.json({ error: "User dont exist!"}, { status: 404 });
-        }
-
-        // --- Fetch jobs for user ---
-        const jobs = await db.job.findMany({
-          where: { userId: user.id },
-          orderBy: { appliedAt: "desc"}
-        });
-
-        // --- Return jobs ---
-        return NextResponse.json(jobs, { status: 200});
+export async function GET(req: Request) {
+  try {
+    // --- Authorization header check ---
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "Missing Authorization header" },
+        { status: 401 }
+      );
     }
-    catch(err){
-        // --- Error handling ---
-        return NextResponse.json({ error: err }, { status: 500 });
+
+    // --- Extract token ---
+    const token = authHeader.split(" ")[1];
+    if (!token) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
+
+    // --- Verify token and get user data ---
+    const decoded = await admin.auth().verifyIdToken(token);
+    const userData = await admin.auth().getUser(decoded.uid);
+
+    // --- Find user in DB ---
+    const user = await db.user.findUnique({
+      where: { firebaseUid: userData.uid },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User dont exist!" }, { status: 404 });
+    }
+
+    // --- Parse pagination params ---
+    const url = new URL(req.url);
+    const pageParam = url.searchParams.get("page");
+    const limitParam = url.searchParams.get("limit");
+
+    const page = Math.max(1, Number(pageParam ?? 1));
+    const limit = Math.min(100, Math.max(1, Number(limitParam ?? 20))); // cap limit to 100
+
+    const skip = (page - 1) * limit;
+
+    // --- Fetch total count and paginated jobs for user ---
+    const [total, jobs] = await Promise.all([
+      db.job.count({ where: { userId: user.id } }),
+      db.job.findMany({
+        where: { userId: user.id },
+        orderBy: { appliedAt: "desc" },
+        skip,
+        take: limit,
+      }),
+    ]);
+
+    // --- Return paginated jobs and total ---
+    return NextResponse.json({ jobs, total }, { status: 200 });
+  } catch (err) {
+    console.error("GET /api/jobs error:", err);
+    return NextResponse.json({ error: err }, { status: 500 });
+  }
 }
+
 
 // ======================================================
 // POST endpoint - Upload jobs from TXT file

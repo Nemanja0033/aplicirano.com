@@ -23,15 +23,27 @@ import { getBadgeLightColor } from "@/helpers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import UpdateJobsStatus from "./UpdateJobsStatus";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+
+interface JobsTableProps {
+  jobs: Job[];
+  total: number;
+  page: number;
+  setPage: (p: number) => void;
+  pageSize: number;
+  currentUser: any;
+  isLoading?: boolean;
+}
 
 export function JobsTable({
   jobs,
+  total,
+  page,
+  setPage,
+  pageSize,
   currentUser,
-}: {
-  jobs: Job[];
-  isLoading: boolean;
-  currentUser: any;
-}) {
+  isLoading = false,
+}: JobsTableProps) {
   const [isTableReady, setIsTableReady] = useState(false);
   const {
     filteredData: jobsToDisplay,
@@ -59,10 +71,19 @@ export function JobsTable({
   }, []);
 
   useEffect(() => {
-    if(currentUser?.jobsLimit === 0 ){
-      toast.warning("You have reached your job application limit. Please upgrade to Pro to continue.");
+    if (currentUser?.jobsLimit === 0) {
+      toast.warning(
+        "You have reached your job application limit. Please upgrade to Pro to continue."
+      );
     }
   }, [currentUser]);
+
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
+
+  function goToPage(p: number) {
+    const next = Math.max(1, Math.min(pageCount, p));
+    if (next !== page) setPage(next);
+  }
 
   return (
     <main className="w-full">
@@ -112,7 +133,10 @@ export function JobsTable({
               )}
 
               {selectedRows.length > 0 && !isStatusChanged && (
-                <UpdateJobStatusButtons resetRows={resetRows} selectedRows={selectedRows} />
+                <UpdateJobStatusButtons
+                  resetRows={resetRows}
+                  selectedRows={selectedRows}
+                />
               )}
 
               {isStatusChanged && (
@@ -135,7 +159,9 @@ export function JobsTable({
                 <input
                   aria-label="select row for action"
                   data-html2canvas-ignore
-                  checked={selectedRows.length === jobs.length}
+                  checked={
+                    selectedRows.length === jobs.length && jobs.length > 0
+                  }
                   onChange={(e) => checkAllRows(e, jobs)}
                   type="checkbox"
                 />
@@ -152,7 +178,11 @@ export function JobsTable({
           <TableBody>
             {jobsToDisplay.map((job: Job) => (
               <TableRow
-                className={`${selectedRows.includes(job.id) ? "dark:bg-gradient-to-b from-[#100c28] to-[#010216]" : ""}`}
+                className={`${
+                  selectedRows.includes(job.id)
+                    ? "dark:bg-gradient-to-b from-[#100c28] to-[#010216]"
+                    : ""
+                }`}
                 key={job.id}
               >
                 <TableCell>
@@ -180,7 +210,9 @@ export function JobsTable({
                         status: e.target.value as any,
                       });
                     }}
-                    className={`cursor-pointer text-[13px] w-28 p-1 rounded-2xl dark:opacity-75 ${getBadgeLightColor(job.status)} bg-accent`}
+                    className={`cursor-pointer text-[13px] font-medium w-28 p-1 rounded-2xl dark:opacity-75 ${getBadgeLightColor(
+                      job.status
+                    )} bg-accent`}
                     defaultValue={job.status}
                     name={`status-${job.id}`}
                   >
@@ -200,9 +232,71 @@ export function JobsTable({
           <TableFooter data-html2canvas-ignore>
             <TableRow>
               <TableCell colSpan={5}>
-                <span className="font-medium">
-                  Total {jobsToDisplay.length}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">Total {total}</span>
+
+                  <div className="flex items-center gap-2">
+                    <Button
+                      size={"sm"}
+                      onClick={() => goToPage(page - 1)}
+                      disabled={page <= 1 || isLoading}
+                    >
+                      Prev
+                    </Button>
+
+                    {Array.from({ length: pageCount }).map((_, idx) => {
+                      const p = idx + 1;
+                      if (pageCount > 7) {
+                        if (
+                          p === 1 ||
+                          p === pageCount ||
+                          (p >= page - 2 && p <= page + 2)
+                        ) {
+                          return (
+                            <Button
+                              key={p}
+                              onClick={() => goToPage(p)}
+                              disabled={isLoading}
+                            >
+                              {p}
+                            </Button>
+                          );
+                        }
+                        if (p === 2 && page > 4) {
+                          return <span key="dots-start">...</span>;
+                        }
+                        if (p === pageCount - 1 && page < pageCount - 3) {
+                          return <span key="dots-end">...</span>;
+                        }
+                        return null;
+                      }
+
+                      return (
+                        <Button
+                          key={p}
+                          size={"sm"}
+                          onClick={() => goToPage(p)}
+                          className={`px-3 md:flex hidden py-1 rounded ${
+                            p === page
+                              ? "bg-primary text-white"
+                              : "border bg-primary/30"
+                          }`}
+                          disabled={isLoading}
+                        >
+                          {p}
+                        </Button>
+                      );
+                    })}
+
+                    <Button
+                      size={"sm"}
+                      onClick={() => goToPage(page + 1)}
+                      disabled={page >= pageCount || isLoading}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                </div>
               </TableCell>
             </TableRow>
           </TableFooter>
