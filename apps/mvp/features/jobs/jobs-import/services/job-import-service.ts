@@ -12,3 +12,16 @@ export async function postSingleJob(data: any, token: string | null){
         throw new Error("Error while posting job");
     }
 }
+
+export async function updateSingleJob(data: any, jobId: string, token: string | null){
+    try{
+        await axios.patch('/api/jobs/single', { data, jobId }, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+    }
+    catch(err){
+        throw new Error("Error while update job");
+    }
+}

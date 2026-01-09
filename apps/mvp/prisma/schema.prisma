@@ -16,6 +16,11 @@ model Job {
   user       User     @relation(fields: [userId], references: [id])
   profileId  String? 
   profile    Profile? @relation(fields: [profileId], references: [id])
+  position   String? 
+  jobUrl     String?
+  salarly     Int?
+  location   String?  
+  pnotes      String?
 }
 
 model User {

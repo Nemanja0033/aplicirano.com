@@ -17,13 +17,33 @@ import ExportToPdf from "@/features/pdf-export/components/ExportToPdf";
 import UpdateJobStatusButtons from "./UpdateJobStatusButtons";
 import { useSelectRows } from "../hooks/useSelectRows";
 import { FileImportForm } from "../../jobs-import/components/ImportForm";
-import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
+import ManuelJobImport, {
+  JobImportForm,
+} from "../../jobs-import/components/ManuelJobImport";
 import ImportGuideModal from "../../jobs-import/components/ImportGuideModal";
 import { getBadgeLightColor } from "@/helpers";
 import { useIsMobile } from "@/hooks/use-mobile";
 import UpdateJobsStatus from "./UpdateJobsStatus";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
+import { Calendar } from "lucide-react";
+import {
+  postSingleJob,
+  updateSingleJob,
+} from "../../jobs-import/services/job-import-service";
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuthContext } from "@/context/AuthProvider";
+import { Textarea } from "@/components/ui/textarea";
 
 interface JobsTableProps {
   jobs: Job[];
@@ -44,6 +64,8 @@ export function JobsTable({
   currentUser,
   isLoading = false,
 }: JobsTableProps) {
+  const { token } = useAuthContext();
+  const queryClient = useQueryClient();
   const [isTableReady, setIsTableReady] = useState(false);
   const {
     filteredData: jobsToDisplay,
@@ -63,6 +85,28 @@ export function JobsTable({
   } = useSelectRows();
   const isMobile = useIsMobile();
   const tableRef = useRef<any>(null);
+  const [selectedJob, setSelectedJob] = useState<any | null>(null);
+  const [isJobModalOpen, setIsJobModalOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isDirty, dirtyFields },
+  } = useForm<JobImportForm>({ mode: "onSubmit" });
+
+  useEffect(() => {
+    if (selectedJob) {
+      reset({
+        company: selectedJob.title,
+        position: selectedJob.position,
+        salary: selectedJob.salarly,
+        jobUrl: selectedJob.jobUrl,
+        location: selectedJob.location,
+        notes: selectedJob.notes
+      });
+    }
+  }, [selectedJob, reset]);
 
   useEffect(() => {
     if (tableRef.current) {
@@ -83,6 +127,28 @@ export function JobsTable({
   function goToPage(p: number) {
     const next = Math.max(1, Math.min(pageCount, p));
     if (next !== page) setPage(next);
+  }
+
+  function handleOpenModal(job: any) {
+    setSelectedJob(job);
+    setIsJobModalOpen(true);
+  }
+
+  async function handleUpdateJob(data: JobImportForm) {
+    console.log("DIRTY FIELDS", dirtyFields);
+    if(!isDirty){
+      console.log('NOTHING FOR UPDATE')
+      setIsJobModalOpen(false);
+      return;
+    }
+
+    try {
+      await updateSingleJob(data, selectedJob?.id, token);
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      setIsJobModalOpen(false);
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
   }
 
   return (
@@ -178,6 +244,7 @@ export function JobsTable({
           <TableBody>
             {jobsToDisplay.map((job: Job) => (
               <TableRow
+                onDoubleClick={() => handleOpenModal(job)}
                 className={`${
                   selectedRows.includes(job.id)
                     ? "dark:bg-gradient-to-b from-[#100c28] to-[#010216]"
@@ -302,6 +369,193 @@ export function JobsTable({
           </TableFooter>
         </Table>
       </div>
+
+      <AlertDialog
+        key={selectedJob?.id}
+        onOpenChange={setIsJobModalOpen}
+        open={isJobModalOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {selectedJob?.title}
+              <span
+                className={`text-[13px] ml-3 font-medium w-28 p-1 rounded-2xl dark:opacity-75 ${getBadgeLightColor(
+                  selectedJob?.status
+                )} bg-accent`}
+              >
+                • {selectedJob?.status}
+              </span>
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              <span className="text-xs text-gray-400 font-normal flex gap-1 items-center">
+                <Calendar size={16} strokeWidth={2} />{" "}
+                {new Date(selectedJob?.appliedAt).toLocaleDateString()}
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <form onSubmit={handleSubmit(handleUpdateJob)} className="grid gap-2">
+            <div className="grid gap-2">
+              <Label htmlFor="company" className="text-xs dark:text-gray-400">
+                *Company name{" "}
+                <span className="text-xs text-primary">*Required</span>
+              </Label>
+              <Input
+                {...register("company", {
+                  required: {
+                    value: true,
+                    message: "Company name is required",
+                  },
+                  minLength: {
+                    value: 2,
+                    message: "Company name requires minimum 2 characters",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Company name accepts maximum 35 characters",
+                  },
+                })}
+                id="company"
+                className="w-full"
+              />
+
+              {errors.company && (
+                <span className="text-red-500 text-xs">
+                  *{errors.company?.message}
+                </span>
+              )}
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="position" className="text-xs dark:text-gray-400">
+                *Position
+              </Label>
+              <Input
+                {...register("position", {
+                  required: false,
+                  minLength: {
+                    value: 2,
+                    message: "Position requires minimum 2 characters",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Position accepts maximum 35 characters",
+                  },
+                })}
+                id="position"
+                className="w-full"
+              />
+
+              {errors.position && (
+                <span className="text-red-500 text-xs">
+                  *{errors.position.message}
+                </span>
+              )}
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="url" className="text-xs dark:text-gray-400">
+                *Salarly
+              </Label>
+              <Input
+                {...register("salary", {
+                  required: false,
+                  min: 50,
+                  max: 30000,
+                })}
+                id="url"
+                type="number"
+                className="w-full"
+              />
+
+              {errors.salary && (
+                <span className="text-red-500 text-xs">
+                  *{errors.salary.message}
+                </span>
+              )}
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="url" className="text-xs dark:text-gray-400">
+                *Job Url
+              </Label>
+              <Input
+                {...register("jobUrl", {
+                  required: false,
+                  minLength: {
+                    value: 2,
+                    message: "Please enter valid URL",
+                  },
+                  maxLength: {
+                    value: 250,
+                    message: "Please enter valid URL",
+                  },
+                })}
+                id="url"
+                className="w-full"
+              />
+
+              {errors.jobUrl && (
+                <span className="text-red-500 text-xs">
+                  *{errors.jobUrl.message}
+                </span>
+              )}
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="location" className="text-xs dark:text-gray-400">
+                *Location
+              </Label>
+              <Input
+                {...register("location", {
+                  required: false,
+                  maxLength: {
+                    value: 250,
+                    message: "Please enter valid location",
+                  },
+                })}
+                id="location"
+                className="w-full"
+              />
+
+              {errors.location && (
+                <span className="text-red-500 text-xs">
+                  *{errors.location.message}
+                </span>
+              )}
+            </div>
+
+            <div className="grid gap-2">
+                <Label htmlFor="notes" className="text-xs dark:text-gray-400">
+                  *Notes
+                </Label>
+                <Textarea
+                  {...register("notes", {
+                    required: false,
+                    maxLength: {
+                      value: 500,
+                      message: "Notes can contains maximum 500 chars",
+                    },
+                  })}
+                  id="notes"
+                  className="w-full min-h-20 max-h-40"
+                />
+
+                {errors.notes && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.notes.message}
+                  </span>
+                )}
+              </div>
+            <div className="grid grid-cols-2 gap-2 mt-3">
+              <Button type="button" onClick={() => setIsJobModalOpen(false)}>Cancel</Button>
+              <Button type="submit">
+                {isSubmitting ? "Submitting. . ." : "Save And Close"}
+              </Button>
+            </div>
+          </form>
+        </AlertDialogContent>
+      </AlertDialog>
     </main>
   );
 }
