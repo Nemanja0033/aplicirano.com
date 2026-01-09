@@ -20,7 +20,7 @@ model Job {
   jobUrl     String?
   salarly     Int?
   location   String?  
-  pnotes      String?
+  notes      String?
 }
 
 model User {
