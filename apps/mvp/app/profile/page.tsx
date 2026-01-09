@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { useAuthContext } from "@/context/AuthProvider";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Loader2, Trash2 } from "lucide-react";
+import axios from "axios";
+import Loader from "@/components/Loader";
 
 type Profile = {
   id: string;
@@ -58,6 +61,7 @@ async function createProfileApi(
 export default function ProfilePage() {
   const { token } = useAuthContext();
   const queryClient = useQueryClient();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const {
     data: profiles,
@@ -67,7 +71,7 @@ export default function ProfilePage() {
     isFetching,
   } = useQuery({
     // uključujemo token u key da se refetchuje kad token stigne/promeni se
-    queryKey: ["profiles", token],
+    queryKey: ["profiles"],
     queryFn: () => fetchProfilesApi(token as any),
     enabled: !!token,
     staleTime: 1000 * 60 * 2,
@@ -99,7 +103,7 @@ export default function ProfilePage() {
       createProfileApi(token as any, payload),
     onSuccess: () => {
       toast.success("Profile created");
-      queryClient.invalidateQueries({ queryKey: ["profiles", token] });
+      queryClient.invalidateQueries({ queryKey: ["profiles"] });
       setName("");
     },
     onError: (err: any) => {
@@ -108,7 +112,7 @@ export default function ProfilePage() {
   });
 
   const canCreate = (profiles?.length ?? 0) < 3;
-  const nameValid = name.trim().length > 0 && name.trim().length <= 50;
+  const nameValid = name.trim().length > 2 && name.trim().length <= 50;
 
   async function handleCreate(e?: React.FormEvent) {
     e?.preventDefault();
@@ -135,23 +139,35 @@ export default function ProfilePage() {
     }
   }
 
-  if (!token) {
-    return <div className="p-4">No token yet. Waiting for auth...</div>;
+  async function handleDelete(payload: { profileId: string }) {
+    try {
+      setIsDeleting(true);
+      const res = await fetch("/api/profiles", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if(!res.ok){
+        toast.error("Something went wrong");
+      }
+
+      queryClient.invalidateQueries({ queryKey: ['profiles']});
+      toast.success("Profile succesfully deleted");
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong");
+    }
+    finally{
+      setIsDeleting(false);
+    }
   }
 
   if (isProfilesLoading) {
-    return <div className="p-4">Loading profiles...</div>;
-  }
-
-  if (isProfilesError) {
-    return (
-      <div className="p-4">
-        <div className="text-red-600">Failed to load profiles.</div>
-        <pre className="mt-2 text-xs">
-          {String((profilesError as any)?.message || profilesError)}
-        </pre>
-      </div>
-    );
+    return <Loader type="NORMAL" />
   }
 
   return (
@@ -191,6 +207,10 @@ export default function ProfilePage() {
                           Created: {new Date(p.createdAt).toLocaleDateString()}
                         </span>
                       </div>
+
+                      <button onClick={() => handleDelete({ profileId: p.id })} disabled={isDeleting} className="text-red-900 cursor-pointer hover:text-red-800">
+                        <Trash2 size={20} />
+                      </button>
                     </div>
                   ))}
                 </div>
@@ -201,40 +221,43 @@ export default function ProfilePage() {
               )}
             </div>
 
-           {isAddingNewProfile ? (
-             <form
-             onSubmit={handleCreate}
-             className="flex items-center justify-start w-full gap-3 h-fit"
-           >
-             <div className="grid">
-               <Input
-                 className="w-72 h-12"
-                 value={name}
-                 onChange={(e) => setName(e.target.value)}
-                 placeholder="e.g. Frontend Dev"
-                 disabled={!canCreate || isSubmitting}
-               />
-             </div>
+            {isAddingNewProfile ? (
+              <form
+                onSubmit={handleCreate}
+                className="flex items-center justify-start w-full gap-3 h-fit"
+              >
+                <div className="grid w-full">
+                  <Input
+                    className="w-full h-12"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="e.g. Frontend Dev"
+                    disabled={!canCreate || isSubmitting}
+                  />
+                </div>
 
-             <div className="flex items-center gap-2">
-               <Button
-                 className="h-12"
-                 type="submit"
-                 disabled={!canCreate || isSubmitting || !nameValid}
-               >
-                 {isSubmitting
-                   ? "Creating..."
-                   : canCreate
-                     ? "Create Profile"
-                     : "Limit reached"}
-               </Button>
-             </div>
-           </form>
-           ): (
-            <button onClick={() => setIsAddingNewProfile(true)} className="flex items-center justify-between p-5 hover:opacity-70 transition-all cursor-pointer rounded-lg border dark:border-[#151046] bg-white dark:bg-sidebar">
-              <span>+ Add Profile</span>
-            </button>
-           )}
+                <div className="flex items-center gap-2">
+                  <Button
+                    className="h-12"
+                    type="submit"
+                    disabled={!canCreate || isSubmitting || !nameValid}
+                  >
+                    {isSubmitting
+                      ? "Creating..."
+                      : canCreate
+                        ? "Create Profile"
+                        : "Limit reached"}
+                  </Button>
+                </div>
+              </form>
+            ) : (
+              <button
+                onClick={() => setIsAddingNewProfile(true)}
+                className="flex items-center justify-between p-5 hover:opacity-70 transition-all cursor-pointer rounded-lg border dark:border-[#151046] bg-white dark:bg-sidebar"
+              >
+                <span>+ Add Profile</span>
+              </button>
+            )}
           </div>
         </section>
       </section>

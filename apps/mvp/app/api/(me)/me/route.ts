@@ -26,6 +26,9 @@ export async function GET(req: Request) {
     const user = await db.user.findUnique({
         where: {
             firebaseUid: userData.uid
+        },
+        include: {
+          profiles: true
         }
     });
 
