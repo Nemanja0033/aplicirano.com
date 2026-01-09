@@ -22,10 +22,16 @@ import {
   TooltipContent,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import { Textarea } from "@/components/ui/textarea";
 
 export interface JobImportForm {
   company: string;
   appliedAt: Date;
+  position: string;
+  jobUrl: string;
+  salary: number
+  location: string
+  notes: string
 }
 
 // *TODO* Refactor, avoid any type casting!
@@ -49,7 +55,8 @@ const ManuelJobImport = ({
 
   const handleSubmitJob = async (data: JobImportForm) => {
     try {
-      const jobObject = { company: data.company, appliedAt: date };
+      console.log(data);
+      const jobObject = { ...data, appliedAt: date };
       await postSingleJob(jobObject, token);
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       setIsModalOpen(false);
@@ -87,41 +94,161 @@ const ManuelJobImport = ({
             <AlertDialogTitle>Import Job Application</AlertDialogTitle>
           </AlertDialogHeader>
           <form onSubmit={handleSubmit(handleSubmitJob)} className="grid gap-2">
-            <Label
-              htmlFor="company"
-              className="text-xs dark:text-gray-400"
-            >
-              *Company name
-            </Label>
-            <Input
-              {...register("company", {
-                required: {
-                  value: true,
-                  message: "Company name is required",
-                },
-                minLength: {
-                  value: 2,
-                  message: "Company name requires minimum 2 characters",
-                },
-                maxLength: {
-                  value: 35,
-                  message: "Company name accepts maximum 35 characters",
-                },
-              })}
-              id="company"
-              className="w-full"
-            />
+            <div className="grid gap-2 overflow-auto h-[200px]">
+              <div className="grid gap-1">
+                <Label htmlFor="company" className="text-xs dark:text-gray-400">
+                  *Company name <span className="text-xs text-primary">*Required</span>
+                </Label>
+                <Input
+                  {...register("company", {
+                    required: {
+                      value: true,
+                      message: "Company name is required",
+                    },
+                    minLength: {
+                      value: 2,
+                      message: "Company name requires minimum 2 characters",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "Company name accepts maximum 35 characters",
+                    },
+                  })}
+                  id="company"
+                  className="w-full"
+                />
 
-            {errors.company && (
-              <span className="text-red-500 text-xs">
-                *{errors.company.message}
-              </span>
-            )}
+                {errors.company && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.company?.message}
+                  </span>
+                )}
+              </div>
 
-            <Label
-              htmlFor="appliedAt"
-              className="text-xs dark:text-gray-400"
-            >
+              <div className="grid gap-1">
+                <Label htmlFor="position" className="text-xs dark:text-gray-400">
+                  *Position
+                </Label>
+                <Input
+                  {...register("position", {
+                    required: false,
+                    minLength: {
+                      value: 2,
+                      message: "Position requires minimum 2 characters",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "Position accepts maximum 35 characters",
+                    },
+                  })}
+                  id="position"
+                  className="w-full"
+                />
+
+                {errors.position && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.position.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="grid gap-1">
+                <Label htmlFor="url" className="text-xs dark:text-gray-400">
+                  *Salarly
+                </Label>
+                <Input
+                  {...register("salary", {
+                    required: false,
+                    min: 50,
+                    max: 30000
+                  })}
+                  id="url"
+                  type="number"
+                  className="w-full"
+                />
+
+                {errors.salary && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.salary.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="grid gap-1">
+                <Label htmlFor="url" className="text-xs dark:text-gray-400">
+                  *Job Url
+                </Label>
+                <Input
+                  {...register("jobUrl", {
+                    required: false,
+                    minLength: {
+                      value: 2,
+                      message: "Please enter valid URL",
+                    },
+                    maxLength: {
+                      value: 250,
+                      message: "Please enter valid URL",
+                    },
+                  })}
+                  id="url"
+                  className="w-full"
+                />
+
+                {errors.jobUrl && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.jobUrl.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="grid gap-1">
+                <Label htmlFor="location" className="text-xs dark:text-gray-400">
+                  *Location
+                </Label>
+                <Input
+                  {...register("location", {
+                    required: false,
+                    maxLength: {
+                      value: 250,
+                      message: "Please enter valid location",
+                    },
+                  })}
+                  id="location"
+                  className="w-full"
+                />
+
+                {errors.location && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.location.message}
+                  </span>
+                )}
+              </div>
+
+              <div className="grid gap-1">
+                <Label htmlFor="notes" className="text-xs dark:text-gray-400">
+                  *Notes
+                </Label>
+                <Textarea
+                  {...register("notes", {
+                    required: false,
+                    maxLength: {
+                      value: 500,
+                      message: "Notes can contains maximum 500 chars",
+                    },
+                  })}
+                  id="notes"
+                  className="w-full min-h-20 max-h-40"
+                />
+
+                {errors.notes && (
+                  <span className="text-red-500 text-xs">
+                    *{errors.notes.message}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <Label htmlFor="appliedAt" className="text-xs dark:text-gray-400">
               *Applied at
             </Label>
             <Calendar

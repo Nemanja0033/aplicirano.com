@@ -15,7 +15,12 @@ model Job {
   userId     String
   user       User     @relation(fields: [userId], references: [id])
   profileId  String? 
-  profile    Profile? @relation(fields  : [profileId], references: [id])
+  profile    Profile? @relation(fields: [profileId], references: [id])
+  position   String? 
+  jobUrl     String?
+  salarly     Int?
+  location   String?  
+  pnotes      String?
 }
 
 model User {
@@ -36,7 +41,6 @@ model Profile {
   userId     String
   user       User     @relation(fields: [userId], references: [id])
   jobs       Job[]
-  jobsLimit  Int      @default(100) // limit po profilu
   createdAt  DateTime @default(now())
 }
 
