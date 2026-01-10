@@ -98,6 +98,7 @@ export async function POST(req: Request) {
     // --- Get uploaded file ---
     const formData = await req.formData();
     const file = formData.get("text") as File;
+    const profileId = formData.get("profileId") as string;
 
     if (!file) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
@@ -167,7 +168,7 @@ export async function POST(req: Request) {
       if (creditsLeft <= 0) break;
 
       await db.job.create({
-        data: { title, status: "APPLIED", userId: user.id },
+        data: { title, status: "APPLIED", userId: user.id, profileId: profileId },
       });
 
       jobsInserted++;

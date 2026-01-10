@@ -7,6 +7,7 @@ export async function POST(req: Request){
     try{
         const body = await req.json();
         const { company, jobUrl, location, position, salary, appliedAt, notes } = body.data;
+        const profileId = body.profileId;
 
         const authHeader = req.headers.get("Authorization");
         if (!authHeader) {
@@ -46,7 +47,8 @@ export async function POST(req: Request){
                 jobUrl,
                 position,
                 location,
-                notes
+                notes,
+                profileId: profileId
             }
         });
 
