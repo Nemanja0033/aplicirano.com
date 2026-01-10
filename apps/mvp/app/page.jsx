@@ -268,9 +268,9 @@ export default function ApliciranoLanding() {
                 {t.hero.ctaPrimary} <Mail />
               </button>
 
-              <button className="px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold text-lg hover:bg-purple-50 transition-all border-2 border-purple-200">
+              <a href="#features" className="px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold text-lg hover:bg-purple-50 transition-all border-2 border-purple-200">
                 {t.hero.ctaSecondary}
-              </button>
+              </a>
             </div>
 
             {/* Screenshots */}
