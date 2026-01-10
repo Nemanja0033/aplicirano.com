@@ -22,10 +22,12 @@ export function FileImportForm({
   isDisabled,
   type,
   currentUser,
+  selectedProfile
 }: {
   isDisabled: boolean;
   type: "TXT" | "CSV";
   currentUser: any;
+  selectedProfile: any
 }) {
   const [formState, setFormState] = useState(initialFormState);
   const queryClient = useQueryClient();
@@ -54,6 +56,7 @@ export function FileImportForm({
 
       const formData = new FormData();
       formData.append("text", file);
+      formData.append("profileId", selectedProfile)
 
       try {
         const res = await fetch("/api/jobs", {
@@ -104,6 +107,7 @@ export function FileImportForm({
 
       const formData = new FormData();
       formData.append("csv-file", file);
+      formData.append("profileId", selectedProfile)
 
       try {
         const res = await fetch("/api/csv-import", {

@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import JobFilters from "@/features/jobs/job-filters/components/FiltersToolbars";
 import { Job } from "../types";
 import { useFilters } from "@/features/jobs/job-filters/hooks/useFilters";
@@ -41,7 +41,7 @@ import {
   postSingleJob,
   updateSingleJob,
 } from "../../jobs-import/services/job-import-service";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "@/context/AuthProvider";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -74,6 +74,7 @@ export function JobsTable({
     setQuery,
     changeStatus,
     setIsStatusChanged,
+    setProfile
   } = useFilters(jobs, "JOBS");
   const {
     checkAllRows,
@@ -87,6 +88,11 @@ export function JobsTable({
   const tableRef = useRef<any>(null);
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
+  
+  const { data: selectedProfile } = useQuery({
+    queryKey: ["selected-profile"],
+    initialData: null,
+  });
 
   const {
     register,
@@ -103,7 +109,7 @@ export function JobsTable({
         salary: selectedJob.salarly,
         jobUrl: selectedJob.jobUrl,
         location: selectedJob.location,
-        notes: selectedJob.notes
+        notes: selectedJob.notes,
       });
     }
   }, [selectedJob, reset]);
@@ -111,6 +117,7 @@ export function JobsTable({
   useEffect(() => {
     if (tableRef.current) {
       setIsTableReady(true);
+      console.log("user", currentUser);
     }
   }, []);
 
@@ -136,8 +143,8 @@ export function JobsTable({
 
   async function handleUpdateJob(data: JobImportForm) {
     console.log("DIRTY FIELDS", dirtyFields);
-    if(!isDirty){
-      console.log('NOTHING FOR UPDATE')
+    if (!isDirty) {
+      console.log("NOTHING FOR UPDATE");
       setIsJobModalOpen(false);
       return;
     }
@@ -150,6 +157,11 @@ export function JobsTable({
       toast.error("Something went wrong");
     }
   }
+
+  function handleSelectProfile(profileId: string | null){
+    queryClient.setQueryData(["selected-profile"], profileId);
+    setProfile(profileId)
+  };
 
   return (
     <main className="w-full">
@@ -171,21 +183,46 @@ export function JobsTable({
           />
         </div>
 
+        <div className="grid gap-2 w-full">
+          <span className="text-sm text-muted-foreground">
+            Selected profiles
+          </span>
+          <div className="flex gap-3 items-center">
+            <Button
+              onClick={() => handleSelectProfile(null)}
+              className={`${selectedProfile !== null ? "text-primary bg-transparent hover:text-white" : "text-white bg-primary"} border-2 border-primary`}
+            >
+              General
+            </Button>
+            {currentUser.profiles.map((p: any) => (
+              <Button
+                onClick={() => handleSelectProfile(p.id)}
+                className={`${selectedProfile !== p.id ? "bg-transparent text-primary hover:text-white" : "bg-primary text-white"} border-2 border-primary`}
+              >
+                {p.name}
+              </Button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex w-full justify-start">
           {isTableReady && (
             <div className="flex">
               {selectedRows.length === 0 && !isStatusChanged && (
                 <div className="flex gap-2">
                   <ManuelJobImport
+                    selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     isDisabled={selectedRows.length > 0}
                   />
                   <FileImportForm
+                    selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     type="TXT"
                     isDisabled={selectedRows.length > 0}
                   />
                   <FileImportForm
+                    selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     type="CSV"
                     isDisabled={selectedRows.length > 0}
@@ -526,29 +563,31 @@ export function JobsTable({
             </div>
 
             <div className="grid gap-2">
-                <Label htmlFor="notes" className="text-xs dark:text-gray-400">
-                  *Notes
-                </Label>
-                <Textarea
-                  {...register("notes", {
-                    required: false,
-                    maxLength: {
-                      value: 500,
-                      message: "Notes can contains maximum 500 chars",
-                    },
-                  })}
-                  id="notes"
-                  className="w-full min-h-20 max-h-40"
-                />
+              <Label htmlFor="notes" className="text-xs dark:text-gray-400">
+                *Notes
+              </Label>
+              <Textarea
+                {...register("notes", {
+                  required: false,
+                  maxLength: {
+                    value: 500,
+                    message: "Notes can contains maximum 500 chars",
+                  },
+                })}
+                id="notes"
+                className="w-full min-h-20 max-h-40"
+              />
 
-                {errors.notes && (
-                  <span className="text-red-500 text-xs">
-                    *{errors.notes.message}
-                  </span>
-                )}
-              </div>
+              {errors.notes && (
+                <span className="text-red-500 text-xs">
+                  *{errors.notes.message}
+                </span>
+              )}
+            </div>
             <div className="grid grid-cols-2 gap-2 mt-3">
-              <Button type="button" onClick={() => setIsJobModalOpen(false)}>Cancel</Button>
+              <Button type="button" onClick={() => setIsJobModalOpen(false)}>
+                Cancel
+              </Button>
               <Button type="submit">
                 {isSubmitting ? "Submitting. . ." : "Save And Close"}
               </Button>

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export async function postSingleJob(data: any, token: string | null){
+export async function postSingleJob(data: any, token: string | null, profileId: string){
     try{
-        await axios.post('/api/jobs/single', { data }, {
+        await axios.post('/api/jobs/single', { data, profileId }, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

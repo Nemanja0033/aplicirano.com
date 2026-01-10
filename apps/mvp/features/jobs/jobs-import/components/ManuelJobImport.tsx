@@ -39,7 +39,9 @@ export interface JobImportForm {
 const ManuelJobImport = ({
   isDisabled,
   currentUser,
+  selectedProfile
 }: {
+  selectedProfile: any
   isDisabled: boolean;
   currentUser: any;
 }) => {
@@ -57,8 +59,9 @@ const ManuelJobImport = ({
     try {
       console.log(data);
       const jobObject = { ...data, appliedAt: date };
-      await postSingleJob(jobObject, token);
+      await postSingleJob(jobObject, token, selectedProfile  );
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       setIsModalOpen(false);
     } catch (err) {
       console.error(err);

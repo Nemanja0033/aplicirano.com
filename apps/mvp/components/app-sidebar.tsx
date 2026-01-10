@@ -46,7 +46,7 @@ const items = [
     icon: ChartBar
   },
   {
-    title: "Postavke Profila",
+    title: "Profili",
     url: "/profile",
     icon: User2
   }

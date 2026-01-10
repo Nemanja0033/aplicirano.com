@@ -49,6 +49,7 @@ export async function POST(req: Request) {
     // ======================================================
     const formData = await req.formData();
     const file = formData.get("csv-file") as File;
+    const profileId = formData.get("profileId") as string;
 
     if (!file) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
@@ -101,6 +102,7 @@ export async function POST(req: Request) {
         data: {
           userId: user.id,
           title: title,
+          profileId: profileId
         },
       });
 

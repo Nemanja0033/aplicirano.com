@@ -44,6 +44,12 @@ model Profile {
   createdAt  DateTime @default(now())
 }
 
+model WaitlistEmail {
+  id        String  @id @default(uuid())
+  createdAt DateTime  @default(now())
+  email     String    @unique
+}
+
 enum JobStatus {
   APPLIED
   REJECTED
