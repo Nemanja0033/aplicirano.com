@@ -3,23 +3,25 @@ import Loader from "@/components/Loader";
 import { useAuthContext } from "@/context/AuthProvider";
 import { JobsTable } from "@/features/jobs/jobs-display/components/JobsTable";
 import { fetchCurrentUserData } from "@/features/user/service/user-service";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function JobsPage() {
   const { token } = useAuthContext();
+  const queryClient = useQueryClient();
   const [page, setPage] = useState<number>(1);
   const PAGE_SIZE = 20;
+  const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
 
   const {
     data: jobsResponse,
     isLoading,
     isFetching,
   } = useQuery({
-    queryKey: ["jobs", page],
+    queryKey: ["jobs", page, selectedProfile],
     queryFn: async () => {
       if (!token) return { jobs: [], total: 0 };
-      const res = await fetch(`/api/jobs?page=${page}&limit=${PAGE_SIZE}`, {
+      const res = await fetch(`/api/jobs?page=${page}&limit=${PAGE_SIZE}&profile=${selectedProfile}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -64,6 +66,8 @@ export default function JobsPage() {
           page={page}
           setPage={setPage}
           pageSize={PAGE_SIZE}
+          selectedProfile={selectedProfile}
+          setSelectedProfile={setSelectedProfile}
         />
       </div>
     </main>

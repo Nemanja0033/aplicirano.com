@@ -37,11 +37,8 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
 import { Calendar } from "lucide-react";
-import {
-  postSingleJob,
-  updateSingleJob,
-} from "../../jobs-import/services/job-import-service";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { updateSingleJob } from "../../jobs-import/services/job-import-service";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "@/context/AuthProvider";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -53,6 +50,8 @@ interface JobsTableProps {
   pageSize: number;
   currentUser: any;
   isLoading?: boolean;
+  setSelectedProfile: any;
+  selectedProfile: any;
 }
 
 export function JobsTable({
@@ -63,6 +62,8 @@ export function JobsTable({
   pageSize,
   currentUser,
   isLoading = false,
+  selectedProfile,
+  setSelectedProfile,
 }: JobsTableProps) {
   const { token } = useAuthContext();
   const queryClient = useQueryClient();
@@ -74,7 +75,6 @@ export function JobsTable({
     setQuery,
     changeStatus,
     setIsStatusChanged,
-    setProfile
   } = useFilters(jobs, "JOBS");
   const {
     checkAllRows,
@@ -88,11 +88,6 @@ export function JobsTable({
   const tableRef = useRef<any>(null);
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
-  
-  const { data: selectedProfile } = useQuery({
-    queryKey: ["selected-profile"],
-    initialData: null,
-  });
 
   const {
     register,
@@ -158,11 +153,6 @@ export function JobsTable({
     }
   }
 
-  function handleSelectProfile(profileId: string | null){
-    queryClient.setQueryData(["selected-profile"], profileId);
-    setProfile(profileId)
-  };
-
   return (
     <main className="w-full">
       <section className="md:w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] w-fit grid gap-5 p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
@@ -189,14 +179,14 @@ export function JobsTable({
           </span>
           <div className="flex gap-3 items-center">
             <Button
-              onClick={() => handleSelectProfile(null)}
+              onClick={() => setSelectedProfile(null)}
               className={`${selectedProfile !== null ? "text-primary bg-transparent hover:text-white" : "text-white bg-primary"} border-2 border-primary`}
             >
               General
             </Button>
             {currentUser.profiles.map((p: any) => (
               <Button
-                onClick={() => handleSelectProfile(p.id)}
+                onClick={() => setSelectedProfile(p.id)}
                 className={`${selectedProfile !== p.id ? "bg-transparent text-primary hover:text-white" : "bg-primary text-white"} border-2 border-primary`}
               >
                 {p.name}
