@@ -8,19 +8,34 @@ datasource db {
 }
 
 model Job {
-  id         String   @id @default(uuid())
-  title      String
-  appliedAt  DateTime @default(now())
-  status     String   @default("APPLIED")
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  profileId  String? 
-  profile    Profile? @relation(fields: [profileId], references: [id])
-  position   String? 
-  jobUrl     String?
-  salarly     Int?
-  location   String?  
-  notes      String?
+  id        String   @id @default(uuid())
+  title     String
+  appliedAt DateTime @default(now())
+  status    String   @default("APPLIED")
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  profileId String?
+  resumeId  String?
+  resume    resume?  @relation(fields: [resumeId], references: [id]) 
+  profile   Profile? @relation(fields: [profileId], references: [id])
+  position  String?
+  jobUrl    String?
+  salarly   Int?
+  location  String?
+  notes     String?
+}
+
+model resume {
+  id        String @id @default(uuid())
+  title     String
+  resumeUrl String
+  fileSize  String
+  userId    String
+  user      User @relation(fields: [userId], references: [id])
+  profileId String?
+  profile   Profile? @relation(fields: [profileId], references: [id])
+  jobs      Job[]
+  createdAt DateTime @default(now())
 }
 
 model User {
@@ -33,21 +48,23 @@ model User {
   jobsLimit   Int       @default(100)
   jobs        Job[]
   profiles    Profile[] // novi odnos
+  resumes     resume[]
 }
 
 model Profile {
-  id         String   @id @default(uuid())
-  name       String
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  jobs       Job[]
-  createdAt  DateTime @default(now())
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  resumes   resume[]
+  jobs      Job[]
+  createdAt DateTime @default(now())
 }
 
 model WaitlistEmail {
-  id        String  @id @default(uuid())
-  createdAt DateTime  @default(now())
-  email     String    @unique
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  email     String   @unique
 }
 
 enum JobStatus {
