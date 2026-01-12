@@ -45,17 +45,43 @@ export async function GET(req: Request) {
     const url = new URL(req.url);
     const pageParam = url.searchParams.get("page");
     const limitParam = url.searchParams.get("limit");
+    const selectedProfile = url.searchParams.get("profile");
+
 
     const page = Math.max(1, Number(pageParam ?? 1));
     const limit = Math.min(100, Math.max(1, Number(limitParam ?? 20))); // cap limit to 100
 
     const skip = (page - 1) * limit;
 
+    console.log("PROFILE", selectedProfile)
+    // Workaround fix for issue when querying the jobs with null profile
+    if(!selectedProfile || selectedProfile === "null"){
+      const [total, jobs] = await Promise.all([
+        db.job.count({ where: { userId: user.id } }),
+        db.job.findMany({
+          where: {
+            userId: user.id,
+          },
+          orderBy: { appliedAt: "desc" },
+          skip,
+          take: limit,
+        }),
+      ]);
+
+      console.log("JOBS FORM WORKAROUND", jobs)
+      
+      // --- Return paginated jobs and total ---
+      return NextResponse.json({ jobs, total }, { status: 200 });
+    }
+
     // --- Fetch total count and paginated jobs for user ---
     const [total, jobs] = await Promise.all([
-      db.job.count({ where: { userId: user.id } }),
+      db.job.count({ where: { userId: user.id, profileId: selectedProfile } }),
       db.job.findMany({
-        where: { userId: user.id },
+        where: {
+          userId: user.id,
+          profileId: selectedProfile 
+        },
         orderBy: { appliedAt: "desc" },
         skip,
         take: limit,

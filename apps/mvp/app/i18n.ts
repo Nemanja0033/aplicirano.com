@@ -4,6 +4,8 @@ export const translations: any = {
         features: "Mogućnosti",
         pricing: "Cene",
         startFree: "Započni besplatno",
+        terms: "Uslovi korišćenja",
+        policy: "Politika privatnosti "
       },
   
       hero: {
@@ -169,6 +171,8 @@ export const translations: any = {
         features: "Features",
         pricing: "Pricing",
         startFree: "Start for free",
+        policy: "Policy",
+        terms: "Terms"
       },
   
       hero: {

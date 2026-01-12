@@ -268,14 +268,17 @@ export default function ApliciranoLanding() {
                 {t.hero.ctaPrimary} <Mail />
               </button>
 
-              <a href="#features" className="px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold text-lg hover:bg-purple-50 transition-all border-2 border-purple-200">
+              <a
+                href="#features"
+                className="px-8 py-4 bg-white text-purple-600 rounded-xl font-semibold text-lg hover:bg-purple-50 transition-all border-2 border-purple-200"
+              >
                 {t.hero.ctaSecondary}
               </a>
             </div>
 
             {/* Screenshots */}
             <div className="relative mt-10 h-[360px] sm:h-[420px]">
-            <img
+              <img
                 src="https://i.postimg.cc/g0J7mJGn/Screenshot-2026-01-10-19-31-04.png"
                 alt=""
                 className="
@@ -288,7 +291,7 @@ export default function ApliciranoLanding() {
         opacity-90
       "
               />
-              
+
               {/* Screenshot left */}
               <img
                 src="https://i.postimg.cc/K899q2tX/Screenshot-2026-01-10-19-31-39.png"
@@ -520,6 +523,12 @@ export default function ApliciranoLanding() {
                   <a href="#" className="hover:text-white transition-colors">
                     {t.nav.pricing}
                   </a>
+                </li>
+                <li>
+                  <a href="/terms-of-service">{t.nav.terms}</a>
+                </li>
+                <li>
+                  <a href="/privacy-policy">{t.nav.policy}</a>
                 </li>
                 <li>
                   {/* <a href="#" className="hover:text-white transition-colors">

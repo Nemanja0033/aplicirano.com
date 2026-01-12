@@ -8,6 +8,7 @@ export async function POST(req: Request){
         const body = await req.json();
         const { company, jobUrl, location, position, salary, appliedAt, notes } = body.data;
         const profileId = body.profileId;
+        console.log("in single post route profileId", profileId)
 
         const authHeader = req.headers.get("Authorization");
         if (!authHeader) {
