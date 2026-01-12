@@ -29,6 +29,7 @@ model resume {
   id        String @id @default(uuid())
   title     String
   resumeUrl String
+  fileSize  String
   userId    String
   user      User @relation(fields: [userId], references: [id])
   profileId String?

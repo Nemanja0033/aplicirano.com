@@ -39,7 +39,7 @@ export async function POST(req: Request) {
     const title = formData.get("title");
     const selectedProfile = formData.get("profile");
 
-    if (!file) {
+    if (!file || !title) {
       return NextResponse.json(
         { error: "No file or title provided" },
         { status: 400 }
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
     }
 
     // --- File path ---
-    const filePath = `users/${user.id}/cv.pdf`;
+    const filePath = `users/${user.id}/${title}.pdf`;
     const arrayBuffer = await file.arrayBuffer();
 
     const { error: uploadError } = await supabaseStorage.storage
@@ -79,8 +79,9 @@ export async function POST(req: Request) {
       await db.resume.create({
         data: {
           userId: user.id,
-          title: "test",
+          title: title as string,
           resumeUrl: data.publicUrl,
+          fileSize: String(file.size)
         },
       });
 
@@ -95,9 +96,10 @@ export async function POST(req: Request) {
     await db.resume.create({
       data: {
         userId: user.id,
-        title: "test",
+        title: title as string,
         profileId: selectedProfile as string,
         resumeUrl: data.publicUrl,
+        fileSize: String(file.size)
       },
     });
 
