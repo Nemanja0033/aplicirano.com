@@ -396,6 +396,13 @@ export default function ApliciranoLanding() {
               description={t.features.cvs.description}
               items={t.features.cvs.items}
             />
+
+            <Feature
+              icon={FileText}
+              title={t.features.atsResumeScan.title}
+              description={t.features.atsResumeScan.description}
+              items={t.features.atsResumeScan.items}
+            />
           </div>
         </div>
       </section>
