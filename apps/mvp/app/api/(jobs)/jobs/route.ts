@@ -46,21 +46,31 @@ export async function GET(req: Request) {
     const pageParam = url.searchParams.get("page");
     const limitParam = url.searchParams.get("limit");
     const selectedProfile = url.searchParams.get("profile");
-
+    const query = url.searchParams.get("query");
+    const status = url.searchParams.get("status");
 
     const page = Math.max(1, Number(pageParam ?? 1));
     const limit = Math.min(100, Math.max(1, Number(limitParam ?? 20))); // cap limit to 100
-
     const skip = (page - 1) * limit;
+    const searchFilter =
+      query && query.trim().length > 0 && query !== "null"
+        ? { title: { contains: query.trim(), mode: "insensitive" } }
+        : {};
 
-    console.log("PROFILE", selectedProfile)
+    const statusFilter = 
+      status && status.trim().length > 0 && status !== "null"
+      ? { status: { contains: status.trim(), mode: "insensitive" } }
+      : {};
+
     // Workaround fix for issue when querying the jobs with null profile
-    if(!selectedProfile || selectedProfile === "null"){
+    if (!selectedProfile || selectedProfile === "null") {
       const [total, jobs] = await Promise.all([
-        db.job.count({ where: { userId: user.id } }),
+        db.job.count({ where: { userId: user.id, ...(searchFilter as any), ...(statusFilter as any) } }),
         db.job.findMany({
           where: {
             userId: user.id,
+            ...(searchFilter as any),
+            ...(statusFilter as any)
           },
           orderBy: { appliedAt: "desc" },
           skip,
@@ -68,19 +78,26 @@ export async function GET(req: Request) {
         }),
       ]);
 
-      console.log("JOBS FORM WORKAROUND", jobs)
-      
       // --- Return paginated jobs and total ---
       return NextResponse.json({ jobs, total }, { status: 200 });
     }
 
     // --- Fetch total count and paginated jobs for user ---
     const [total, jobs] = await Promise.all([
-      db.job.count({ where: { userId: user.id, profileId: selectedProfile } }),
+      db.job.count({
+        where: {
+          userId: user.id,
+          profileId: selectedProfile,
+          ...(searchFilter as any),
+          ...(statusFilter as any)
+        },
+      }),
       db.job.findMany({
         where: {
           userId: user.id,
-          profileId: selectedProfile 
+          profileId: selectedProfile,
+          ...(searchFilter as any),
+          ...(statusFilter as any)
         },
         orderBy: { appliedAt: "desc" },
         skip,
@@ -95,7 +112,6 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: err }, { status: 500 });
   }
 }
-
 
 // ======================================================
 // POST endpoint - Upload jobs from TXT file
@@ -194,7 +210,12 @@ export async function POST(req: Request) {
       if (creditsLeft <= 0) break;
 
       await db.job.create({
-        data: { title, status: "APPLIED", userId: user.id, profileId: profileId },
+        data: {
+          title,
+          status: "APPLIED",
+          userId: user.id,
+          profileId: profileId,
+        },
       });
 
       jobsInserted++;

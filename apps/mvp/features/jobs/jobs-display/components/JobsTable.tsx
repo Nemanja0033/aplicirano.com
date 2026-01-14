@@ -36,7 +36,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
-import { Calendar } from "lucide-react";
+import { Calendar, Loader2 } from "lucide-react";
 import { updateSingleJob } from "../../jobs-import/services/job-import-service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "@/context/AuthProvider";
@@ -52,6 +52,9 @@ interface JobsTableProps {
   isLoading?: boolean;
   setSelectedProfile: any;
   selectedProfile: any;
+  query: string | null;
+  setQuery: any;
+  setStatus: any
 }
 
 export function JobsTable({
@@ -64,6 +67,9 @@ export function JobsTable({
   isLoading = false,
   selectedProfile,
   setSelectedProfile,
+  query,
+  setQuery,
+  setStatus
 }: JobsTableProps) {
   const { token } = useAuthContext();
   const queryClient = useQueryClient();
@@ -71,9 +77,9 @@ export function JobsTable({
   const {
     filteredData: jobsToDisplay,
     isStatusChanged,
-    query,
-    setQuery,
-    changeStatus,
+    // query,
+    // setQuery,
+    // changeStatus,
     setIsStatusChanged,
   } = useFilters(jobs, "JOBS");
   const {
@@ -88,6 +94,7 @@ export function JobsTable({
   const tableRef = useRef<any>(null);
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
+  const searchDebounceRef = useRef<any | null>(null);
 
   const {
     register,
@@ -166,10 +173,10 @@ export function JobsTable({
         <div className="flex items-center w-full justify-between">
           <JobFilters
             filterType="JOBS"
-            changeStatus={changeStatus}
-            searchTerm={query}
+            changeStatus={setStatus}
+            searchTerm={query as any}
             isDisabled={isStatusChanged}
-            handleSearch={(e: any) => setQuery(e.target.value)}
+            handleSearch={(e) => setQuery(e.target.value)}
           />
         </div>
 
@@ -244,7 +251,8 @@ export function JobsTable({
       </section>
 
       <div className="mt-5 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white shadow-md p-5 rounded-lg shadow-md">
-        <Table ref={tableRef}>
+        {isLoading ? <div className="w-full h-screen flex items-center justify-center"><Loader2 className="animate-spin" /> </div>: (
+          <Table ref={tableRef}>
           <TableCaption>A list of your recent job applications.</TableCaption>
           <TableHeader>
             <TableRow data-html2canvas-ignore>
@@ -395,6 +403,7 @@ export function JobsTable({
             </TableRow>
           </TableFooter>
         </Table>
+        )}
       </div>
 
       <AlertDialog
@@ -578,7 +587,7 @@ export function JobsTable({
               <Button type="button" onClick={() => setIsJobModalOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit">
+              <Button disabled={!isDirty} type="submit">
                 {isSubmitting ? "Submitting. . ." : "Save And Close"}
               </Button>
             </div>
