@@ -16,7 +16,7 @@ model Job {
   user      User     @relation(fields: [userId], references: [id])
   profileId String?
   resumeId  String?
-  resume    resume?  @relation(fields: [resumeId], references: [id]) 
+  resume    resume?  @relation(fields: [resumeId], references: [id])
   profile   Profile? @relation(fields: [profileId], references: [id])
   position  String?
   jobUrl    String?
@@ -26,12 +26,12 @@ model Job {
 }
 
 model resume {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   title     String
   resumeUrl String
   fileSize  String
   userId    String
-  user      User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   profileId String?
   profile   Profile? @relation(fields: [profileId], references: [id])
   jobs      Job[]
@@ -39,16 +39,19 @@ model resume {
 }
 
 model User {
-  id          String    @id @default(uuid())
-  firebaseUid String    @unique
-  email       String    @unique
-  username    String
-  avatarUrl   String?
-  apiCredits  Int       @default(10)
-  jobsLimit   Int       @default(100)
-  jobs        Job[]
-  profiles    Profile[] // novi odnos
-  resumes     resume[]
+  id           String    @id @default(uuid())
+  firebaseUid  String    @unique
+  email        String    @unique
+  username     String
+  avatarUrl    String?
+  apiCredits   Int       @default(10)
+  jobsLimit    Int       @default(100)
+  profileLimit Int       @default(3)
+  resumeLimit  Int       @default(3) 
+  isProUSer    Boolean   @default(false) 
+  jobs         Job[]
+  profiles     Profile[] // novi odnos
+  resumes      resume[]
 }
 
 model Profile {

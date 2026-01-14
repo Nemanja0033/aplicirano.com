@@ -15,8 +15,9 @@ import { useAuthContext } from "@/context/AuthProvider";
 import { fetchCurrentUserData } from "@/features/user/service/user-service";
 import { formatFileSize } from "@/helpers";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 type FormValues = {
   title: string;
@@ -50,6 +51,12 @@ export default function ResumesPage() {
     enabled: !!token,
   });
 
+  useEffect(() => {
+    if(currentUser?.resumeLimit === 0){
+      toast.error("Resumes limit reached, please upgrade to Pro Plan");
+    }
+  }, [currentUser]);
+
   const {
     register,
     handleSubmit,
@@ -81,11 +88,14 @@ export default function ResumesPage() {
       });
 
       if (!res.ok) {
+        toast.error("Error while uploading")
         throw new Error("Upload failed");
       }
 
       // refresh resumes for current profile
       queryClient.invalidateQueries({ queryKey: ["resumes", selectedProfile] });
+      // refresh "me" data to check remaining resume credits
+      queryClient.invalidateQueries({ queryKey: ["me"] });
 
       // reset form and close modal
       reset();
@@ -147,7 +157,7 @@ export default function ResumesPage() {
 
               <AlertDialog open={isAddResumeModalOpen} onOpenChange={setIsOpenModalOpen}>
                 <AlertDialogTrigger asChild>
-                  <Button className="mt-3">+ Add resume</Button>
+                  <Button className="mt-3" disabled={currentUser?.resumeLimit === 0}>+ Add resume</Button>
                 </AlertDialogTrigger>
 
                 <AlertDialogContent>

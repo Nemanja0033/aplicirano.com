@@ -33,6 +33,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    if(user.resumeLimit === 0){
+      return NextResponse.json({ error: "Resumes limit reached"}, { status: 400 });
+    }
+
     // --- Parse multipart form ---
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
@@ -74,21 +78,30 @@ export async function POST(req: Request) {
       .from("resumes")
       .getPublicUrl(filePath);
 
-      console.log("selected profile", selectedProfile)
-      if (!selectedProfile || selectedProfile === "null") {
+    if (!selectedProfile || selectedProfile === "null") {
       await db.resume.create({
         data: {
           userId: user.id,
           title: title as string,
           resumeUrl: data.publicUrl,
-          fileSize: String(file.size)
+          fileSize: String(file.size),
         },
       });
 
-      console.log("RUNING IN WORKAROUND", selectedProfile)
+      // Decrement resume credit
+      const resumeCredits = await db.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          resumeLimit: {
+            decrement: 1
+          }
+        }
+      });
 
       return NextResponse.json(
-        { created: true, publicUrl: data.publicUrl },
+        { created: true, publicUrl: data.publicUrl, resumeCredits },
         { status: 201 }
       );
     }
@@ -99,12 +112,24 @@ export async function POST(req: Request) {
         title: title as string,
         profileId: selectedProfile as string,
         resumeUrl: data.publicUrl,
-        fileSize: String(file.size)
+        fileSize: String(file.size),
       },
     });
 
+    // Decrement resume credit
+    const resumeCredits = await db.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        resumeLimit: {
+          decrement: 1
+        }
+      }
+    });
+
     return NextResponse.json(
-      { created: true, publicUrl: data.publicUrl },
+      { created: true, publicUrl: data.publicUrl, resumeCredits },
       { status: 201 }
     );
   } catch (err) {
