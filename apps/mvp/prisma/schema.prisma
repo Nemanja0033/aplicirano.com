@@ -47,7 +47,7 @@ model User {
   apiCredits   Int       @default(10)
   jobsLimit    Int       @default(100)
   profileLimit Int       @default(3)
-  resumeLimit  Int       @default(3) 
+  resumeLimit  Int       @default(9) 
   isProUSer    Boolean   @default(false) 
   jobs         Job[]
   profiles     Profile[] // novi odnos

@@ -1,0 +1,225 @@
+{
+  "HomePage": {
+    "title": "Aplicirano",
+    "subtitle": "Sve prijave, statistike i pametni alati na jednom mestu.",
+
+    "jobs_title": "Prijave za posao",
+    "jobs_cta": "Dodaj prijavu",
+    "jobs_insight": "Uvezi prijave iz CSV ili TXT fajla i uštedi vreme.",
+    "jobs_description": "Sve tvoje prijave na jednom mestu. Dodaj, uvozi, menjaj statuse i ostani organizovan tokom celog procesa.",
+
+    "stats_title": "Statistika",
+    "stats_cta": "Pogledaj statistiku",
+    "stats_insight": "Efikasno prati svoj proces",
+    "stats_description": "Pregled rezultata tvoje potrage za poslom. Vidi koliko prijava si poslao, gde dobijaš odgovore i koliko proces zapravo traje.",
+
+    "ai_title": "JobTrack AI",
+    "ai_cta": "Isprobaj AI asistenta",
+    "ai_insight": "Tvoj asistent u potrazi za poslom",
+    "ai_description": "AI asistent za traženje posla. Postavljaj pitanja o prijavama, pripremaj propratna pisma, unapredi CV i planiraj sledeće korake."
+  },
+  "JobsTable": {
+    "title": "Prijavljeni poslovi",
+    "subtitle": "Upravljaj i prati sve svoje prijave na jednom mestu",
+
+    "profiles_label": "Izabrani profili",
+    "profiles_general": "Opšti",
+
+    "imports_manual": "Ručni unos posla",
+    "imports_txt": "Uvoz iz TXT fajla",
+    "imports_csv": "Uvoz iz CSV fajla",
+    "imports_exportPdf": "Izvoz u PDF",
+    "imports_guide": "Vodič za uvoz",
+
+    "status_updateButtons": "Ažuriraj status posla",
+    "status_updateJobs": "Ažuriraj statuse poslova",
+    "status_applied": "PRIJAVLJENO",
+    "status_interview": "INTERVJU",
+    "status_rejected": "ODBIJENO",
+    "status_offer": "PONUDA",
+
+    "search_label": "Pretraži kompanije...",
+    "all_status": "Svi statusi",
+
+    "table_caption": "Lista tvojih nedavnih prijava za posao.",
+    "table_columns_company": "Kompanija",
+    "table_columns_appliedAt": "Datum prijave",
+    "table_columns_status": "Status",
+
+    "pagination_total": "Ukupno",
+    "pagination_prev": "Prethodno",
+    "pagination_next": "Sledeće",
+    "pagination_dotsStart": "...",
+    "pagination_dotsEnd": "...",
+
+    "modal_title": "Detalji prijave",
+    "modal_company_label": "Naziv kompanije",
+    "modal_company_required": "*Obavezno",
+    "modal_company_error_required": "Naziv kompanije je obavezan",
+    "modal_company_error_minLength": "Naziv mora imati najmanje 2 karaktera",
+    "modal_company_error_maxLength": "Naziv može imati najviše 35 karaktera",
+
+    "modal_position_label": "Pozicija",
+    "modal_position_error_minLength": "Pozicija mora imati najmanje 2 karaktera",
+    "modal_position_error_maxLength": "Pozicija može imati najviše 35 karaktera",
+
+    "modal_salary_label": "Plata",
+    "modal_salary_error_min": "Plata mora biti najmanje 50",
+    "modal_salary_error_max": "Plata mora biti manja od 30000",
+
+    "modal_jobUrl_label": "Link ka poslu",
+    "modal_jobUrl_error_minLength": "Unesite validan URL",
+    "modal_jobUrl_error_maxLength": "Unesite validan URL",
+
+    "modal_location_label": "Lokacija",
+    "modal_location_error_maxLength": "Unesite validnu lokaciju",
+
+    "modal_notes_label": "Beleške",
+    "modal_notes_error_maxLength": "Beleške mogu sadržati najviše 500 karaktera",
+
+    "modal_buttons_cancel": "Otkaži",
+    "modal_buttons_save": "Sačuvaj i zatvori",
+    "modal_buttons_submitting": "Slanje..."
+  },
+  "FileImport": {
+    "button_import_csv": "Uvezi CSV",
+    "button_import_txt": "Uvezi TXT",
+    "tooltip_out_of_credits": "Nemate više kredita za poslove...",
+    "error_no_file": "Fajl nije izabran",
+    "error_upload_failed": "Učitavanje nije uspelo",
+    "error_unexpected": "Neočekivana greška",
+    "button_submit_uploading": "Učitavanje...",
+    "button_submit": "Potvrdi"
+  },
+  "FileExport": {
+    "export_btn": "Izvezi"
+  },
+  "JobImport": {
+    "add_button": "+ Dodaj posao",
+    "tooltip_out_of_credits": "Nemate više kredita za poslove...",
+    "modal_title": "Unos prijave za posao",
+    "form_company_label": "*Naziv kompanije",
+    "form_company_required": "*Obavezno",
+    "form_company_error_required": "Naziv kompanije je obavezan",
+    "form_company_error_minLength": "Naziv mora imati najmanje 2 karaktera",
+    "form_company_error_maxLength": "Naziv može imati najviše 35 karaktera",
+    "form_position_label": "*Pozicija",
+    "form_position_error_minLength": "Pozicija mora imati najmanje 2 karaktera",
+    "form_position_error_maxLength": "Pozicija može imati najviše 35 karaktera",
+    "form_salary_label": "*Plata",
+    "form_salary_error_min": "Plata mora biti najmanje 50",
+    "form_salary_error_max": "Plata mora biti manja od 30000",
+    "form_jobUrl_label": "*Link ka poslu",
+    "form_jobUrl_error_minLength": "Unesite validan URL",
+    "form_jobUrl_error_maxLength": "Unesite validan URL",
+    "form_location_label": "*Lokacija",
+    "form_location_error_maxLength": "Unesite validnu lokaciju",
+    "form_notes_label": "*Beleške",
+    "form_notes_error_maxLength": "Beleške mogu sadržati najviše 500 karaktera",
+    "form_appliedAt_label": "*Datum prijave",
+    "form_submit_submitting": "Slanje...",
+    "form_submit": "Potvrdi",
+    "form_cancel": "Otkaži"
+  },
+  "StatsPage": {
+    "title": "Statistika",
+    "subtitle": "Prati metrike i napredak u potrazi za poslom",
+
+    "range_label": "Izaberi vremenski period",
+    "range_7d": "Poslednjih 7 dana",
+    "range_30d": "Poslednjih 30 dana",
+    "range_90d": "Poslednjih 90 dana",
+
+    "chart_label": "Broj prijava po danu",
+    "grid_totalApplied": "Ukupno prijava",
+    "grid_totalActiveDays": "Ukupno aktivnih dana",
+    "grid_totalInterviews": "Ukupno intervjua",
+    "grid_totalRejections": "Ukupno odbijenica",
+    "grid_averageApplies": "Prosečno prijava",
+    "grid_averageApplies_suffix": "/ dnevno",
+    "grid_interviewsRate": "% stopa intervjua"
+  },
+  "ChatbotPage": {
+    "title": "AI Asistent",
+    "subtitle": "AI pomoć za tvoje prijave za posao",
+    "welcome_message": "Zdravo, ja sam TrakifyAI! Mogu ti pomoći u procesu prijavljivanja za posao. Da li želiš da proverimo tvoje poslednje prijave ili nešto drugo?",
+    "thinking": "Razmišljam...",
+    "placeholder": "Unesi poruku...",
+    "send_button": "Pošalji",
+    "tokens_limit_warning": "Dostigli ste limit AI tokena. Nadogradite na Pro plan da biste nastavili.",
+    "error_no_response": "Nažalost, nema odgovora.",
+    "error_generic": "Došlo je do greške. Pokušaj ponovo.",
+    "desktop_only_message": "Za najbolje iskustvo koristite desktop verziju"
+  },
+  "ProfilePage": {
+    "title": "Profili",
+    "subtitle": "Podesi svoje profile za prijave (do 3). Profili predstavljaju različite uloge.",
+    "used_label": "{count} / 3 iskorišćeno",
+    "no_profiles": "Još uvek nema profila",
+    "form_placeholder": "npr. Frontend Developer",
+    "form_creating": "Kreiranje...",
+    "form_create": "Kreiraj profil",
+    "form_limit": "Limit dostignut",
+    "add_button": "+ Dodaj profil",
+    "created_label": "Kreirano: {date}",
+    "toast_created": "Profil je kreiran",
+    "toast_deleted": "Profil je uspešno obrisan",
+    "toast_error_create": "Neuspešno kreiranje profila",
+    "toast_error_delete": "Došlo je do greške",
+    "toast_error_signedIn": "Morate biti prijavljeni",
+    "toast_error_limit": "Dostignut limit profila (3)",
+    "toast_error_name": "Unesite validan naziv profila (1–50 karaktera)"
+  },
+  "ResumePage": {
+    "title": "Skladište CV-ja",
+    "subtitle": "Čuvaj, upravljaj i ponovo koristi svoje CV-je po profilima",
+
+    "active_profile": "Aktivan profil",
+    "general_profile": "Opšti",
+    "add_resume_button": "+ Dodaj CV",
+
+    "upload_title": "Otpremi CV",
+    "upload_description": "Otpremi CV i preciznije prati prijave za posao",
+
+    "toast_limit": "Dostignut je limit CV-ja, nadogradite na Pro plan",
+    "toast_upload_error": "Greška prilikom otpremanja",
+    "form_file_error": "Izaberite validan fajl",
+
+    "form_title_label": "* Naslov",
+    "form_title_required": "Naslov je obavezan",
+    "form_title_placeholder": "npr. CV v1",
+
+    "form_document_label": "* Dokument (PDF)",
+    "form_document_required": "PDF fajl je obavezan",
+    "form_document_only_pdf": "Dozvoljeni su samo PDF fajlovi",
+
+    "form_submit_uploading": "Otpremanje...",
+    "form_submit": "Otpremi",
+    "form_cancel": "Otkaži",
+
+    "no_resumes": "Još uvek nema otpremljenih CV-ja",
+    "resume_default_title": "CV",
+    "resume_file_label": "PDF dokument {size}",
+    "resume_view": "Pregled"
+  },
+  "Sidebar": {
+    "dashboard": "Početna",
+    "jobs": "Lista poslova",
+    "chatbot": "JobTrack AI",
+    "stats": "Statistika",
+    "profile": "Profili",
+    "resume": "Skladište CV-ja"
+  },
+  "ImportGuide": {
+    "button_guide": "Vodič",
+    "modal_title": "Kako uvesti prijave za posao?",
+    "txt_title": "UVOZ .txt FAJLA",
+    "txt_step1": "Kliknite na dugme \"Uvoz\".",
+    "txt_step2": "Izaberite .txt dokument koji sadrži nazive kompanija na koje ste se prijavili.",
+    "txt_important": "**VAŽNO** Između svakog naziva posla ili kompanije dodajte znak \"-\".",
+    "manual_title": "RUČNI UNOS",
+    "manual_step1": "Kliknite na dugme \"+ Ručni unos\".",
+    "manual_step2": "Unesite naziv kompanije i izaberite datum prijave.",
+    "cancel_button": "Otkaži"
+  }
+}
