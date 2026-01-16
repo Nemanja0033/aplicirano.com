@@ -80,7 +80,7 @@ export function AppSidebar() {
                     <SidebarMenuButton className={`${pathname === item.url.slice(0) ? 'bg-primary/20 text-primary' : ''}`} asChild>
                       <Link
                         href={item.url}
-                        className="flex items-center text-lg gap-3 px-3 py-2 rounded-md transition-colors"
+                        className="flex items-center text-lg px-3 py-2 rounded-md transition-colors"
                       >
                         <item.icon size={40} />
                         <span className="text-md font-medium">{item.title}</span>
