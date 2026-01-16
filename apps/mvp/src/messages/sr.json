@@ -221,5 +221,9 @@
     "manual_step1": "Kliknite na dugme \"+ Ručni unos\".",
     "manual_step2": "Unesite naziv kompanije i izaberite datum prijave.",
     "cancel_button": "Otkaži"
+  },
+  "Seo": {
+    "title": "Aplicirano | Skup alata za lakše traženje posla",
+    "description": "Pratite i upravljajte svojim prijavama za posao na jednom mestu. Aplicirano vam pomaže da ostanete organizovani, steknete uvide i poboljšate potragu za poslom uz pametnu analitiku i AI podršku."
   }
 }
