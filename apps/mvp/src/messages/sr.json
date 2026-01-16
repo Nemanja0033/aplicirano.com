@@ -92,7 +92,8 @@
     "button_submit": "Potvrdi"
   },
   "FileExport": {
-    "export_btn": "Izvezi"
+    "export_btn": "Izvezi",
+    "disabled_tooltip": "Dostupno samo za Pro korisnike"
   },
   "JobImport": {
     "add_button": "+ Dodaj posao",

@@ -28,7 +28,8 @@ export async function GET(req: Request) {
             firebaseUid: userData.uid
         },
         include: {
-          profiles: true
+          profiles: true,
+          resumes: true
         }
     });
 

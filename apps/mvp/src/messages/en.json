@@ -92,7 +92,8 @@
     "button_submit": "Submit"
   },
   "FileExport": {
-    "export_btn": "Export"
+    "export_btn": "Export",
+    "disabled_tooltip": "Available only for Pro users"
   },
   "JobImport": {
     "add_button": "+ Add Job",

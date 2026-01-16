@@ -45,9 +45,9 @@ model User {
   username     String
   avatarUrl    String?
   apiCredits   Int       @default(10)
-  jobsLimit    Int       @default(100)
-  profileLimit Int       @default(3)
-  resumeLimit  Int       @default(9) 
+  jobsLimit    Int       @default(25)
+  profileLimit Int       @default(1)
+  resumeLimit  Int       @default(1) 
   isProUSer    Boolean   @default(false) 
   jobs         Job[]
   profiles     Profile[] // novi odnos
