@@ -1,0 +1,225 @@
+{
+  "HomePage": {
+    "title": "Aplicirano",
+    "subtitle": "All applications, statistics and smart tools in one place.",
+
+    "jobs_title": "Job Applications",
+    "jobs_cta": "Add application",
+    "jobs_insight": "Import applications from CSV or TXT file and save time.",
+    "jobs_description": "All your applications in one place. Add, import, update statuses and stay organized throughout the process.",
+
+    "stats_title": "Statistics",
+    "stats_cta": "View statistics",
+    "stats_insight": "Track your process efficiently",
+    "stats_description": "Overview of your job search results. See how many applications you sent, where you get responses and how long the process really takes.",
+
+    "ai_title": "JobTrack AI",
+    "ai_cta": "Try AI assistant",
+    "ai_insight": "Your assistant in job search",
+    "ai_description": "Your AI assistant for job searching. Ask questions about your applications, prepare cover letters, improve your CV and plan next steps."
+  },
+  "JobsTable": {
+    "title": "Applied Jobs",
+    "subtitle": "Manage and track all your job applications in one place",
+
+    "profiles_label": "Selected profiles",
+    "profiles_general": "General",
+
+    "imports_manual": "Manual Job Import",
+    "imports_txt": "Import from TXT",
+    "imports_csv": "Import from CSV",
+    "imports_exportPdf": "Export to PDF",
+    "imports_guide": "Import Guide",
+
+    "status_updateButtons": "Update Job Status",
+    "status_updateJobs": "Update Jobs Status",
+    "status_applied": "APPLIED",
+    "status_interview": "INTERVIEW",
+    "status_rejected": "REJECTED",
+    "status_offer": "OFFER",
+
+    "search_label": "Search for companies. . .",
+    "all_status": "All Status",
+
+    "table_caption": "A list of your recent job applications.",
+    "table_columns_company": "Company",
+    "table_columns_appliedAt": "Applied At",
+    "table_columns_status": "Status",
+
+    "pagination_total": "Total",
+    "pagination_prev": "Prev",
+    "pagination_next": "Next",
+    "pagination_dotsStart": "...",
+    "pagination_dotsEnd": "...",
+
+    "modal_title": "Job Details",
+    "modal_company_label": "Company name",
+    "modal_company_required": "*Required",
+    "modal_company_error_required": "Company name is required",
+    "modal_company_error_minLength": "Company name requires minimum 2 characters",
+    "modal_company_error_maxLength": "Company name accepts maximum 35 characters",
+
+    "modal_position_label": "Position",
+    "modal_position_error_minLength": "Position requires minimum 2 characters",
+    "modal_position_error_maxLength": "Position accepts maximum 35 characters",
+
+    "modal_salary_label": "Salary",
+    "modal_salary_error_min": "Salary must be at least 50",
+    "modal_salary_error_max": "Salary must be less than 30000",
+
+    "modal_jobUrl_label": "Job URL",
+    "modal_jobUrl_error_minLength": "Please enter valid URL",
+    "modal_jobUrl_error_maxLength": "Please enter valid URL",
+
+    "modal_location_label": "Location",
+    "modal_location_error_maxLength": "Please enter valid location",
+
+    "modal_notes_label": "Notes",
+    "modal_notes_error_maxLength": "Notes can contain maximum 500 characters",
+
+    "modal_buttons_cancel": "Cancel",
+    "modal_buttons_save": "Save And Close",
+    "modal_buttons_submitting": "Submitting..."
+  },
+  "FileImport": {
+    "button_import_csv": "Import CSV",
+    "button_import_txt": "Import TXT",
+    "tooltip_out_of_credits": "You have no more job credits...",
+    "error_no_file": "No file selected",
+    "error_upload_failed": "Upload failed",
+    "error_unexpected": "Unexpected error",
+    "button_submit_uploading": "Uploading...",
+    "button_submit": "Submit"
+  },
+  "FileExport": {
+    "export_btn": "Export"
+  },
+  "JobImport": {
+    "add_button": "+ Add Job",
+    "tooltip_out_of_credits": "You have no more job credits...",
+    "modal_title": "Import Job Application",
+    "form_company_label": "*Company name",
+    "form_company_required": "*Required",
+    "form_company_error_required": "Company name is required",
+    "form_company_error_minLength": "Company name requires minimum 2 characters",
+    "form_company_error_maxLength": "Company name accepts maximum 35 characters",
+    "form_position_label": "*Position",
+    "form_position_error_minLength": "Position requires minimum 2 characters",
+    "form_position_error_maxLength": "Position accepts maximum 35 characters",
+    "form_salary_label": "*Salary",
+    "form_salary_error_min": "Salary must be at least 50",
+    "form_salary_error_max": "Salary must be less than 30000",
+    "form_jobUrl_label": "*Job URL",
+    "form_jobUrl_error_minLength": "Please enter valid URL",
+    "form_jobUrl_error_maxLength": "Please enter valid URL",
+    "form_location_label": "*Location",
+    "form_location_error_maxLength": "Please enter valid location",
+    "form_notes_label": "*Notes",
+    "form_notes_error_maxLength": "Notes can contain maximum 500 characters",
+    "form_appliedAt_label": "*Applied at",
+    "form_submit_submitting": "Submitting...",
+    "form_submit": "Submit",
+    "form_cancel": "Cancel"
+  },
+  "StatsPage": {
+    "title": "Statistics",
+    "subtitle": "Track your job search metrics and progress",
+
+    "range_label": "Select date range view applied jobs stats",
+    "range_7d": "Last 7 days",
+    "range_30d": "Last 30 days",
+    "range_90d": "Last 90 days",
+
+    "chart_label": "Applications per day",
+    "grid_totalApplied": "Total Applied",
+    "grid_totalActiveDays": "Total Active Days",
+    "grid_totalInterviews": "Total Interviews",
+    "grid_totalRejections": "Total Rejections",
+    "grid_averageApplies": "Average Applies",
+    "grid_averageApplies_suffix": "/ per day",
+    "grid_interviewsRate": "% Interviews Rate"
+  },
+  "ChatbotPage": {
+    "title": "AI Assistant",
+    "subtitle": "Get AI-powered help with your job applications",
+    "welcome_message": "Hello I'm TrakifyAI! I can help you with your job application process. Do you want me to check your recent job applications or anything else?",
+    "thinking": "Thinking...",
+    "placeholder": "Type your message...",
+    "send_button": "Send",
+    "tokens_limit_warning": "You have reached your AI tokens limit. Please upgrade to Pro to continue.",
+    "error_no_response": "Sorry, no response.",
+    "error_generic": "Something went wrong. Try again.",
+    "desktop_only_message": "Please use desktop version for best experience"
+  },
+  "ProfilePage": {
+    "title": "Profile",
+    "subtitle": "Configure your applying profiles (up to 3). Profiles are personas for applying.",
+    "used_label": "{count} / 3 used",
+    "no_profiles": "No profiles yet",
+    "form_placeholder": "e.g. Frontend Dev",
+    "form_creating": "Creating...",
+    "form_create": "Create Profile",
+    "form_limit": "Limit reached",
+    "add_button": "+ Add Profile",
+    "created_label": "Created: {date}",
+    "toast_created": "Profile created",
+    "toast_deleted": "Profile successfully deleted",
+    "toast_error_create": "Failed to create profile",
+    "toast_error_delete": "Something went wrong",
+    "toast_error_signedIn": "You must be signed in",
+    "toast_error_limit": "Profile limit reached (3)",
+    "toast_error_name": "Enter a valid profile name (1-50 chars)"
+  },
+  "ResumePage": {
+    "title": "Resumes Storage",
+    "subtitle": "Store, manage and reuse your CVs across profiles",
+
+    "active_profile": "Active profile",
+    "general_profile": "General",
+    "add_resume_button": "+ Add resume",
+
+    "upload_title": "Upload resume",
+    "upload_description": "Upload your resume and track your job applications more precisely",
+
+    "toast_limit": "Resumes limit reached, please upgrade to Pro Plan",
+    "toast_upload_error": "Error while uploading",
+    "form_file_error": "Please select a valid file",
+
+    "form_title_label": "* Title",
+    "form_title_required": "Title is required",
+    "form_title_placeholder": "e.g. Resume v1",
+
+    "form_document_label": "* Document (PDF)",
+    "form_document_required": "PDF file is required",
+    "form_document_only_pdf": "Only PDF files are allowed",
+
+    "form_submit_uploading": "Uploading...",
+    "form_submit": "Upload",
+    "form_cancel": "Cancel",
+
+    "no_resumes": "No resumes uploaded yet",
+    "resume_default_title": "Resume",
+    "resume_file_label": "PDF document {size}",
+    "resume_view": "View"
+  },
+  "Sidebar": {
+    "dashboard": "Home",
+    "jobs": "Jobs List",
+    "chatbot": "JobTrack AI",
+    "stats": "Statistics",
+    "profile": "Profiles",
+    "resume": "Resume Storage"
+  },
+  "ImportGuide": {
+    "button_guide": "Guide",
+    "modal_title": "How to import applied jobs?",
+    "txt_title": "IMPORTING .txt FILE",
+    "txt_step1": "In order to import the applied jobs, please click on the \"Import\" button.",
+    "txt_step2": "And select the .txt document that contains the names of the companies you recently applied to.",
+    "txt_important": "**IMPORTANT** Please put a \"-\" character between each job title/company name.",
+    "manual_title": "MANUAL IMPORT",
+    "manual_step1": "Click \"+ Manual Import\" button.",
+    "manual_step2": "When modal is open, enter company name and select applied date.",
+    "cancel_button": "Cancel"
+  }
+}
