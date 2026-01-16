@@ -136,11 +136,11 @@ export const translations: any = {
         subtitle: "Za početak i testiranje",
         price: "0 RSD",
         features: [
-          "Do 100 prijava",
+          "Do 25 prijava",
           "Osnovna statistika",
           "Ograničen AI pristup",
-          "Do 3 CV verzije",
-          "Do 3 Profile"
+          "Do 2 CV verzije",
+          "Do 2 Profila"
         ],
         cta: "Započni besplatno",
       },
@@ -315,11 +315,11 @@ export const translations: any = {
         subtitle: "For getting started",
         price: "0 RSD",
         features: [
-          "Up to 100 applications",
+          "Up to 25 applications",
           "Basic statistics",
           "Limited AI access",
-          "Up to 3 CV versions",
-          "Up to 3 Profiles"
+          "Up to 2 CV versions",
+          "Up to 2 Profiles"
         ],
         cta: "Start for free",
       },
