@@ -309,7 +309,7 @@ export default function ApliciranoLanding() {
 
               {/* Screenshot right (main) */}
               <img
-                src="https://i.postimg.cc/sD5dNvgL/Screenshot-2026-01-10-19-29-18.png"
+                src="https://i.postimg.cc/5N1V5hgq/Screenshot-2026-01-16-23-35-47.png"
                 alt=""
                 className="
         absolute left-1/2 top-5
