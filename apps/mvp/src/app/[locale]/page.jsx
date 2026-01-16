@@ -35,7 +35,7 @@ export default function ApliciranoLanding() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [lang, setLang] = useState("en");
+  const [lang, setLang] = useState("sr");
   const t = translations[lang];
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -397,12 +397,12 @@ export default function ApliciranoLanding() {
               items={t.features.cvs.items}
             />
 
-            <Feature
+            {/* <Feature
               icon={FileText}
               title={t.features.atsResumeScan.title}
               description={t.features.atsResumeScan.description}
               items={t.features.atsResumeScan.items}
-            />
+            /> */}
           </div>
         </div>
       </section>
