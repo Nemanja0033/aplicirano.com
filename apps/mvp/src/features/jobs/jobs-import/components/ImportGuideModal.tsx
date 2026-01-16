@@ -33,6 +33,7 @@ const ImportGuideModal = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>{t("modal_title")}</AlertDialogTitle>
             <AlertDialogDescription>
+              {/* TXT guide */}
               <b>{t("txt_title")}</b> <br />
               <span className="dark:text-gray-400">
                 1. {t("txt_step1")} <br /> <br />
@@ -40,13 +41,27 @@ const ImportGuideModal = () => {
                 <b>{t("txt_important")}</b> <br />
                 <br />
               </span>
-              <b>{t("manual_title")}</b>
-              <br />
-              <br />
+
+              {/* CSV guide */}
+              <b>{t("csv_title")}</b> <br />
               <span className="dark:text-gray-400">
-                1. {t("manual_step1")} <br />
-                <br />
-                2. {t("manual_step2")}
+                1. {t("csv_step1")} <br /> <br />
+                2. {t("csv_step2")} <br /> <br />
+                3. {t("csv_step3")} <br /> <br />
+              </span>
+
+              {/* Manual entry */}
+              <b>{t("manual_title")}</b> <br />
+              <span className="dark:text-gray-400">
+                1. {t("manual_step1")} <br /> <br />
+                2. {t("manual_step2")} <br /> <br />
+              </span>
+
+              {/* Table overview */}
+              <b>{t("table_title")}</b> <br />
+              <span className="dark:text-gray-400">
+                1. {t("table_step1")} <br /> <br />
+                2. {t("table_step2")} <br /> <br />
               </span>
             </AlertDialogDescription>
           </AlertDialogHeader>

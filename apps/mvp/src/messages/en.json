@@ -213,16 +213,24 @@
   },
   "ImportGuide": {
     "button_guide": "Guide",
-    "modal_title": "How to import applied jobs?",
-    "txt_title": "IMPORTING .txt FILE",
-    "txt_step1": "In order to import the applied jobs, please click on the \"Import\" button.",
-    "txt_step2": "And select the .txt document that contains the names of the companies you recently applied to.",
-    "txt_important": "**IMPORTANT** Please put a \"-\" character between each job title/company name.",
-    "manual_title": "MANUAL IMPORT",
-    "manual_step1": "Click \"+ Manual Import\" button.",
-    "manual_step2": "When modal is open, enter company name and select applied date.",
+    "modal_title": "How to import job applications?",
+    "txt_title": "IMPORT .txt FILE",
+    "txt_step1": "Click the \"Import\" button.",
+    "txt_step2": "Select a .txt document containing company names you applied to.",
+    "txt_important": "**IMPORTANT** Separate each job or company name with a \"-\" symbol.",
+    "csv_title": "IMPORT .csv FILE",
+    "csv_step1": "Click the \"Import\" button and select a .csv file.",
+    "csv_step2": "The CSV file must contain a field named \"title\" referring to the company name.",
+    "csv_step3": "Each application is loaded as a row in the table.",
+    "manual_title": "MANUAL ENTRY",
+    "manual_step1": "Click the \"+ Manual entry\" button.",
+    "manual_step2": "Enter the company name and select the application date.",
+    "table_title": "APPLICATION OVERVIEW",
+    "table_step1": "Double‑clicking on a job in the table opens a modal.",
+    "table_step2": "In the modal you can review and enter relevant details for the selected job.",
     "cancel_button": "Cancel"
   },
+
   "Seo": {
     "title": "Aplicirano | Smart Job Search Platform",
     "description": "Track and manage your job applications in one place. Aplicirano helps you stay organized, gain insights, and improve your job search with smart analytics and AI support."

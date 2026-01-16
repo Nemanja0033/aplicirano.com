@@ -218,11 +218,19 @@
     "txt_step1": "Kliknite na dugme \"Uvoz\".",
     "txt_step2": "Izaberite .txt dokument koji sadrži nazive kompanija na koje ste se prijavili.",
     "txt_important": "**VAŽNO** Između svakog naziva posla ili kompanije dodajte znak \"-\".",
+    "csv_title": "UVOZ .csv FAJLA",
+    "csv_step1": "Kliknite na dugme \"Uvoz\" i izaberite .csv fajl.",
+    "csv_step2": "CSV fajl mora da sadrži polje \"title\" koje se odnosi na naziv kompanije.",
+    "csv_step3": "Svaka prijava se učitava kao red u tabeli.",
     "manual_title": "RUČNI UNOS",
     "manual_step1": "Kliknite na dugme \"+ Ručni unos\".",
     "manual_step2": "Unesite naziv kompanije i izaberite datum prijave.",
+    "table_title": "PREGLED PRIJAVA",
+    "table_step1": "Dvostrukim klikom na prijavu u tabeli otvara se modal.",
+    "table_step2": "U modalu možete pregledati i uneti relevantne podatke za izabrani posao.",
     "cancel_button": "Otkaži"
   },
+
   "Seo": {
     "title": "Aplicirano | Skup alata za lakše traženje posla",
     "description": "Pratite i upravljajte svojim prijavama za posao na jednom mestu. Aplicirano vam pomaže da ostanete organizovani, steknete uvide i poboljšate potragu za poslom uz pametnu analitiku i AI podršku."
