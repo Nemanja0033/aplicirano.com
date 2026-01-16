@@ -96,12 +96,27 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Name is to long " }, { status: 400 });
     }
 
+    if(user.profileLimit === 0){
+      return NextResponse.json({ error: "Profile limit reached" }, { status: 400 });
+    }
+
     const createProfile = await db.profile.create({
       data: {
         name,
         userId: user.id,
       },
     });
+
+    await db.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        profileLimit: {
+          decrement: 1
+        }
+      }
+    })
 
     return NextResponse.json({ succes: true }, { status: 200 });
   } catch (err) {
@@ -151,6 +166,17 @@ export async function DELETE(req: Request) {
         id: profileId
       }
     });
+
+    await db.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        profileLimit: {
+          increment: 1
+        }
+      }
+    })
 
     return NextResponse.json({ succes: true }, { status: 200 });
   } catch (err) {
