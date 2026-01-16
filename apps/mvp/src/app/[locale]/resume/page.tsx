@@ -106,6 +106,16 @@ export default function ResumesPage() {
     }
   }
 
+  if (!token) {
+    return (
+      <div className="w-full h-[60vh] flex justify-center items-center">
+        <span className="text-gray-400 text-2xl font-semibold">
+          Sign In To Start importing jobs
+        </span>
+      </div>
+    );
+  }
+
   return (
     <>
       <main className="w-full h-screen flex justify-center items-start overflow-auto">

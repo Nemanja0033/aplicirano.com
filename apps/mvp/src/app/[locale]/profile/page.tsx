@@ -145,6 +145,16 @@ export default function ProfilePage() {
     return <Loader type="NORMAL" />;
   }
 
+  if (!token) {
+    return (
+      <div className="w-full h-[60vh] flex justify-center items-center">
+        <span className="text-gray-400 text-2xl font-semibold">
+          Sign In To Start importing jobs
+        </span>
+      </div>
+    );
+  }
+
   return (
     <main className="w-full h-full flex justify-center items-start">
       <section className="md:w-6xl p-3 w-full grid place-items-center gap-5">
