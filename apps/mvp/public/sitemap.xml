@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Home -->
+  <url>
+    <loc>https://www.aplicirano.com/en</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.aplicirano.com"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.aplicirano.com"/>
+  </url>
+
+  <!-- Pages -->
+  <!-- Chatbot -->
+  <url>
+    <loc>https://www.aplicirano.com/en/chatbot</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/chatbot"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/chatbot"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/chatbot</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/chatbot"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/chatbot"/>
+  </url>
+
+  <!-- Dashboard -->
+  <url>
+    <loc>https://www.aplicirano.com/en/dashboard</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/dashboard"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/dashboard"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/dashboard</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/dashboard"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/dashboard"/>
+  </url>
+
+  <!-- Jobs -->
+  <url>
+    <loc>https://www.aplicirano.com/en/jobs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/jobs"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/jobs"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/jobs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/jobs"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/jobs"/>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://www.aplicirano.com/en/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/privacy-policy"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/privacy-policy"/>
+  </url>
+
+  <!-- Profile -->
+  <url>
+    <loc>https://www.aplicirano.com/en/profile</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/profile"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/profile"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/profile</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/profile"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/profile"/>
+  </url>
+
+  <!-- Resume -->
+  <url>
+    <loc>https://www.aplicirano.com/en/resume</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/resume"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/resume"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/resume</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/resume"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/resume"/>
+  </url>
+
+  <!-- Stats -->
+  <url>
+    <loc>https://www.aplicirano.com/en/stats</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/stats"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/stats"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/stats</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/stats"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/stats"/>
+  </url>
+
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://www.aplicirano.com/en/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/terms-of-service"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/terms-of-service"/>
+  </url>
+  <url>
+    <loc>https://www.aplicirano.com/sr/terms-of-service</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.aplicirano.com/en/terms-of-service"/>
+    <xhtml:link rel="alternate" hreflang="sr" href="https://www.aplicirano.com/sr/terms-of-service"/>
+  </url>
+
+</urlset>

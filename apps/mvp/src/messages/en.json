@@ -221,5 +221,9 @@
     "manual_step1": "Click \"+ Manual Import\" button.",
     "manual_step2": "When modal is open, enter company name and select applied date.",
     "cancel_button": "Cancel"
+  },
+  "Seo": {
+    "title": "Aplicirano | Smart Job Search Platform",
+    "description": "Track and manage your job applications in one place. Aplicirano helps you stay organized, gain insights, and improve your job search with smart analytics and AI support."
   }
 }
