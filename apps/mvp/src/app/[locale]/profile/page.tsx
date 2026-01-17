@@ -155,6 +155,12 @@ export default function ProfilePage() {
     );
   }
 
+  useEffect(() => {
+    if (!token) {
+      location.href = "auth";
+    }
+  }, []);
+
   return (
     <main className="w-full h-full flex justify-center items-start">
       <section className="md:w-6xl p-3 w-full grid place-items-center gap-5">

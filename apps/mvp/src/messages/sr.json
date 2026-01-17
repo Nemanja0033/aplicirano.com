@@ -234,5 +234,28 @@
   "Seo": {
     "title": "Aplicirano | Skup alata za lakše traženje posla",
     "description": "Pratite i upravljajte svojim prijavama za posao na jednom mestu. Aplicirano vam pomaže da ostanete organizovani, steknete uvide i poboljšate potragu za poslom uz pametnu analitiku i AI podršku."
+  },
+  "AuthPage": {
+    "title": "Prijavite se na Aplicirano.com",
+    "subtitle": "Pristupite svom nalogu da pratite i upravljate prijavama za posao.",
+    "email_label": "Email adresa",
+    "password_label": "Lozinka",
+    "remember_me": "Zapamti me",
+    "forgot_password": "Zaboravili ste lozinku?",
+    "sign_in_button": "Prijava",
+    "no_account": "Nemate nalog?",
+    "register_link": "Kreirajte ga ovde",
+    "terms_label": "Pročitao/la sam i slažem se sa",
+    "terms_link": "Uslovima korišćenja",
+    "google_auth": "Prijavite Se Preko Google Naloga"
+  },
+  "AuthMarketing": {
+    "headline": "Ostani organizovan.\nNađi posao pametnije.",
+    "description": "Aplicirano ti pomaže da na jednom mestu vodiš prijave za posao, CV-jeve i profile — uz statistike i AI podršku za efikasniju potragu.",
+    "features": {
+      "one": "Pametno praćenje prijava i statusa",
+      "two": "Čuvanje CV-jeva po profilima",
+      "three": "Statistike i AI uvidi za bolje rezultate"
+    }
   }
 }

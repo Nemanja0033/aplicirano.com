@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Loader from "@/src/components/Loader";
 import { Button } from "@/src/components/ui/button";
 import { Textarea } from "@/src/components/ui/textarea";
@@ -103,6 +103,12 @@ export default function ChatbotPage() {
     }
   }
 
+  useEffect(() => {
+    if (!token) {
+      location.href = "auth";
+    }
+  }, []);
+
   if (isUserLoading) {
     return <Loader type="NORMAL" />;
   }
@@ -179,9 +185,7 @@ export default function ChatbotPage() {
             className="absolute right-3 h-16 w-20 top-3"
             onClick={() => sendPrompt(prompt)}
             size="lg"
-            disabled={
-              isLoading || !token || currentUserData.apiCredits === 0
-            }
+            disabled={isLoading || !token || currentUserData.apiCredits === 0}
           >
             <Send />
           </Button>
