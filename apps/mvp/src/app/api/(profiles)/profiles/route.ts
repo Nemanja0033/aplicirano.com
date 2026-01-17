@@ -161,10 +161,16 @@ export async function DELETE(req: Request) {
     const body = await req.json();
     const { profileId } = body;
 
+    const deleteProfileJobs = await db.job.deleteMany({
+      where: {
+        profileId: profileId
+      }
+    })
+
     const deleteProfile = await db.profile.delete({
       where: {
         id: profileId
-      }
+      },
     });
 
     await db.user.update({

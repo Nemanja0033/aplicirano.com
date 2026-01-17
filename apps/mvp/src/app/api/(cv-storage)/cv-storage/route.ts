@@ -33,8 +33,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    if(user.resumeLimit === 0){
-      return NextResponse.json({ error: "Resumes limit reached"}, { status: 400 });
+    if (user.resumeLimit === 0) {
+      return NextResponse.json(
+        { error: "Resumes limit reached" },
+        { status: 400 }
+      );
     }
 
     // --- Parse multipart form ---
@@ -91,13 +94,13 @@ export async function POST(req: Request) {
       // Decrement resume credit
       const resumeCredits = await db.user.update({
         where: {
-          id: user.id
+          id: user.id,
         },
         data: {
           resumeLimit: {
-            decrement: 1
-          }
-        }
+            decrement: 1,
+          },
+        },
       });
 
       return NextResponse.json(
@@ -119,13 +122,13 @@ export async function POST(req: Request) {
     // Decrement resume credit
     const resumeCredits = await db.user.update({
       where: {
-        id: user.id
+        id: user.id,
       },
       data: {
         resumeLimit: {
-          decrement: 1
-        }
-      }
+          decrement: 1,
+        },
+      },
     });
 
     return NextResponse.json(
@@ -194,5 +197,47 @@ export async function GET(req: Request) {
       { error: "Internal server error" },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    // --- Auth header ---
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return NextResponse.json(
+        { error: "Missing Authorization header" },
+        { status: 401 }
+      );
+    }
+
+    const token = authHeader.split(" ")[1];
+    if (!token) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    }
+
+    // --- Verify Firebase token ---
+    const decoded = await admin.auth().verifyIdToken(token);
+
+    const user = await db.user.findUnique({
+      where: { firebaseUid: decoded.uid },
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const body = await req.json();
+    const { cvToDeleteId } = body;
+
+    await db.resume.delete({
+      where: {
+        id: cvToDeleteId
+      }
+    });
+
+    return NextResponse.json({ succes: true }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ error: "Internal server error "}, { status: 500 });
   }
 }
