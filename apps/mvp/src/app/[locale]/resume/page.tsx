@@ -19,6 +19,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import axios from "axios";
+import { Trash2 } from "lucide-react";
+import GlobalLoader from "@/src/components/gloabal-loader";
 
 type FormValues = {
   title: string;
@@ -30,6 +33,7 @@ export default function ResumesPage() {
   const { token } = useAuthContext();
   const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
   const [isAddResumeModalOpen, setIsOpenModalOpen] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const t = useTranslations("ResumePage");
 
   const { data: currentUser, isLoading: isUserLoading } = useQuery({
@@ -106,6 +110,25 @@ export default function ResumesPage() {
     }
   }
 
+  async function handleDelete(cvId: string){
+    try{
+      setIsDeleting(true);
+      await axios.delete('/api/cv-storage', {
+        data: { cvToDeleteId: cvId },
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success("Resume deleted");
+      queryClient.invalidateQueries({ queryKey: ['resumes', selectedProfile ]});
+    }
+    catch(err){
+      console.error(err);
+      toast.error("Something went wrong");
+    }
+    finally{
+      setIsDeleting(false);
+    }
+  }
+
   // useEffect(() => {
   //   if (!token) {
   //     location.href = "auth";
@@ -125,6 +148,7 @@ export default function ResumesPage() {
   return (
     <>
       <main className="w-full h-screen flex justify-center items-start overflow-auto">
+        {isDeleting && <GlobalLoader />}
         <div className="md:w-6xl p-3 w-full grid place-items-center gap-5">
           <div className="w-full">
             <section className="md:w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] w-fit grid gap-5 p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
@@ -303,6 +327,7 @@ export default function ResumesPage() {
                       </span>
                     </div>
 
+                    <div className="flex items-center gap-2">
                     <a
                       href={r.resumeUrl}
                       target="_blank"
@@ -311,6 +336,9 @@ export default function ResumesPage() {
                     >
                       {t("resume_view")}
                     </a>
+
+                    <button onClick={() => handleDelete(r.id)} className="text-red-700 cursor-pointer"><Trash2 size={18} /></button>
+                    </div>
                   </div>
                 ))}
               </div>

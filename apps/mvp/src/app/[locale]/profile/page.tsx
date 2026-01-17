@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 import Loader from "@/src/components/Loader";
 import { useTranslations } from "next-intl";
+import GlobalLoader from "@/src/components/gloabal-loader";
 
 type Profile = {
   id: string;
@@ -132,6 +133,7 @@ export default function ProfilePage() {
       }
 
       queryClient.invalidateQueries({ queryKey: ["profiles"] });
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
       toast.success(t("toast_deleted"));
     } catch (err) {
       console.error(err);
@@ -163,6 +165,7 @@ export default function ProfilePage() {
 
   return (
     <main className="w-full h-full flex justify-center items-start">
+      {isDeleting && <GlobalLoader />}
       <section className="md:w-6xl p-3 w-full grid place-items-center gap-5">
         <section className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] grid place-items-start p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
           <div className="grid gap-1 w-full">
