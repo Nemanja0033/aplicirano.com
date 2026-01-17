@@ -1,5 +1,4 @@
 "use client";
-
 import { AppSidebar } from '@/src/components/app-sidebar'
 import Navbar from '@/src/components/Navbar'
 import { SidebarProvider, SidebarTrigger } from '@/src/components/ui/sidebar'
@@ -19,7 +18,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="dark">
-          {pathname === '/en' || pathname.includes("auth") || pathname === "/sr" || pathname.includes("privacy-policy") || pathname.includes("terms-of-services") ? (
+          {pathname === '/en' || pathname.includes("auth") || pathname === "/sr" || pathname.includes("privacy-policy") || pathname.includes("terms-of-service") ? (
             children
           ) : (
             <>

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/src/components/ui/card";
 import { getStatsInsightsColor } from "@/helpers";
-import { ArrowRight, BotIcon, ChartBar, ScrollText } from "lucide-react";
+import { ArrowRight, BotIcon, ChartBar, ScrollText, User, Database } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 // *TODO* Add two card sections: Profile stats (api credits & info), Usage stats plan usage, jobs limit, ai chat limits
@@ -102,6 +102,24 @@ export default function Home() {
       description: t("ai_description"),
       icon: BotIcon,
     },
+    {
+      title: t("profiles_title"),
+      cta: t("profiles_cta"),
+      insight: t("profiles_insight"),
+      description: t("profiles_description"),
+      color: "text-blue-500",
+      icon: User,
+      url: "/profile"
+    },
+    {
+      url: "/resume",
+      title: t("resume_title"),
+      cta: t("resume_cta"),
+      insight: t("resume_insight"),
+      description: t("resume_description"),
+      color: "text-orange-500",
+      icon: Database
+    }
   ];
 
   return (
