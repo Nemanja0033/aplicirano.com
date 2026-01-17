@@ -15,12 +15,6 @@ export default function AuthPage() {
   const { handleSignIn } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if(!user){
-      location.href = '/dashboard';
-    }
-  }, []);
-
   async function signIn(){
     await handleSignIn();
     location.href = '/dashboard'

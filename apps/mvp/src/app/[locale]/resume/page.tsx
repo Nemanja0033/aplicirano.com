@@ -116,7 +116,7 @@ export default function ResumesPage() {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">
         <span className="text-gray-400 text-2xl font-semibold">
-          Sign In To Start importing jobs
+          Sign In To Start importing resumes
         </span>
       </div>
     );
