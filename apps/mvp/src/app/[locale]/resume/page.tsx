@@ -106,6 +106,12 @@ export default function ResumesPage() {
     }
   }
 
+  useEffect(() => {
+    if (!token) {
+      location.href = "auth";
+    }
+  }, []);
+
   if (!token) {
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">

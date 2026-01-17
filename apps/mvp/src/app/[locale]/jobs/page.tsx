@@ -5,7 +5,7 @@ import { JobsTable } from "@/src/features/jobs/jobs-display/components/JobsTable
 import { fetchCurrentUserData } from "@/src/features/user/service/user-service";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function JobsPage() {
   const { token } = useAuthContext();
@@ -45,6 +45,12 @@ export default function JobsPage() {
     queryFn: () => fetchCurrentUserData(token as any),
     enabled: !!token,
   });
+
+  useEffect(() => {
+    if(!token){
+      location.href = "auth"
+    }
+  }, []);
 
   if (isUserLoading) {
     return <Loader type="NORMAL" />;

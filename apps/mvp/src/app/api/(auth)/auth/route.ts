@@ -32,7 +32,8 @@ export async function POST(req: Request) {
         data: {
           firebaseUid,
           email: (userData.email as string),
-          username: userData.displayName as string
+          username: userData.displayName as string,
+          isUserAcceptedTerms: true
         },
       });
     }

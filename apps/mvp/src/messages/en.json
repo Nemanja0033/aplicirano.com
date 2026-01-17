@@ -234,5 +234,28 @@
   "Seo": {
     "title": "Aplicirano | Smart Job Search Platform",
     "description": "Track and manage your job applications in one place. Aplicirano helps you stay organized, gain insights, and improve your job search with smart analytics and AI support."
+  },
+  "AuthPage": {
+    "title": "Sign in to Aplicirano.com",
+    "subtitle": "Access your account to track and manage job applications.",
+    "email_label": "Email address",
+    "password_label": "Password",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot your password?",
+    "sign_in_button": "Sign in",
+    "no_account": "Don't have an account?",
+    "register_link": "Create one here",
+    "terms_label": "I have read and agree to the",
+    "terms_link": "Terms of Service",
+    "google_auth": "Continue With Google"
+  },
+  "AuthMarketing": {
+    "headline": "Stay organized.\nGet hired smarter.",
+    "description": "Aplicirano helps you manage job applications, resumes, and profiles in one place — with smart insights and AI support to improve your job search.",
+    "features": {
+      "one": "Smart job tracking & application timelines",
+      "two": "Resume storage with profile-based organization",
+      "three": "Analytics and AI insights to improve your chances"
+    }
   }
 }

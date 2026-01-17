@@ -19,7 +19,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="dark">
-          {pathname === '/en' || pathname === "/sr" || pathname === "/privacy-policy" || pathname === "/terms-of-service" ? (
+          {pathname === '/en' || pathname.includes("auth") || pathname === "/sr" || pathname.includes("privacy-policy") || pathname.includes("terms-of-services") ? (
             children
           ) : (
             <>
