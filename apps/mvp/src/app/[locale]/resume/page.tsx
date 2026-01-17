@@ -106,11 +106,11 @@ export default function ResumesPage() {
     }
   }
 
-  useEffect(() => {
-    if (!token) {
-      location.href = "auth";
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!token) {
+  //     location.href = "auth";
+  //   }
+  // }, []);
 
   if (!token) {
     return (

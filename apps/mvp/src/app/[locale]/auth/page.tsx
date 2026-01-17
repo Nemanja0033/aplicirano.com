@@ -1,15 +1,25 @@
 "use client";
-
 import { Button } from "@/src/components/ui/button";
+import { useAuthContext } from "@/src/context/AuthProvider";
 import { useAuth } from "@/src/features/user/hooks/useAuth";
+import { useRouter } from "@/src/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
 
 export default function AuthPage() {
+  const { user } = useAuthContext();
   const t = useTranslations("AuthPage");
   const m = useTranslations("AuthMarketing");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const { handleSignIn } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if(!user){
+      location.href = '/dashboard';
+    }
+  }, []);
 
   async function signIn(){
     await handleSignIn();
@@ -45,7 +55,7 @@ export default function AuthPage() {
               alt="Auth illustration"
               className="w-64 mx-auto"
             />
-            <h2 className="text-4xl font-semibold">{t("title")}</h2>
+            <h2 className="text-3xl font-semibold">{t("title")}</h2>
             <p className="text-muted-foreground text-xl">{t("subtitle")}</p>
           </div>
 

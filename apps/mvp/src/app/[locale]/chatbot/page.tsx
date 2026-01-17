@@ -103,11 +103,11 @@ export default function ChatbotPage() {
     }
   }
 
-  useEffect(() => {
-    if (!token) {
-      location.href = "auth";
-    }
-  }, []);
+// useEffect(() => {
+//   if (!token) {
+//     location.href = "auth";
+//   }
+// }, []);
 
   if (isUserLoading) {
     return <Loader type="NORMAL" />;

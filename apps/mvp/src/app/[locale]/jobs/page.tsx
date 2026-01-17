@@ -46,12 +46,6 @@ export default function JobsPage() {
     enabled: !!token,
   });
 
-  useEffect(() => {
-    if(!token){
-      location.href = "auth"
-    }
-  }, []);
-
   if (isUserLoading) {
     return <Loader type="NORMAL" />;
   }

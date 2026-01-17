@@ -155,11 +155,11 @@ export default function ProfilePage() {
     );
   }
 
-  useEffect(() => {
-    if (!token) {
-      location.href = "auth";
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!token) {
+  //     location.href = "auth";
+  //   }
+  // }, []);
 
   return (
     <main className="w-full h-full flex justify-center items-start">

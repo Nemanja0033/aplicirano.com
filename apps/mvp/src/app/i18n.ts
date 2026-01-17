@@ -37,7 +37,7 @@ export const translations: any = {
       allApplications: {
         title: "Sve prijave na jednom mestu",
         description:
-          "Dodaj, uvezi i prati sve svoje prijave za posao — brzo i jednostavno. Bez Excela, bez beleški, bez gubljenja konteksta.",
+          "Dodaj, uvezi i prati sve svoje prijave za posao, brzo i jednostavno. Bez Excela, bez beleški, bez gubljenja konteksta.",
         items: [
           "Dodavanje i ažuriranje prijava",
           "Import iz CSV / TXT fajlova",
@@ -47,7 +47,7 @@ export const translations: any = {
       },
 
       analytics: {
-        title: "Vidi šta funkcioniše — a šta ne",
+        title: "Vidi šta funkcioniše a šta ne",
         description:
           "Aplicirano ti daje jasan uvid u tvoje rezultate. Koliko prijava šalješ, gde dobijaš odgovore i koliko proces traje.",
         items: [
