@@ -25,11 +25,13 @@ export function FileImportForm({
   type,
   currentUser,
   selectedProfile,
+  selectedResume,
 }: {
   isDisabled: boolean;
   type: "TXT" | "CSV";
   currentUser: any;
   selectedProfile: any;
+  selectedResume: any
 }) {
   const t = useTranslations("FileImport");
   const [formState, setFormState] = useState(initialFormState);
@@ -58,9 +60,11 @@ export function FileImportForm({
         return;
       }
 
+      // Here send data to server
       const formData = new FormData();
       formData.append("text", file);
       formData.append("profileId", selectedProfile);
+      formData.append("resumeId", selectedResume);
 
       try {
         const res = await fetch("/api/jobs", {
@@ -113,6 +117,7 @@ export function FileImportForm({
       const formData = new FormData();
       formData.append("csv-file", file);
       formData.append("profileId", selectedProfile);
+      formData.append("resumeId", selectedResume);
 
       try {
         const res = await fetch("/api/csv-import", {

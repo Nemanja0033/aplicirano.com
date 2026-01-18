@@ -80,6 +80,9 @@ export async function GET(req: Request) {
             ...(resumeFilter as any)
           },
           orderBy: { appliedAt: "desc" },
+          include: {
+            resume: true
+          },
           skip,
           take: limit,
         }),
@@ -106,6 +109,9 @@ export async function GET(req: Request) {
           profileId: selectedProfile,
           ...(searchFilter as any),
           ...(statusFilter as any)
+        },
+        include: {
+          resume: true
         },
         orderBy: { appliedAt: "desc" },
         skip,
@@ -149,6 +155,7 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const file = formData.get("text") as File;
     const profileId = formData.get("profileId") as string;
+    const resumeId = formData.get("resumeId") as string;
 
     if (!file) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
@@ -214,9 +221,14 @@ export async function POST(req: Request) {
     let jobsInserted = 0;
     let creditsLeft = user.jobsLimit;
 
-    const restData =
+    const profileData =
       profileId && profileId.trim().length > 0 && profileId !== "null"
         ? { profileId: profileId }
+        : {};
+
+    const resumeData = 
+      resumeId && resumeId.trim().length > 0 && resumeId !== "null"
+        ? { resumeId: resumeId }
         : {};
 
     for (const title of jobs) {
@@ -227,7 +239,8 @@ export async function POST(req: Request) {
           title,
           status: "APPLIED",
           userId: user.id,
-          ...restData
+          ...profileData,
+          ...resumeData
         },
       });
 

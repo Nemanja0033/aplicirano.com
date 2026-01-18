@@ -36,7 +36,7 @@ import { Label } from "@/src/components/ui/label";
 import { Input } from "@/src/components/ui/input";
 import { useForm } from "react-hook-form";
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
-import { Calendar, Loader2, ScrollText } from "lucide-react";
+import { Calendar, Download, Loader2, ScrollText } from "lucide-react";
 import { updateSingleJob } from "../../jobs-import/services/job-import-service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "@/src/context/AuthProvider";
@@ -138,6 +138,11 @@ export function JobsTable({
     }
   }, [currentUser]);
 
+  useEffect(() => {
+      console.log("SELCTED prof", selectedProfile);
+      console.log("selected cv", selectedResume);
+  }, [selectedProfile, selectedResume])
+
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
 
   function goToPage(p: number) {
@@ -238,9 +243,9 @@ export function JobsTable({
                 key={r.id}
                 onClick={() => setSelectedResume(r.id)}
                 className={`${
-                  selectedProfile !== r.id
-                    ? "bg-transparent text-primary hover:text-white"
-                    : "bg-primary text-white"
+                  selectedResume !== null
+                    ? "text-white hover:text-white"
+                    : "text-primary bg-transparent hover:bg-primary hover:text-white"
                 } border-2 border-primary`}
               >
                 <ScrollText />
@@ -256,17 +261,20 @@ export function JobsTable({
               {selectedRows.length === 0 && !isStatusChanged && (
                 <div className="flex gap-2">
                   <ManuelJobImport
+                    selectedResume={selectedResume}
                     selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     isDisabled={selectedRows.length > 0}
                   />
                   <FileImportForm
+                    selectedResume={selectedResume}
                     selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     type="TXT"
                     isDisabled={selectedRows.length > 0}
                   />
                   <FileImportForm
+                    selectedResume={selectedResume}
                     selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     type="CSV"
@@ -655,6 +663,16 @@ export function JobsTable({
                 </span>
               )}
             </div>
+
+            {selectedJob?.resume && (
+              <div className="w-full p-2 h-14 border flex gap-2 items-center justify-between rounded-md">
+                <div className="flex gap-2 items-center">
+                  <img src="/pdf.png" className="w-6" alt="" />
+                  <span>{selectedJob?.resume?.title}</span>
+                </div>
+                <a download href={selectedJob?.resume.resumeUrl} className="cursor-pointer"><Download className="text-primary" /></a>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-2 mt-3">
               <Button type="button" onClick={() => setIsJobModalOpen(false)}>

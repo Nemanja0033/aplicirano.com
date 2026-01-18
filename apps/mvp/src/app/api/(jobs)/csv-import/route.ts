@@ -50,6 +50,7 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const file = formData.get("csv-file") as File;
     const profileId = formData.get("profileId") as string;
+    const resumeId = formData.get("resumeId") as string;
 
     if (!file) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
@@ -93,10 +94,15 @@ export async function POST(req: Request) {
     let jobsInserted = 0;
     let creditsLeft = user.jobsLimit;
 
-    const restData =
+    const profileData =
       profileId && profileId.trim().length > 0 && profileId !== "null"
         ? { profileId: profileId }
         : {};
+
+    const resumeData = 
+      resumeId && resumeId.trim().length > 0 && resumeId !== "null"
+      ? { resumeId: resumeId }
+      : {};
 
     for (const row of rows) {
       if (creditsLeft <= 0) break; // stop if no credits left
@@ -107,7 +113,8 @@ export async function POST(req: Request) {
         data: {
           userId: user.id,
           title: title,
-          ...restData,
+          ...profileData,
+          ...resumeData
         },
       });
 
