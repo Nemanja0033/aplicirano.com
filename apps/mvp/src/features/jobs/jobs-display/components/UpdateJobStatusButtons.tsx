@@ -6,6 +6,8 @@ import {
   deleteRecords,
 } from "@/src/features/jobs/jobs-display/services/batch-actions-service";
 import { useQueryClient } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -16,6 +18,7 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
   const [loadingAction, setLoadingAction] = useState<
     "INTERVIEW" | "REJECTED" | "OFFER" | "DELETE" | null
   >(null);
+  const t = useTranslations("JobsTable");
 
   async function handleUpdateStatus(status: "INTERVIEW" | "REJECTED" | "OFFER") {
     try {
@@ -65,8 +68,8 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           disabled={isLoading}
         >
           {isLoading && loadingAction === "INTERVIEW"
-            ? "Marking..."
-            : "Mark As Interview"}
+            ? <span><Loader2 className="animate-spin" /></span>
+            : t("mark_as_interview")}
         </Button>
 
         <Button
@@ -77,8 +80,8 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           disabled={isLoading}
         >
           {isLoading && loadingAction === "REJECTED"
-            ? "Marking..."
-            : "Mark As Rejected"}
+            ? <span><Loader2 className="animate-spin" /></span>
+            : t("mark_as_rejected")}
         </Button>
 
         <Button
@@ -89,8 +92,8 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           disabled={isLoading}
         >
           {isLoading && loadingAction === "OFFER"
-            ? "Marking..."
-            : "Mark As Offer"}
+            ? <span><Loader2 className="animate-spin" /></span>
+            : t("mark_as_offer")}
         </Button>
 
         <Button
@@ -101,8 +104,8 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           disabled={isLoading}
         >
           {isLoading && loadingAction === "DELETE"
-            ? "Deleting..."
-            : `Delete ${selectedRows.length} records`}
+            ? <span><Loader2 className="animate-spin" /></span>
+            : `${t("delete_button")} (${selectedRows.length})`}
         </Button>
       </div>
     </div>

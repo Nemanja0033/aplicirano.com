@@ -11,6 +11,7 @@ import {
   TooltipProvider,
 } from "@/src/components/ui/tooltip";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 
 const initialFormState = {
   isSubmitting: false,
@@ -53,6 +54,7 @@ export function FileImportForm({
           errorMessage: t("error_no_file"),
           fileName: "",
         });
+        toast.error(t("error_no_file"));
         return;
       }
 
@@ -75,7 +77,7 @@ export function FileImportForm({
             typeof errorData?.error === "string"
               ? errorData.error
               : t("error_upload_failed");
-          throw new Error(message);
+          toast.error(t("error_upload_failed"))
         }
 
         setFormState((prev) => ({ ...prev, isSubmitting: false }));
@@ -104,6 +106,7 @@ export function FileImportForm({
           errorMessage: t("error_no_file"),
           fileName: "",
         });
+        toast.error("No file selected")
         return;
       }
 
@@ -196,11 +199,11 @@ export function FileImportForm({
             </Button>
           )}
         </div>
-        {formState.isError && (
+        {/* {formState.isError && (
           <span className="text-red-500 text-sm ml-2">
             {formState.errorMessage}
           </span>
-        )}
+        )} */}
       </form>
     </TooltipProvider>
   );

@@ -1,33 +1,33 @@
 {
   "HomePage": {
-  "title": "Aplicirano",
-  "subtitle": "All applications, statistics and smart tools in one place.",
+    "title": "Aplicirano",
+    "subtitle": "All applications, statistics and smart tools in one place.",
 
-  "jobs_title": "Job Applications",
-  "jobs_cta": "Add application",
-  "jobs_insight": "Import applications from CSV or TXT file and save time.",
-  "jobs_description": "All your applications in one place. Add, import, update statuses and stay organized throughout the process.",
+    "jobs_title": "Job Applications",
+    "jobs_cta": "Add application",
+    "jobs_insight": "Import applications from CSV or TXT file and save time.",
+    "jobs_description": "All your applications in one place. Add, import, update statuses and stay organized throughout the process.",
 
-  "stats_title": "Statistics",
-  "stats_cta": "View statistics",
-  "stats_insight": "Track your process efficiently",
-  "stats_description": "Overview of your job search results. See how many applications you sent, where you get responses and how long the process really takes.",
+    "stats_title": "Statistics",
+    "stats_cta": "View statistics",
+    "stats_insight": "Track your process efficiently",
+    "stats_description": "Overview of your job search results. See how many applications you sent, where you get responses and how long the process really takes.",
 
-  "ai_title": "JobTrack AI",
-  "ai_cta": "Try AI assistant",
-  "ai_insight": "Your assistant in job search",
-  "ai_description": "Your AI assistant for job searching. Ask questions about your applications, prepare cover letters, improve your CV and plan next steps.",
+    "ai_title": "JobTrack AI",
+    "ai_cta": "Try AI assistant",
+    "ai_insight": "Your assistant in job search",
+    "ai_description": "Your AI assistant for job searching. Ask questions about your applications, prepare cover letters, improve your CV and plan next steps.",
 
-  "profiles_title": "Applying Profiles",
-  "profiles_cta": "Create profile",
-  "profiles_insight": "Tailor your applications with different profiles.",
-  "profiles_description": "Set up multiple applying profiles with personalized details. Switch between them to adapt your applications to different companies or roles.",
+    "profiles_title": "Applying Profiles",
+    "profiles_cta": "Create profile",
+    "profiles_insight": "Tailor your applications with different profiles.",
+    "profiles_description": "Set up multiple applying profiles with personalized details. Switch between them to adapt your applications to different companies or roles.",
 
-  "resume_title": "Resume Storage",
-  "resume_cta": "Upload resume",
-  "resume_insight": "Keep your CVs organized and ready.",
-  "resume_description": "Store and manage multiple versions of your resume in one place. Quickly access and attach the right CV when applying."
-},
+    "resume_title": "Resume Storage",
+    "resume_cta": "Upload resume",
+    "resume_insight": "Keep your CVs organized and ready.",
+    "resume_description": "Store and manage multiple versions of your resume in one place. Quickly access and attach the right CV when applying."
+  },
   "JobsTable": {
     "title": "Applied Jobs",
     "subtitle": "Manage and track all your job applications in one place",
@@ -89,7 +89,12 @@
 
     "modal_buttons_cancel": "Cancel",
     "modal_buttons_save": "Save And Close",
-    "modal_buttons_submitting": "Submitting..."
+    "modal_buttons_submitting": "Submitting...",
+
+    "delete_button": "Delete records",
+    "mark_as_offer": "Mark as offer",
+    "mark_as_interview": "Mark as interview",
+    "mark_as_rejected": "Mark as rejected"
   },
   "FileImport": {
     "button_import_csv": "Import CSV",

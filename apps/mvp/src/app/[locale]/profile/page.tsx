@@ -10,6 +10,7 @@ import { Trash2 } from "lucide-react";
 import Loader from "@/src/components/Loader";
 import { useTranslations } from "next-intl";
 import GlobalLoader from "@/src/components/gloabal-loader";
+import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 
 type Profile = {
   id: string;
@@ -76,6 +77,8 @@ export default function ProfilePage() {
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAddingNewProfile, setIsAddingNewProfile] = useState(false);
+
+  const { currentUserData } = useCurrentUser();
 
   const createMutation = useMutation({
     mutationFn: (payload: { name: string }) =>
@@ -237,7 +240,7 @@ export default function ProfilePage() {
                   <Button
                     className="h-12"
                     type="submit"
-                    disabled={!canCreate || isSubmitting || !nameValid}
+                    disabled={!canCreate || isSubmitting}
                   >
                     {isSubmitting
                       ? t("form_creating")
@@ -249,6 +252,7 @@ export default function ProfilePage() {
               </form>
             ) : (
               <button
+                disabled={currentUserData?.profileLimit === 0}
                 onClick={() => setIsAddingNewProfile(true)}
                 className="flex items-center justify-between p-5 hover:opacity-70 transition-all cursor-pointer rounded-lg border dark:border-[#151046] bg-white dark:bg-sidebar"
               >

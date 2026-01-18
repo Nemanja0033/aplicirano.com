@@ -93,6 +93,11 @@ export async function POST(req: Request) {
     let jobsInserted = 0;
     let creditsLeft = user.jobsLimit;
 
+    const restData =
+      profileId && profileId.trim().length > 0 && profileId !== "null"
+        ? { profileId: profileId }
+        : {};
+
     for (const row of rows) {
       if (creditsLeft <= 0) break; // stop if no credits left
 
@@ -102,7 +107,7 @@ export async function POST(req: Request) {
         data: {
           userId: user.id,
           title: title,
-          profileId: profileId
+          ...restData,
         },
       });
 
