@@ -10,13 +10,13 @@ const   StatsNav = ({ range, onChange }: { range: any, onChange: (e: any) => voi
       </div>
       <div className="flex gap-2 items-center">
         <select aria-label={t("range_label")} className="border-2 rounded-md px-3 py-2 dark:border-[#151046] dark:border-2" value={range} onChange={onChange} >
-          <option value="7d" className="bg-[#100c28]">
+          <option value="7d" className="dark:bg-[#100c28] bg-white dark:text-white text-black">
             {t("range_7d")}
           </option>
-          <option value="30d" className="bg-[#100c28]">
+          <option value="30d" className="dark:bg-[#100c28] bg-white dark:text-white text-black">
             {t("range_30d")}
           </option>
-          <option value="90d" className="bg-[#100c28]">
+          <option value="90d" className="dark:bg-[#100c28] bg-white dark:text-white text-black">
             {t("range_90d")}
           </option>
         </select>

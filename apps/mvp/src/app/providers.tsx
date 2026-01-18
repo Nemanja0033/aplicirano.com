@@ -9,6 +9,7 @@ import React, { useState } from 'react'
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthProvider } from '@/src/context/AuthProvider'
 import { usePathname } from 'next/navigation'
+import { Toaster } from 'sonner';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
@@ -30,6 +31,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
               </SidebarProvider>
             </>
           )}
+          <Toaster position='top-center' />
           <ReactQueryDevtools initialIsOpen={false} />
         </ThemeProvider>
       </QueryClientProvider>

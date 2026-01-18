@@ -56,7 +56,7 @@ const ExportToPdf = ({ elementRef, isDisabled }: { elementRef: any; isDisabled: 
           </span>
         </TooltipTrigger>
         {disabled && (
-          <TooltipContent>
+          <TooltipContent className="bg-background text-black dark:text-white">
             <p>{t("disabled_tooltip")}</p>
           </TooltipContent>
         )}
