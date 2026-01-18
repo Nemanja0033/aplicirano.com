@@ -35,6 +35,9 @@
     "profiles_label": "Selected profiles",
     "profiles_general": "General",
 
+    "resumes_label": "Imported resumes",
+    "resumes_general": "All resumes",
+
     "imports_manual": "Manual Job Import",
     "imports_txt": "Import from TXT",
     "imports_csv": "Import from CSV",

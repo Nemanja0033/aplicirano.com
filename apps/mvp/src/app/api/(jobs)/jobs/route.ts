@@ -48,6 +48,7 @@ export async function GET(req: Request) {
     const selectedProfile = url.searchParams.get("profile");
     const query = url.searchParams.get("query");
     const status = url.searchParams.get("status");
+    const resume = url.searchParams.get("resume");
 
     const page = Math.max(1, Number(pageParam ?? 1));
     const limit = Math.min(100, Math.max(1, Number(limitParam ?? 20))); // cap limit to 100
@@ -62,6 +63,11 @@ export async function GET(req: Request) {
       ? { status: { contains: status.trim(), mode: "insensitive" } }
       : {};
 
+      const resumeFilter =
+        resume && resume.trim().length > 0 && resume !== "null"
+          ? { resumeId: resume }
+          : {}; 
+
     // Workaround fix for issue when querying the jobs with null profile
     if (!selectedProfile || selectedProfile === "null") {
       const [total, jobs] = await Promise.all([
@@ -70,7 +76,8 @@ export async function GET(req: Request) {
           where: {
             userId: user.id,
             ...(searchFilter as any),
-            ...(statusFilter as any)
+            ...(statusFilter as any),
+            ...(resumeFilter as any)
           },
           orderBy: { appliedAt: "desc" },
           skip,
@@ -89,7 +96,8 @@ export async function GET(req: Request) {
           userId: user.id,
           profileId: selectedProfile,
           ...(searchFilter as any),
-          ...(statusFilter as any)
+          ...(statusFilter as any),
+          ...(resumeFilter as any)
         },
       }),
       db.job.findMany({

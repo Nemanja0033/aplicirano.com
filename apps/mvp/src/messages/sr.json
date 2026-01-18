@@ -94,7 +94,10 @@
     "delete_button": "Obriši rekorde",
     "mark_as_offer": "Obeleži kao ponudu",
     "mark_as_interview": "Obeleži kao intervju",
-    "mark_as_rejected": "Obeleži kao odbijeno"
+    "mark_as_rejected": "Obeleži kao odbijeno",
+
+    "resumes_label": "Uvezeni CV-jevi",
+    "resumes_general": "Svi CV-jevi"
   },
   "FileImport": {
     "button_import_csv": "Uvezi CSV",
