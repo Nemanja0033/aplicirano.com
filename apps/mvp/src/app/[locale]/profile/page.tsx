@@ -12,6 +12,15 @@ import { useTranslations } from "next-intl";
 import GlobalLoader from "@/src/components/gloabal-loader";
 import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 
+import {
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogContent,
+  AlertDialog,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogCancel,
+} from "@/src/components/ui/alert-dialog";
 type Profile = {
   id: string;
   name: string;
@@ -80,6 +89,12 @@ export default function ProfilePage() {
 
   const { currentUserData } = useCurrentUser();
 
+  useEffect(() => {
+    if(currentUserData?.profileLimit === 0){
+      toast.error("Profiles Limit reached, please upgrade to Pro plan")
+    }
+  }, [currentUserData])
+
   const createMutation = useMutation({
     mutationFn: (payload: { name: string }) =>
       createProfileApi(token as any, payload),
@@ -119,6 +134,13 @@ export default function ProfilePage() {
     }
   }
 
+  // state for confirm modal
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectedProfileToDelete, setSelectedProfileToDelete] = useState<{
+    id: string;
+    name?: string;
+  } | null>(null);
+
   async function handleDelete(payload: { profileId: string }) {
     try {
       setIsDeleting(true);
@@ -133,17 +155,32 @@ export default function ProfilePage() {
 
       if (!res.ok) {
         toast.error(t("toast_error_delete"));
+      } else {
+        toast.success(t("toast_deleted"));
       }
 
       queryClient.invalidateQueries({ queryKey: ["profiles"] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      toast.success(t("toast_deleted"));
     } catch (err) {
       console.error(err);
       toast.error(t("toast_error_delete"));
     } finally {
       setIsDeleting(false);
     }
+  }
+
+  // open confirm modal
+  function confirmDelete(profile: { id: string; name?: string }) {
+    setSelectedProfileToDelete(profile);
+    setConfirmOpen(true);
+  }
+
+  // called when user confirms in modal
+  async function onConfirmDelete() {
+    if (!selectedProfileToDelete) return;
+    setConfirmOpen(false);
+    await handleDelete({ profileId: selectedProfileToDelete.id });
+    setSelectedProfileToDelete(null);
   }
 
   if (isProfilesLoading) {
@@ -160,15 +197,48 @@ export default function ProfilePage() {
     );
   }
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     location.href = "auth";
-  //   }
-  // }, []);
-
   return (
     <main className="w-full h-full flex justify-center items-start">
       {isDeleting && <GlobalLoader />}
+
+      {/* Confirm delete modal */}
+      <AlertDialog onOpenChange={setConfirmOpen} open={confirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {t("confirm_delete_title") || "Delete profile"}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("confirm_delete_desc") ||
+                "Are you sure you want to delete this profile? All jobs associated with this profile will be permanently deleted."}
+              <div className="mt-3 font-medium">
+                {selectedProfileToDelete?.name
+                  ? `${t("confirm_delete_profile") || "Profile"}: ${
+                      selectedProfileToDelete.name
+                    }`
+                  : null}
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter className="flex gap-2">
+            <AlertDialogCancel className="cursor-pointer bg-muted p-2 rounded-lg">
+              {t("confirm_delete_cancel") || "Cancel"}
+            </AlertDialogCancel>
+            <Button
+              onClick={onConfirmDelete}
+              disabled={isDeleting}
+              className="bg-red-600 hover:bg-red-700 text-white"
+            >
+              {isDeleting
+                ? t("confirm_delete_deleting") || "Deleting..."
+                : t("confirm_delete_confirm") || "Delete profile and jobs"}
+              <Trash2 />
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <section className="md:w-6xl p-3 w-full grid place-items-center gap-5">
         <section className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] grid place-items-start p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
           <div className="grid gap-1 w-full">
@@ -205,9 +275,12 @@ export default function ProfilePage() {
                       </div>
 
                       <button
-                        onClick={() => handleDelete({ profileId: p.id })}
+                        onClick={() =>
+                          confirmDelete({ id: p.id, name: p.name })
+                        }
                         disabled={isDeleting}
-                        className="text-red-900 cursor-pointer hover:text-red-800"
+                        className="text-red-700 cursor-pointer"
+                        aria-label={`Delete profile ${p.name}`}
                       >
                         <Trash2 size={20} />
                       </button>
@@ -240,11 +313,11 @@ export default function ProfilePage() {
                   <Button
                     className="h-12"
                     type="submit"
-                    disabled={!canCreate || isSubmitting}
+                    disabled={isSubmitting || currentUserData?.profileLimit === 0}
                   >
                     {isSubmitting
                       ? t("form_creating")
-                      : canCreate
+                      : currentUserData?.profileLimit !== 0
                         ? t("form_create")
                         : t("form_limit")}
                   </Button>
@@ -252,7 +325,6 @@ export default function ProfilePage() {
               </form>
             ) : (
               <button
-                disabled={currentUserData?.profileLimit === 0}
                 onClick={() => setIsAddingNewProfile(true)}
                 className="flex items-center justify-between p-5 hover:opacity-70 transition-all cursor-pointer rounded-lg border dark:border-[#151046] bg-white dark:bg-sidebar"
               >
