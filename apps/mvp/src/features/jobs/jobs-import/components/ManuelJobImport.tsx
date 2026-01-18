@@ -39,7 +39,9 @@ const ManuelJobImport = ({
   isDisabled,
   currentUser,
   selectedProfile,
+  selectedResume
 }: {
+  selectedResume: any
   selectedProfile: any;
   isDisabled: boolean;
   currentUser: any;
@@ -58,7 +60,7 @@ const ManuelJobImport = ({
   const handleSubmitJob = async (data: JobImportForm) => {
     try {
       const jobObject = { ...data, appliedAt: date };
-      await postSingleJob(jobObject, token, selectedProfile);
+      await postSingleJob(jobObject, token, selectedProfile, selectedResume );
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
       setIsModalOpen(false);

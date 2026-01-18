@@ -36,7 +36,7 @@ import { Label } from "@/src/components/ui/label";
 import { Input } from "@/src/components/ui/input";
 import { useForm } from "react-hook-form";
 import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
-import { Calendar, Loader2 } from "lucide-react";
+import { Calendar, Download, Loader2, ScrollText } from "lucide-react";
 import { updateSingleJob } from "../../jobs-import/services/job-import-service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "@/src/context/AuthProvider";
@@ -56,6 +56,9 @@ interface JobsTableProps {
   query: string | null;
   setQuery: any;
   setStatus: any;
+  resumes: any;
+  setSelectedResume: any;
+  selectedResume: any
 }
 
 export function JobsTable({
@@ -71,6 +74,9 @@ export function JobsTable({
   query,
   setQuery,
   setStatus,
+  resumes,
+  selectedResume,
+  setSelectedResume
 }: JobsTableProps) {
   const { token } = useAuthContext();
   const queryClient = useQueryClient();
@@ -132,6 +138,11 @@ export function JobsTable({
     }
   }, [currentUser]);
 
+  useEffect(() => {
+      console.log("SELCTED prof", selectedProfile);
+      console.log("selected cv", selectedResume);
+  }, [selectedProfile, selectedResume])
+
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
 
   function goToPage(p: number) {
@@ -181,7 +192,7 @@ export function JobsTable({
           />
         </div>
 
-        <div className="grid gap-2 w-full">
+        <div className="grid gap-2 w-full border-b py-3">
           <span className="text-sm text-muted-foreground">
             {t("profiles_label")}
           </span>
@@ -212,23 +223,58 @@ export function JobsTable({
           </div>
         </div>
 
+        <div className="grid gap-2 w-full border-b pb-3">
+          <span className="text-sm text-muted-foreground">
+            {t("resumes_label")}
+          </span>
+          <div className="flex gap-3 items-center">
+            <Button
+              onClick={() => setSelectedResume(null)}
+              className={`${
+                selectedResume !== null
+                  ? "text-primary bg-transparent hover:text-white"
+                  : "text-white bg-primary"
+              } border-2 border-primary`}
+            >
+              {t("resumes_general")}
+            </Button>
+            {resumes?.map((r: any) => (
+              <Button
+                key={r.id}
+                onClick={() => setSelectedResume(r.id)}
+                className={`${
+                  selectedResume !== null
+                    ? "text-white hover:text-white"
+                    : "text-primary bg-transparent hover:bg-primary hover:text-white"
+                } border-2 border-primary`}
+              >
+                <ScrollText />
+                {r.title}
+              </Button>
+            ))}
+          </div>
+        </div>
+
         <div className="flex w-full justify-start">
           {isTableReady && (
             <div className="flex">
               {selectedRows.length === 0 && !isStatusChanged && (
                 <div className="flex gap-2">
                   <ManuelJobImport
+                    selectedResume={selectedResume}
                     selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     isDisabled={selectedRows.length > 0}
                   />
                   <FileImportForm
+                    selectedResume={selectedResume}
                     selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     type="TXT"
                     isDisabled={selectedRows.length > 0}
                   />
                   <FileImportForm
+                    selectedResume={selectedResume}
                     selectedProfile={selectedProfile}
                     currentUser={currentUser}
                     type="CSV"
@@ -260,7 +306,10 @@ export function JobsTable({
         </div>
       </section>
 
-      <div ref={tableRef} className="mt-5 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white shadow-md p-5 rounded-lg shadow-md">
+      <div
+        ref={tableRef}
+        className="mt-5 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white shadow-md p-5 rounded-lg shadow-md"
+      >
         {isLoading ? (
           <div className="w-full h-[50vh] flex items-center justify-center">
             <Loader2 className="animate-spin" />
@@ -614,6 +663,16 @@ export function JobsTable({
                 </span>
               )}
             </div>
+
+            {selectedJob?.resume && (
+              <div className="w-full p-2 h-14 border flex gap-2 items-center justify-between rounded-md">
+                <div className="flex gap-2 items-center">
+                  <img src="/pdf.png" className="w-6" alt="" />
+                  <span>{selectedJob?.resume?.title}</span>
+                </div>
+                <a download href={selectedJob?.resume.resumeUrl} className="cursor-pointer"><Download className="text-primary" /></a>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-2 mt-3">
               <Button type="button" onClick={() => setIsJobModalOpen(false)}>

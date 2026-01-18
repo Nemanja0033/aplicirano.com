@@ -48,6 +48,7 @@ export async function GET(req: Request) {
     const selectedProfile = url.searchParams.get("profile");
     const query = url.searchParams.get("query");
     const status = url.searchParams.get("status");
+    const resume = url.searchParams.get("resume");
 
     const page = Math.max(1, Number(pageParam ?? 1));
     const limit = Math.min(100, Math.max(1, Number(limitParam ?? 20))); // cap limit to 100
@@ -62,6 +63,11 @@ export async function GET(req: Request) {
       ? { status: { contains: status.trim(), mode: "insensitive" } }
       : {};
 
+      const resumeFilter =
+        resume && resume.trim().length > 0 && resume !== "null"
+          ? { resumeId: resume }
+          : {}; 
+
     // Workaround fix for issue when querying the jobs with null profile
     if (!selectedProfile || selectedProfile === "null") {
       const [total, jobs] = await Promise.all([
@@ -70,9 +76,13 @@ export async function GET(req: Request) {
           where: {
             userId: user.id,
             ...(searchFilter as any),
-            ...(statusFilter as any)
+            ...(statusFilter as any),
+            ...(resumeFilter as any)
           },
           orderBy: { appliedAt: "desc" },
+          include: {
+            resume: true
+          },
           skip,
           take: limit,
         }),
@@ -89,7 +99,8 @@ export async function GET(req: Request) {
           userId: user.id,
           profileId: selectedProfile,
           ...(searchFilter as any),
-          ...(statusFilter as any)
+          ...(statusFilter as any),
+          ...(resumeFilter as any)
         },
       }),
       db.job.findMany({
@@ -98,6 +109,9 @@ export async function GET(req: Request) {
           profileId: selectedProfile,
           ...(searchFilter as any),
           ...(statusFilter as any)
+        },
+        include: {
+          resume: true
         },
         orderBy: { appliedAt: "desc" },
         skip,
@@ -141,6 +155,7 @@ export async function POST(req: Request) {
     const formData = await req.formData();
     const file = formData.get("text") as File;
     const profileId = formData.get("profileId") as string;
+    const resumeId = formData.get("resumeId") as string;
 
     if (!file) {
       return NextResponse.json({ error: "No file received" }, { status: 400 });
@@ -206,9 +221,14 @@ export async function POST(req: Request) {
     let jobsInserted = 0;
     let creditsLeft = user.jobsLimit;
 
-    const restData =
+    const profileData =
       profileId && profileId.trim().length > 0 && profileId !== "null"
         ? { profileId: profileId }
+        : {};
+
+    const resumeData = 
+      resumeId && resumeId.trim().length > 0 && resumeId !== "null"
+        ? { resumeId: resumeId }
         : {};
 
     for (const title of jobs) {
@@ -219,7 +239,8 @@ export async function POST(req: Request) {
           title,
           status: "APPLIED",
           userId: user.id,
-          ...restData
+          ...profileData,
+          ...resumeData
         },
       });
 
