@@ -44,7 +44,7 @@ export async function POST(req: Request){
                 title: company,
                 userId: user.id,
                 appliedAt: appliedAt,
-                salarly: Number(salary),
+                salarly: salary === "" ? null : Number(salary),
                 jobUrl,
                 position,
                 location,
@@ -108,7 +108,7 @@ export async function PATCH(req: Request){
         jobUrl,
         location,
         position,
-        salarly: Number(salary),
+        salarly: salary === "" ? null : Number(salary),
         notes
       }
     });

@@ -262,7 +262,7 @@ export function JobsTable({
 
       <div ref={tableRef} className="mt-5 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white shadow-md p-5 rounded-lg shadow-md">
         {isLoading ? (
-          <div className="w-full h-screen flex items-center justify-center">
+          <div className="w-full h-[50vh] flex items-center justify-center">
             <Loader2 className="animate-spin" />
           </div>
         ) : (
