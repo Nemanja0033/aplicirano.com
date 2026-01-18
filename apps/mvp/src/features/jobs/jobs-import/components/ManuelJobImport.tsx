@@ -274,13 +274,13 @@ const ManuelJobImport = ({
             />
 
             {/* Buttons */}
-            <div className="flex gap-2 w-full justify-end">
-              <Button disabled={isSubmitting} type="submit">
-                {isSubmitting ? t("form_submit_submitting") : t("form_submit")}
-              </Button>
+            <div className="flex gap-2 mt-2 w-full justify-end">
               <AlertDialogCancel className="cursor-pointer">
                 {t("form_cancel")}
               </AlertDialogCancel>
+              <Button disabled={isSubmitting} type="submit">
+                {isSubmitting ? t("form_submit_submitting") : t("form_submit")}
+              </Button>
             </div>
           </form>
           <AlertDialogFooter></AlertDialogFooter>

@@ -206,6 +206,11 @@ export async function POST(req: Request) {
     let jobsInserted = 0;
     let creditsLeft = user.jobsLimit;
 
+    const restData =
+      profileId && profileId.trim().length > 0 && profileId !== "null"
+        ? { profileId: profileId }
+        : {};
+
     for (const title of jobs) {
       if (creditsLeft <= 0) break;
 
@@ -214,7 +219,7 @@ export async function POST(req: Request) {
           title,
           status: "APPLIED",
           userId: user.id,
-          profileId: profileId,
+          ...restData
         },
       });
 

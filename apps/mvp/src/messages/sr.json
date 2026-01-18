@@ -1,33 +1,33 @@
 {
   "HomePage": {
-  "title": "Aplicirano",
-  "subtitle": "Sve prijave, statistika i pametni alati na jednom mestu.",
+    "title": "Aplicirano",
+    "subtitle": "Sve prijave, statistika i pametni alati na jednom mestu.",
 
-  "jobs_title": "Prijave za posao",
-  "jobs_cta": "Dodaj prijavu",
-  "jobs_insight": "Uvezite prijave iz CSV ili TXT fajla i uštedite vreme.",
-  "jobs_description": "Sve vaše prijave na jednom mestu. Dodajte, uvezite, ažurirajte statuse i budite organizovani tokom celog procesa.",
+    "jobs_title": "Prijave za posao",
+    "jobs_cta": "Dodaj prijavu",
+    "jobs_insight": "Uvezite prijave iz CSV ili TXT fajla i uštedite vreme.",
+    "jobs_description": "Sve vaše prijave na jednom mestu. Dodajte, uvezite, ažurirajte statuse i budite organizovani tokom celog procesa.",
 
-  "stats_title": "Statistika",
-  "stats_cta": "Pogledaj statistiku",
-  "stats_insight": "Pratite svoj proces efikasno",
-  "stats_description": "Pregled rezultata vaše potrage za poslom. Vidite koliko ste prijava poslali, gde dobijate odgovore i koliko proces zaista traje.",
+    "stats_title": "Statistika",
+    "stats_cta": "Pogledaj statistiku",
+    "stats_insight": "Pratite svoj proces efikasno",
+    "stats_description": "Pregled rezultata vaše potrage za poslom. Vidite koliko ste prijava poslali, gde dobijate odgovore i koliko proces zaista traje.",
 
-  "ai_title": "JobTrack AI",
-  "ai_cta": "Isprobaj AI asistenta",
-  "ai_insight": "Vaš asistent u potrazi za poslom",
-  "ai_description": "Vaš AI asistent za traženje posla. Postavljajte pitanja o prijavama, pripremite propratna pisma, unapredite CV i planirajte sledeće korake.",
+    "ai_title": "JobTrack AI",
+    "ai_cta": "Isprobaj AI asistenta",
+    "ai_insight": "Vaš asistent u potrazi za poslom",
+    "ai_description": "Vaš AI asistent za traženje posla. Postavljajte pitanja o prijavama, pripremite propratna pisma, unapredite CV i planirajte sledeće korake.",
 
-  "profiles_title": "Profili za prijave",
-  "profiles_cta": "Kreiraj profil",
-  "profiles_insight": "Prilagodite prijave različitim profilima.",
-  "profiles_description": "Kreirajte više profila sa personalizovanim podacima. Lako menjajte profil u zavisnosti od kompanije ili pozicije.",
+    "profiles_title": "Profili za prijave",
+    "profiles_cta": "Kreiraj profil",
+    "profiles_insight": "Prilagodite prijave različitim profilima.",
+    "profiles_description": "Kreirajte više profila sa personalizovanim podacima. Lako menjajte profil u zavisnosti od kompanije ili pozicije.",
 
-  "resume_title": "Skladište CV-a",
-  "resume_cta": "Otpremi CV",
-  "resume_insight": "Organizujte svoje CV-e na jednom mestu.",
-  "resume_description": "Čuvajte i upravljajte različitim verzijama CV-a. Brzo pristupite i priložite pravi CV kada se prijavljujete."
-},
+    "resume_title": "Skladište CV-a",
+    "resume_cta": "Otpremi CV",
+    "resume_insight": "Organizujte svoje CV-e na jednom mestu.",
+    "resume_description": "Čuvajte i upravljajte različitim verzijama CV-a. Brzo pristupite i priložite pravi CV kada se prijavljujete."
+  },
   "JobsTable": {
     "title": "Prijavljeni poslovi",
     "subtitle": "Upravljaj i prati sve svoje prijave na jednom mestu",
@@ -89,7 +89,12 @@
 
     "modal_buttons_cancel": "Otkaži",
     "modal_buttons_save": "Sačuvaj i zatvori",
-    "modal_buttons_submitting": "Slanje..."
+    "modal_buttons_submitting": "Slanje...",
+
+    "delete_button": "Obriši rekorde",
+    "mark_as_offer": "Obeleži kao ponudu",
+    "mark_as_interview": "Obeleži kao intervju",
+    "mark_as_rejected": "Obeleži kao odbijeno"
   },
   "FileImport": {
     "button_import_csv": "Uvezi CSV",
