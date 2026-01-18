@@ -1,4 +1,5 @@
 "use client";
+
 import Loader from "@/src/components/Loader";
 import {
   AlertDialog,
@@ -7,6 +8,8 @@ import {
   AlertDialogContent,
   AlertDialogTrigger,
   AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
 } from "@/src/components/ui/alert-dialog";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
@@ -61,7 +64,7 @@ export default function ResumesPage() {
     if (currentUser?.resumeLimit === 0) {
       toast.error(t("toast_limit"));
     }
-  }, [currentUser]);
+  }, [currentUser, t]);
 
   const {
     register,
@@ -69,6 +72,13 @@ export default function ResumesPage() {
     reset,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>();
+
+  // Confirm modal state for deleting resume
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [selectedResumeToDelete, setSelectedResumeToDelete] = useState<{
+    id: string;
+    title?: string;
+  } | null>(null);
 
   if (isUserLoading || isLoading) {
     return <Loader type="NORMAL" />;
@@ -78,6 +88,12 @@ export default function ResumesPage() {
     const file = data.cv?.[0];
     if (!file) {
       toast.error(t("form_file_error"));
+      return;
+    }
+
+    // Prevent upload if user has no quota
+    if (currentUser?.resumeLimit === 0) {
+      toast.error(t("toast_limit"));
       return;
     }
 
@@ -105,35 +121,44 @@ export default function ResumesPage() {
 
       reset();
       setIsOpenModalOpen(false);
+      toast.success(t("toast_upload_success"));
     } catch (err) {
       console.error(err);
+      toast.error(t("toast_upload_error"));
     }
   }
 
-  async function handleDelete(cvId: string){
-    try{
+  async function handleDelete(cvId: string) {
+    try {
       setIsDeleting(true);
-      await axios.delete('/api/cv-storage', {
+      await axios.delete("/api/cv-storage", {
         data: { cvToDeleteId: cvId },
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
-      toast.success("Resume deleted");
-      queryClient.invalidateQueries({ queryKey: ['resumes', selectedProfile ]});
-    }
-    catch(err){
+      toast.success(t("toast_deleted"));
+      queryClient.invalidateQueries({ queryKey: ["resumes", selectedProfile] });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+    } catch (err) {
       console.error(err);
-      toast.error("Something went wrong");
-    }
-    finally{
+      toast.error(t("toast_error_delete"));
+    } finally {
       setIsDeleting(false);
     }
   }
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     location.href = "auth";
-  //   }
-  // }, []);
+  // Open confirm modal for a resume
+  function confirmDeleteResume(resume: { id: string; title?: string }) {
+    setSelectedResumeToDelete(resume);
+    setConfirmOpen(true);
+  }
+
+  // Called when user confirms deletion in modal
+  async function onConfirmDeleteResume() {
+    if (!selectedResumeToDelete) return;
+    setConfirmOpen(false);
+    await handleDelete(selectedResumeToDelete.id);
+    setSelectedResumeToDelete(null);
+  }
 
   if (!token) {
     return (
@@ -201,6 +226,11 @@ export default function ResumesPage() {
                   <Button
                     className="mt-3"
                     disabled={currentUser?.resumeLimit === 0}
+                    title={
+                      currentUser?.resumeLimit === 0
+                        ? t("upload_disabled_tooltip")
+                        : undefined
+                    }
                   >
                     {t("add_resume_button")}
                   </Button>
@@ -241,7 +271,7 @@ export default function ResumesPage() {
                       />
                       {errors.title && (
                         <p className="text-xs text-destructive mt-1">
-                          {errors.title.message}
+                          {errors.title.message as string}
                         </p>
                       )}
                     </div>
@@ -274,16 +304,7 @@ export default function ResumesPage() {
                       )}
                     </div>
 
-                    <div className="flex gap-2 items-center">
-                      <Button
-                        type="submit"
-                        className="h-12 px-6"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting
-                          ? t("form_submit_uploading")
-                          : t("form_submit")}
-                      </Button>
+                    <div className="flex w-full justify-end gap-2 items-center">
                       <Button
                         type="button"
                         variant="outline"
@@ -294,6 +315,15 @@ export default function ResumesPage() {
                         className="h-12 px-4"
                       >
                         {t("form_cancel")}
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="h-12 px-6"
+                        disabled={isSubmitting || currentUser?.resumeLimit === 0}
+                      >
+                        {isSubmitting
+                          ? t("form_submit_uploading")
+                          : t("form_submit")}
                       </Button>
                     </div>
                   </form>
@@ -328,16 +358,22 @@ export default function ResumesPage() {
                     </div>
 
                     <div className="flex items-center gap-2">
-                    <a
-                      href={r.resumeUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-sm text-primary hover:underline"
-                    >
-                      {t("resume_view")}
-                    </a>
+                      <a
+                        href={r.resumeUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-sm text-primary hover:underline"
+                      >
+                        {t("resume_view")}
+                      </a>
 
-                    <button onClick={() => handleDelete(r.id)} className="text-red-700 cursor-pointer"><Trash2 size={18} /></button>
+                      <button
+                        onClick={() => confirmDeleteResume({ id: r.id, title: r.title })}
+                        className="text-red-700 cursor-pointer"
+                        aria-label={`Delete resume ${r.title}`}
+                      >
+                        <Trash2 size={18} />
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -345,6 +381,36 @@ export default function ResumesPage() {
             </div>
           </div>
         </div>
+
+        {/* Confirm delete modal */}
+        <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{t("confirm_delete_title")}</AlertDialogTitle>
+              <AlertDialogDescription>
+                {t("confirm_delete_desc")}
+                <div className="mt-3 font-medium">
+                  {selectedResumeToDelete?.title
+                    ? `${t("confirm_delete_resume_label")}: ${selectedResumeToDelete.title}`
+                    : null}
+                </div>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+
+            <AlertDialogFooter className="flex gap-2">
+              <AlertDialogCancel className="cursor-pointer bg-muted p-2 rounded-lg">
+                {t("confirm_delete_cancel")}
+              </AlertDialogCancel>
+              <Button
+                onClick={onConfirmDeleteResume}
+                disabled={isDeleting}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                {isDeleting ? t("confirm_delete_deleting") : t("confirm_delete_confirm")}
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </main>
     </>
   );
