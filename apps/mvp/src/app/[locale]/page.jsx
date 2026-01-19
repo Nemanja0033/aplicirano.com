@@ -10,6 +10,7 @@ import {
   Languages,
   Mail,
   Loader2,
+  User,
 } from "lucide-react";
 import { translations } from "../i18n";
 import {
@@ -41,6 +42,17 @@ export default function ApliciranoLanding() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [mail, setMail] = useState(null);
+  const [usersWait, setUsersWait] = useState(null);
+
+  useEffect(() => {
+    async function fetchUsers(){
+      const res = await fetch("/api/waitlist");
+      const data = await res.json();
+      setUsersWait(data);
+    };
+
+    fetchUsers();
+  }, [])
 
   async function handleWaitlistSubmit(e) {
     e.preventDefault();
@@ -258,6 +270,21 @@ export default function ApliciranoLanding() {
             <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-3xl mx-auto">
               {t.hero.subtitle}
             </p>
+
+            {usersWait > 0 && (
+              <div className="w-full flex items-center mb-3 animate-pulse justify-center gap-2">
+                <span className="bg-gray-100 text-purple-400 z-30 flex items-center justify-center p-1 rounded-full w-10 h-10 border-2 border-gray-100">
+                  <User />
+                </span>
+                <span className="bg-gray-100 relative right-7 z-20 text-purple-400 flex items-center justify-center p-1 rounded-full w-10 h-10 border-2 border-gray-100">
+                  <User />
+                </span>
+                <span className="bg-gray-100 relative right-14 z-10 text-purple-400 flex items-center justify-center p-1 rounded-full w-10 h-10 border-2 border-gray-100">
+                  <User />
+                </span>
+                <span className="text-purple-600 relative right-13">{t.hero.waitlist_label ?? 0}</span>
+              </div>
+            )}
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
