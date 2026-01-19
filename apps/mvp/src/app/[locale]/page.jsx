@@ -282,7 +282,7 @@ export default function ApliciranoLanding() {
                 <span className="bg-gray-100 relative right-14 z-10 text-purple-400 flex items-center justify-center p-1 rounded-full w-10 h-10 border-2 border-gray-100">
                   <User />
                 </span>
-                <span className="text-purple-600 relative right-13">{t.hero.waitlist_label ?? 0}</span>
+                <span className="text-purple-600 relative right-13">{usersWait} {t.hero.waitlist_label ?? 0}</span>
               </div>
             )}
 
