@@ -143,20 +143,29 @@
   "StatsPage": {
     "title": "Statistics",
     "subtitle": "Track your job search metrics and progress",
-
     "range_label": "Select date range view applied jobs stats",
     "range_7d": "Last 7 days",
     "range_30d": "Last 30 days",
     "range_90d": "Last 90 days",
-
     "chart_label": "Applications per day",
+    "chart_positions_title": "Applications by Position",
+    "chart_locations_title": "Applications by Location",
+    "chart_salary_title": "Applications by Salary Range",
+    "chart_appliesPerDay_title": "Applications per Day",
+    "chart_positions": "Positions",
+    "chart_locations": "Locations",
+    "chart_salary": "Salary Range",
+    "chart_appliesPerDay": "Daily Applications",
     "grid_totalApplied": "Total Applied",
     "grid_totalActiveDays": "Total Active Days",
     "grid_totalInterviews": "Total Interviews",
     "grid_totalRejections": "Total Rejections",
     "grid_averageApplies": "Average Applies",
     "grid_averageApplies_suffix": "/ per day",
-    "grid_interviewsRate": "% Interviews Rate"
+    "grid_interviewsRate": "% Interviews Rate",
+    "locked_title": "Locked Feature",
+    "locked_subtitle": "Upgrade to Pro to unlock detailed statistics",
+    "upgrade_button": "Upgrade to Pro"
   },
   "ChatbotPage": {
     "title": "AI Assistant",

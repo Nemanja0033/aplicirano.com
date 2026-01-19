@@ -142,21 +142,30 @@
   },
   "StatsPage": {
     "title": "Statistika",
-    "subtitle": "Prati metrike i napredak u potrazi za poslom",
-
-    "range_label": "Izaberi vremenski period",
+    "subtitle": "Pratite metrike i napredak u traženju posla",
+    "range_label": "Izaberite vremenski period za pregled prijava",
     "range_7d": "Poslednjih 7 dana",
     "range_30d": "Poslednjih 30 dana",
     "range_90d": "Poslednjih 90 dana",
-
-    "chart_label": "Broj prijava po danu",
+    "chart_label": "Prijave po danu",
+    "chart_positions_title": "Prijave po poziciji",
+    "chart_locations_title": "Prijave po lokaciji",
+    "chart_salary_title": "Prijave po platnom razredu",
+    "chart_appliesPerDay_title": "Prijave po danu",
+    "chart_positions": "Pozicije",
+    "chart_locations": "Lokacije",
+    "chart_salary": "Platni razred",
+    "chart_appliesPerDay": "Dnevne prijave",
     "grid_totalApplied": "Ukupno prijava",
     "grid_totalActiveDays": "Ukupno aktivnih dana",
     "grid_totalInterviews": "Ukupno intervjua",
-    "grid_totalRejections": "Ukupno odbijenica",
+    "grid_totalRejections": "Ukupno odbijenih",
     "grid_averageApplies": "Prosečno prijava",
-    "grid_averageApplies_suffix": "/ dnevno",
-    "grid_interviewsRate": "% stopa intervjua"
+    "grid_averageApplies_suffix": "/ po danu",
+    "grid_interviewsRate": "% stopa intervjua",
+    "locked_title": "Zaključana opcija",
+    "locked_subtitle": "Nadogradite na Pro plan da otključate detaljnu statistiku",
+    "upgrade_button": "Nadogradi na Pro"
   },
   "ChatbotPage": {
     "title": "AI Asistent",

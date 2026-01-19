@@ -166,6 +166,7 @@ export function JobsTable({
     try {
       await updateSingleJob(data, selectedJob?.id, token);
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"]});
       setIsJobModalOpen(false);
     } catch (err) {
       toast.error("Something went wrong");

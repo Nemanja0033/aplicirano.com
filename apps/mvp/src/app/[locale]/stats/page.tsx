@@ -1,13 +1,14 @@
 "use client";
 import { formatISO, subDays } from "date-fns";
 import { useStats } from "@/src/features/stats/hooks/useStats";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "@/src/components/Loader";
 import JobChart from "@/src/features/stats/components/JobChart";
 import JobStatsGrid from "@/src/features/stats/components/JobStatsGrid";
 import StatsNav from "@/src/features/stats/components/StatsNav";
 import { useFirebaseUser } from "@/src/hooks/useFirebaseUser";
 import { useIsMobile } from "@/src/hooks/use-mobile";
+import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 
 const ranges = {
   "7d": 7,
@@ -24,8 +25,13 @@ export default function StatsPage() {
   });
   const { data, isLoading } = useStats(token, startDate, endDate);
   const isMobile = useIsMobile();
+  const { currentUserData, isUserLoading: isUserFromDbLoading } = useCurrentUser();
 
-  if (isLoading || isUserLoading) {
+  useEffect(() => {
+    console.log("USER", currentUserData)
+  }, []);
+
+  if (isLoading || isUserLoading || isUserFromDbLoading) {
     return <Loader type="NORMAL" />;
   }
 
@@ -60,13 +66,10 @@ export default function StatsPage() {
           onChange={(e) => setRange(e.target.value as keyof typeof ranges)}
           range={range}
         />
-        <JobChart data={data} />
-        <JobStatsGrid data={data} />
+        <JobChart isPro={currentUserData?.isProUSer as any} data={data} />
+        <JobStatsGrid isPro={currentUserData?.isProUSer as any} data={data} />
       </section>
     </main>
   );
-}
-function useEffect(arg0: () => void, arg1: never[]) {
-    throw new Error("Function not implemented.");
 }
 
