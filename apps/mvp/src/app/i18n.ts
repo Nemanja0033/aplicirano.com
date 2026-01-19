@@ -17,6 +17,7 @@ export const translations: any = {
       ctaPrimary: "Prijavi se na listu čekanja",
       ctaSecondary: "Pogledaj kako funkcioniše",
       note: "Bez kreditne kartice • Instant pristup • Otkaži kad god želiš",
+      waitlist_label: "Korisnika čeka!"
     },
 
     problem: {
@@ -195,6 +196,7 @@ export const translations: any = {
       ctaPrimary: "Join The Waitlist",
       ctaSecondary: "Explore features ",
       note: "No credit card required • Instant access • Cancel anytime",
+      waitlist_label: "Users waiting!"
     },
 
     problem: {

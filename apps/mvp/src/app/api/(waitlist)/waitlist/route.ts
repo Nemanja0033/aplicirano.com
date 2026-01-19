@@ -33,3 +33,15 @@ export async function POST(req: Request){
         return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
 }
+
+export async function GET(req: Request){
+    try{
+        const users = await db.waitlistEmail.count();
+
+        return NextResponse.json(users, { status: 200 });
+    }
+    catch(err){
+        console.error(err);
+        return NextResponse.json({ error: "Internal server error" }, { status: 500})
+    }
+}

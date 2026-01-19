@@ -45,7 +45,7 @@ export interface Job {
     jobsLimit: number;
     profileLimit: number;
     resumeLimit: number;
-    isProUser: boolean;
+    isProUSer: boolean;
     jobs: Job[];
     profiles: Profile[];
     resumes: Resume[];
