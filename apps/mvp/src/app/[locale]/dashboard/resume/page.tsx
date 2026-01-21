@@ -341,11 +341,11 @@ export default function ResumesPage() {
                 {resumes?.map((r: any) => (
                   <div
                     key={r.id}
-                    className="flex cursor-pointer hover:opacity-80 transition-all items-center justify-between p-3 border rounded-lg bg-background"
+                    className="flex hover:opacity-80 transition-all items-center justify-between p-3 border rounded-lg bg-background"
                   >
                     <div className="grid gap-1">
                       <div className="flex items-center gap-1">
-                        <img className="w-4" src="pdf.png" alt="" />
+                        {/* <img className="w-4" src="pdf.png" alt="" /> */}
                         <span className="font-medium">
                           {r.title || t("resume_default_title")}
                         </span>
