@@ -66,7 +66,7 @@ const ImportGuideModal = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="cursor-pointer bg-primary p-2 rounded-lg shadow-md">
+            <AlertDialogCancel className="cursor-pointer bg-primary dark:text-white text-white p-2 rounded-lg shadow-md">
               {t("cancel_button")}
             </AlertDialogCancel>
           </AlertDialogFooter>

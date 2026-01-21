@@ -109,6 +109,8 @@ export async function POST(req: Request) {
 
       const { title } = row;
 
+      if(!title) break;
+
       await db.job.create({
         data: {
           userId: user.id,
@@ -120,6 +122,11 @@ export async function POST(req: Request) {
 
       jobsInserted++;
       creditsLeft--;
+    }
+
+    // If no valid jobs is inserted
+    if(jobsInserted === 0){
+      return NextResponse.json({ error: "Uploaded CSV file, must contain TITLE field." }, { status: 400 })
     }
 
     // --- Update user job limit ---

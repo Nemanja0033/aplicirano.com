@@ -60,6 +60,9 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
         Selected Records ({selectedRows.length})
       </span>
       <div className="md:flex grid grid-cols-2 gap-2 items-center">
+        <Button onClick={resetRows}>
+          {t("cancel")}
+        </Button>
         <Button
           size="sm"
           type="button"

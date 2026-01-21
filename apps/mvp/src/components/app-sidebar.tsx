@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   ScrollText,
   Inbox,
@@ -7,8 +7,8 @@ import {
   ChartBarIncreasingIcon,
   Home,
   User2,
-  File
-} from "lucide-react"
+  File,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -20,11 +20,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/src/components/ui/sidebar"
-import SignInButton from "../features/user/components/AuthToggler"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
-import { useTranslations } from "next-intl"
+} from "@/src/components/ui/sidebar";
+import SignInButton from "../features/user/components/AuthToggler";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -34,35 +34,34 @@ export function AppSidebar() {
     {
       title: t("dashboard"),
       url: "/dashboard",
-      icon: Home
+      icon: Home,
     },
     {
       title: t("jobs"),
-      url: "/jobs",
+      url: "/dashboard/jobs", // promenjeno
       icon: ScrollText,
     },
     {
       title: t("chatbot"),
-      url: "/chatbot",
+      url: "/dashboard/chatbot", // ako želiš da i ovo bude u dashboardu
       icon: BotIcon,
     },
     {
       title: t("stats"),
-      url: "/stats",
-      icon: ChartBar
+      url: "/dashboard/stats", // isto
+      icon: ChartBar,
     },
     {
       title: t("profile"),
-      url: "/profile",
-      icon: User2
+      url: "/dashboard/profile", // isto
+      icon: User2,
     },
     {
       title: t("resume"),
-      url: "/resume",
-      icon: File
-    }
-  ]
-  
+      url: "/dashboard/resume", // isto
+      icon: File,
+    },
+  ];
 
   return (
     <Sidebar>
@@ -71,19 +70,24 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarGroupLabel className="flex gap-2 items-center justify-center text-2xl py-7 text-primary font-bold px-3 mb-2 border-b rounded-none">
               {/* <span className="bg-primary rounded-lg text-white p-1 text-md">JT</span> JobTrakify */}
-              <img className="w-full mr-20" src='/logo.svg' />
+              <img className="w-full mr-20" src="/logo.svg" />
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton className={`${pathname === item.url.slice(0) ? 'bg-primary/20 text-primary' : ''}`} asChild>
+                    <SidebarMenuButton
+                      className={`${pathname === item.url.slice(0) ? "bg-primary/20 text-primary" : ""}`}
+                      asChild
+                    >
                       <Link
                         href={item.url}
                         className="flex items-center text-lg px-3 py-2 rounded-md transition-colors"
                       >
                         <item.icon size={40} />
-                        <span className="text-md font-medium">{item.title}</span>
+                        <span className="text-md font-medium">
+                          {item.title}
+                        </span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -98,5 +102,5 @@ export function AppSidebar() {
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

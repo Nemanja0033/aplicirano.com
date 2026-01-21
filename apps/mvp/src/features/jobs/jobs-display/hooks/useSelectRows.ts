@@ -2,17 +2,26 @@ import { Job } from "@prisma/client";
 import { useState } from "react";
 
 export function useSelectRows() {
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  const [selectedRowsWithStatus, setSelectedRowsWithStatus] = useState<{
-    id: string;
-    status: "INTERVIEW" | "APPLIED" | "REJECTED";
-  }[]>([]);
+  const [selectedRows, setSelectedRows] = useState<any[]>([]);
+  const [selectedRowsWithStatus, setSelectedRowsWithStatus] = useState<
+    {
+      id: string;
+      status: "INTERVIEW" | "APPLIED" | "REJECTED";
+    }[]
+  >([]);
 
   const checkAllRows = (e: any, jobs: Job[]) => {
     if (e.target.checked) {
-      setSelectedRows(jobs.map((j) => j.id));
+      // dodaj sve job.id sa ove strane, ali pazi da ne dupliraš
+      setSelectedRows((prev) => {
+        const newIds = jobs.map((j) => j.id);
+        return [...new Set([...prev, ...newIds])];
+      });
     } else {
-      setSelectedRows([]);
+      // ukloni samo job.id sa ove strane, ostali ostaju
+      setSelectedRows((prev) =>
+        prev.filter((id) => !jobs.some((job) => job.id === id))
+      );
     }
   };
 
@@ -24,17 +33,20 @@ export function useSelectRows() {
     }
   };
 
-  const checkRowsWithStatus = (rowWithStatus: { id: string, status: "INTERVIEW" | "APPLIED" | "REJECTED" }) => {
+  const checkRowsWithStatus = (rowWithStatus: {
+    id: string;
+    status: "INTERVIEW" | "APPLIED" | "REJECTED";
+  }) => {
     setSelectedRowsWithStatus((prev) => {
       const withoutCurrent = prev.filter((row) => row.id !== rowWithStatus.id);
-  
+
       return [...withoutCurrent, rowWithStatus];
     });
   };
 
   const resetRows = () => {
-    setSelectedRows([])
-  }
+    setSelectedRows([]);
+  };
 
   return {
     checkAllRows,
@@ -42,6 +54,6 @@ export function useSelectRows() {
     checkRowsWithStatus,
     resetRows,
     selectedRows,
-    selectedRowsWithStatus
+    selectedRowsWithStatus,
   };
 }

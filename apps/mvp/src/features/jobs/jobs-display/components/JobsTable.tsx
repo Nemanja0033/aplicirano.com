@@ -58,7 +58,7 @@ interface JobsTableProps {
   setStatus: any;
   resumes: any;
   setSelectedResume: any;
-  selectedResume: any
+  selectedResume: any;
 }
 
 export function JobsTable({
@@ -76,7 +76,7 @@ export function JobsTable({
   setStatus,
   resumes,
   selectedResume,
-  setSelectedResume
+  setSelectedResume,
 }: JobsTableProps) {
   const { token } = useAuthContext();
   const queryClient = useQueryClient();
@@ -139,9 +139,8 @@ export function JobsTable({
   }, [currentUser]);
 
   useEffect(() => {
-      console.log("SELCTED prof", selectedProfile);
-      console.log("selected cv", selectedResume);
-  }, [selectedProfile, selectedResume])
+    console.log("selected rows", selectedRows);
+  }, [selectedRows]);
 
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
 
@@ -166,7 +165,7 @@ export function JobsTable({
     try {
       await updateSingleJob(data, selectedJob?.id, token);
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ["stats"]});
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
       setIsJobModalOpen(false);
     } catch (err) {
       toast.error("Something went wrong");
@@ -244,8 +243,8 @@ export function JobsTable({
                 key={r.id}
                 onClick={() => setSelectedResume(r.id)}
                 className={`${
-                  selectedResume !== null
-                    ? "text-white hover:text-white"
+                  selectedResume === r.id
+                    ? "text-white bg-primary hover:text-white"
                     : "text-primary bg-transparent hover:bg-primary hover:text-white"
                 } border-2 border-primary`}
               >
@@ -325,7 +324,7 @@ export function JobsTable({
                     aria-label="select row for action"
                     data-html2canvas-ignore
                     checked={
-                      selectedRows.length === jobs.length && jobs.length > 0
+                      selectedRows.length >= jobs.length && jobs.length > 0
                     }
                     onChange={(e) => checkAllRows(e, jobs)}
                     type="checkbox"
@@ -380,7 +379,7 @@ export function JobsTable({
                           status: e.target.value as any,
                         });
                       }}
-                      className={`cursor-pointer text-[13px] font-medium w-28 p-1 rounded-2xl dark:opacity-75 ${getBadgeLightColor(
+                      className={`cursor-pointer text-[13px] font-medium w-33 p-1 rounded-2xl dark:opacity-65 ${getBadgeLightColor(
                         job.status
                       )} bg-accent`}
                       defaultValue={job.status}
@@ -416,6 +415,7 @@ export function JobsTable({
 
                     <div className="flex items-center gap-2">
                       <Button
+                        variant={'outline'}
                         size={"sm"}
                         onClick={() => goToPage(page - 1)}
                         disabled={page <= 1 || isLoading}
@@ -465,8 +465,8 @@ export function JobsTable({
                             onClick={() => goToPage(p)}
                             className={`px-3 md:flex hidden py-1 rounded ${
                               p === page
-                                ? "bg-primary text-white"
-                                : "border bg-primary/30"
+                                ? "bg-primary text-white rounded-lg"
+                                : "border bg-gray-300/30 hover:text-white text-primary rounded-lg"
                             }`}
                             disabled={isLoading}
                           >
@@ -476,6 +476,7 @@ export function JobsTable({
                       })}
 
                       <Button
+                        variant={'outline'}
                         size={"sm"}
                         onClick={() => goToPage(page + 1)}
                         disabled={page >= pageCount || isLoading}
@@ -671,7 +672,13 @@ export function JobsTable({
                   <img src="/pdf.png" className="w-6" alt="" />
                   <span>{selectedJob?.resume?.title}</span>
                 </div>
-                <a download href={selectedJob?.resume.resumeUrl} className="cursor-pointer"><Download className="text-primary" /></a>
+                <a
+                  download
+                  href={selectedJob?.resume.resumeUrl}
+                  className="cursor-pointer"
+                >
+                  <Download className="text-primary" />
+                </a>
               </div>
             )}
 

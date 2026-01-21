@@ -97,7 +97,8 @@
     "delete_button": "Delete records",
     "mark_as_offer": "Mark as offer",
     "mark_as_interview": "Mark as interview",
-    "mark_as_rejected": "Mark as rejected"
+    "mark_as_rejected": "Mark as rejected",
+    "cancel": "Cancel"
   },
   "FileImport": {
     "button_import_csv": "Import CSV",
