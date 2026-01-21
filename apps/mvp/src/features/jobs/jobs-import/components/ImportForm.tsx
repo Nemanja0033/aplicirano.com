@@ -81,7 +81,7 @@ export function FileImportForm({
             typeof errorData?.error === "string"
               ? errorData.error
               : t("error_upload_failed");
-          toast.error(t("error_upload_failed"))
+          toast.error(message)
         }
 
         setFormState((prev) => ({ ...prev, isSubmitting: false }));
@@ -134,7 +134,7 @@ export function FileImportForm({
             typeof errorData?.error === "string"
               ? errorData.error
               : t("error_upload_failed");
-          throw new Error(message);
+          toast.error(message);
         }
 
         setFormState((prev) => ({ ...prev, isSubmitting: false }));

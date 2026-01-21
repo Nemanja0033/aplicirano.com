@@ -9,8 +9,6 @@ import { useState } from "react";
 
 export default function JobsPage() {
   const { token } = useAuthContext();
-  const queryClient = useQueryClient();
-
   const [page, setPage] = useState<number>(1);
   const PAGE_SIZE = 20;
   const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
