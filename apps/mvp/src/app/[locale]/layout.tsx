@@ -52,7 +52,7 @@ export default async function LocaleLayout({
     <html lang={params.locale} className={inter.className}>
       <body className="antialiased bg-background">
         <NextIntlClientProvider locale={params.locale} messages={messages}>
-          {!isProdReady ? <MaintenancePage /> : <Providers>{children}</Providers>}
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>
