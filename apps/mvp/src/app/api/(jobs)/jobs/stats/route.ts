@@ -68,6 +68,7 @@ export async function GET(req: Request) {
           appliesBySalaryRange: {},
           appliesByProfile: {},
           appliesByResume: {},
+          avgResponseTime: 0,
           avgDaysToInterview: 0,
           avgDaysToRejection: 0,
         },
@@ -120,8 +121,27 @@ export async function GET(req: Request) {
     const appliesByProfile: Record<string, number> = {};
     const appliesByResume: Record<string, number> = {};
 
-    let interviewDays: number[] = [];
-    let rejectionDays: number[] = [];
+    // prosecno vreme odgovora na prijavu
+    let avgInterviewResponse = 0;
+    let interviewWaiting = 0;
+    
+    let avgRejectionResponse = 0;
+    let rejectionWaiting = 0;
+
+    let avgResponseTime = 0;
+    let waitingDays = 0;
+    for (const job of jobs ) {
+      const appliedAt = job.appliedAt;
+      const updatedAt = job.updatedAt;
+
+      const gapDays = (updatedAt.getTime() - appliedAt.getTime()) / (1000 * 60 * 60 * 24);
+      job.status === "INTERVIEW" ? interviewWaiting+= gapDays : job.status === "REJECTED" ? rejectionWaiting+= gapDays : waitingDays+= gapDays
+    };
+
+    // 1. General res time, 2. Interview res time, 3. rejection res time
+    avgResponseTime = Math.floor((waitingDays ?? 0) / totalApplies);
+    avgInterviewResponse = Math.floor((interviewWaiting ?? 0)) / totalInterviews.length;
+    avgRejectionResponse = Math.floor((rejectionWaiting ?? 0)) / totalRejected.length;
 
     for (const job of jobs) {
       // pozicija
@@ -154,27 +174,7 @@ export async function GET(req: Request) {
       if (job.resume?.title) {
         appliesByResume[job.resume.title] = (appliesByResume[job.resume.title] || 0) + 1;
       }
-
-      // vreme do intervjua/odbijanja (za proseke)
-      if (job.status === "INTERVIEW" && job.appliedAt) {
-        // ovde bi u realnom sistemu trebalo da imaš datum intervjua, ali pošto ga nemaš,
-        // koristićemo appliedAt kao proxy (razlika 0 dana)
-        interviewDays.push(0);
-      }
-      if (job.status === "REJECTED" && job.appliedAt) {
-        rejectionDays.push(0);
-      }
     }
-
-    const avgDaysToInterview =
-      interviewDays.length > 0
-        ? Math.round(interviewDays.reduce((a, b) => a + b, 0) / interviewDays.length)
-        : 0;
-
-    const avgDaysToRejection =
-      rejectionDays.length > 0
-        ? Math.round(rejectionDays.reduce((a, b) => a + b, 0) / rejectionDays.length)
-        : 0;
 
     return NextResponse.json(
       {
@@ -190,8 +190,9 @@ export async function GET(req: Request) {
         appliesBySalaryRange,
         appliesByProfile,
         appliesByResume,
-        avgDaysToInterview,
-        avgDaysToRejection,
+        avgResponseTime,
+        avgRejectionResponse,
+        avgInterviewResponse
       },
       { status: 200 }
     );

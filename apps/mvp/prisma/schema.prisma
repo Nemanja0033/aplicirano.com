@@ -11,6 +11,7 @@ model Job {
   id        String   @id @default(uuid())
   title     String
   appliedAt DateTime @default(now())
+  updatedAt DateTime @default(now())
   status    String   @default("APPLIED")
   userId    String
   user      User     @relation(fields: [userId], references: [id])

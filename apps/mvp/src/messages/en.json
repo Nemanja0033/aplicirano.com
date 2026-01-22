@@ -66,6 +66,8 @@
     "pagination_dotsEnd": "...",
 
     "modal_title": "Job Details",
+    "applied_at": "Applied at",
+    "updated_at": "Updated at", 
     "modal_company_label": "Company name",
     "modal_company_required": "*Required",
     "modal_company_error_required": "Company name is required",

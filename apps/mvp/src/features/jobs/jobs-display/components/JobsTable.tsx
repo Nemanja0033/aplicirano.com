@@ -509,10 +509,14 @@ export function JobsTable({
                 • {selectedJob?.status}
               </span>
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="flex gap-3 items-center w-full justify-between">
               <span className="text-xs text-gray-400 font-normal flex gap-1 items-center">
-                <Calendar size={16} strokeWidth={2} />{" "}
+                <span>{t("applied_at")}</span> 
                 {new Date(selectedJob?.appliedAt).toLocaleDateString()}
+              </span>
+              <span className="text-xs text-gray-400 font-normal flex gap-1 items-center">
+                <span>{t("updated_at")}</span> 
+                {new Date(selectedJob?.updatedAt).toLocaleDateString()}
               </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
