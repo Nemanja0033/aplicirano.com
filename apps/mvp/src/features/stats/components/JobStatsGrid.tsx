@@ -11,17 +11,17 @@ const JobStatsGrid = ({
   data,
   isPro,
 }: {
-  data: StatsData | undefined;
+  data: any | undefined;
   isPro: boolean;
 }) => {
   const t = useTranslations("StatsPage");
 
   return (
     <div className="grid gap-6 w-full">
-      <section className="grid w-full lg:grid-cols-3 gap-3">
+      <section className="grid w-full md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
         {/* Osnovne metrike - dostupne svima */}
         <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-primary">
             <FileText strokeWidth={1} /> {t("grid_totalApplied")}
           </CardTitle>
           <CardContent>
@@ -39,7 +39,7 @@ const JobStatsGrid = ({
         </Card>
 
         <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
-          <CardTitle className="flex gap-2 items-center text-[#c751de]">
+          <CardTitle className="flex gap-2 items-center text-[#98de51]">
             <Mic strokeWidth={1} /> {t("grid_totalInterviews")}
           </CardTitle>
           <CardContent>
@@ -48,6 +48,36 @@ const JobStatsGrid = ({
         </Card>
 
         {/* Premium metrike - zaključane ako nije Pro */}
+        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+          <CardTitle className="flex gap-2 items-center text-[#237cb4]">
+            <Calendar1 strokeWidth={1} /> {t("grid_avg_response_time")}
+          </CardTitle>
+          <CardContent>
+            <AnimatedNumber value={data?.avgResponseTime ?? 0} /> /d
+          </CardContent>
+          {!isPro && <LockedOverlay />}
+        </Card>
+
+        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+          <CardTitle className="flex gap-2 items-center text-[#fa1f1b]">
+            <Calendar1 strokeWidth={1} /> {t("grid_avg_rejection_response")}
+          </CardTitle>
+          <CardContent>
+            <AnimatedNumber value={data?.avgRejectionResponse ?? 0} /> /d
+          </CardContent>
+          {!isPro && <LockedOverlay />}
+        </Card>
+
+        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+          <CardTitle className="flex gap-2 items-center text-[#75f399]">
+            <Calendar1 strokeWidth={1} /> {t("grid_avg_interview_response")}
+          </CardTitle>
+          <CardContent>
+            <AnimatedNumber value={data?.avgInterviewResponse ?? 0} /> /d
+          </CardContent>
+          {!isPro && <LockedOverlay />}
+        </Card>
+
         <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
           <CardTitle className="flex gap-2 items-center text-[#FBBF24]">
             <Calendar1 strokeWidth={1} /> {t("grid_totalActiveDays")}
@@ -72,7 +102,7 @@ const JobStatsGrid = ({
         </Card>
 
         <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
-          <CardTitle className="flex gap-2 items-center text-[#F97316]">
+          <CardTitle className="flex gap-2 items-center text-[#71f66a]">
             {t("grid_interviewsRate")}
           </CardTitle>
           <CardContent>

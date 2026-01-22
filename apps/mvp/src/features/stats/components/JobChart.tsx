@@ -1,5 +1,5 @@
+// JobChart.tsx
 import React, { useEffect } from "react";
-import { StatsData } from "../types";
 import { Card, CardTitle, CardContent } from "@/src/components/ui/card";
 import { Bar, Pie } from "react-chartjs-2";
 import {
@@ -12,7 +12,6 @@ import {
   ArcElement,
 } from "chart.js";
 import { useTranslations } from "next-intl";
-import { Button } from "@/src/components/ui/button";
 import LockedOverlay from "./LockedOverlay";
 
 ChartJS.register(
@@ -24,21 +23,55 @@ ChartJS.register(
   ArcElement
 );
 
+// Mock data koji se prikazuje i kad nije pro
+const mockStatsData = {
+  appliesByPosition: {
+    "Frontend Developer": 12,
+    "Backend Developer": 8,
+    "Full-Stack Engineer": 15,
+    "UI/UX Designer": 6,
+    "Data Scientist": 5,
+  },
+  appliesByLocation: {
+    Belgrade: 20,
+    "Novi Sad": 10,
+    Remote: 15,
+    Niš: 5,
+    Kragujevac: 3,
+  },
+  appliesBySalaryRange: {
+    "€500-1000": 12,
+    "€1000-2000": 18,
+    "€2000+": 8,
+  },
+  appliesPerDay: {
+    "2026-01-15": 5,
+    "2026-01-16": 8,
+    "2026-01-17": 3,
+    "2026-01-18": 10,
+    "2026-01-19": 7,
+    "2026-01-20": 4,
+  },
+};
+
 const JobChart = ({
   data,
   isPro,
 }: {
-  data: any | undefined;
+  data?: any;
   isPro: boolean;
 }) => {
   const t = useTranslations("StatsPage");
 
+  // Ako nije pro, koristi mock data
+  const chartData = isPro ? data : mockStatsData;
+
   const positionData = {
-    labels: Object.keys(data?.appliesByPosition ?? {}),
+    labels: Object.keys(chartData?.appliesByPosition ?? {}),
     datasets: [
       {
         label: t("chart_positions"),
-        data: Object.values(data?.appliesByPosition ?? {}),
+        data: Object.values(chartData?.appliesByPosition ?? {}),
         backgroundColor: "#6366F1",
         borderRadius: 6,
       },
@@ -46,11 +79,11 @@ const JobChart = ({
   };
 
   const locationData = {
-    labels: Object.keys(data?.appliesByLocation ?? {}),
+    labels: Object.keys(chartData?.appliesByLocation ?? {}),
     datasets: [
       {
         label: t("chart_locations"),
-        data: Object.values(data?.appliesByLocation ?? {}),
+        data: Object.values(chartData?.appliesByLocation ?? {}),
         backgroundColor: [
           "#F97316",
           "#10B981",
@@ -63,22 +96,22 @@ const JobChart = ({
   };
 
   const salaryData = {
-    labels: Object.keys(data?.appliesBySalaryRange ?? {}),
+    labels: Object.keys(chartData?.appliesBySalaryRange ?? {}),
     datasets: [
       {
         label: t("chart_salary"),
-        data: Object.values(data?.appliesBySalaryRange ?? {}),
+        data: Object.values(chartData?.appliesBySalaryRange ?? {}),
         backgroundColor: ["#22D3EE", "#A78BFA", "#F87171"],
       },
     ],
   };
 
   const appliesPerDayData = {
-    labels: Object.keys(data?.appliesPerDay ?? {}),
+    labels: Object.keys(chartData?.appliesPerDay ?? {}),
     datasets: [
       {
         label: t("chart_appliesPerDay"),
-        data: Object.values(data?.appliesPerDay ?? {}),
+        data: Object.values(chartData?.appliesPerDay ?? {}),
         backgroundColor: "#677fed",
         borderRadius: 8,
         maxBarThickness: 60,
@@ -87,8 +120,8 @@ const JobChart = ({
   };
 
   useEffect(() => {
-    console.log("USER FORM CHILD", isPro)
-  }, [isPro])
+    console.log("USER FORM CHILD", isPro);
+  }, [isPro]);
 
   return (
     <div className="grid gap-6">

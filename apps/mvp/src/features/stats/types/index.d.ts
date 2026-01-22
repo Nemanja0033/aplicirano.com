@@ -5,5 +5,5 @@ export interface StatsData {
     appliesPerDay: any;
     averageAppliesPerDay: number;
     activeDays: string[];
-    interviewsPercentage: number
+    interviewsPercentage: number;
 }

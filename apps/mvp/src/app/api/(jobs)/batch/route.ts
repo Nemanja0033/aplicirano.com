@@ -25,7 +25,7 @@ export async function PATCH(req: Request) {
     for (const id of recordIds) {
       await db.job.update({
         where: { id },
-        data: { status },
+        data: { status, updatedAt: new Date() },
       });
     }
 

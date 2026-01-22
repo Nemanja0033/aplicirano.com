@@ -71,7 +71,7 @@ export async function GET(req: Request) {
     // Workaround fix for issue when querying the jobs with null profile
     if (!selectedProfile || selectedProfile === "null") {
       const [total, jobs] = await Promise.all([
-        db.job.count({ where: { userId: user.id, ...(searchFilter as any), ...(statusFilter as any) } }),
+        db.job.count({ where: { userId: user.id, ...(searchFilter as any), ...(statusFilter as any), ...(resumeFilter as any) } }),
         db.job.findMany({
           where: {
             userId: user.id,
