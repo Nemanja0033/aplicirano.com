@@ -1,5 +1,5 @@
 // JobChart.tsx
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { Card, CardTitle, CardContent } from "@/src/components/ui/card";
 import { Bar, Pie } from "react-chartjs-2";
 import {
@@ -65,6 +65,7 @@ const JobChart = ({
 
   // Ako nije pro, koristi mock data
   const chartData = isPro ? data : mockStatsData;
+  const appliesPerDayDataRaw = data;
 
   const positionData = {
     labels: Object.keys(chartData?.appliesByPosition ?? {}),
@@ -107,11 +108,11 @@ const JobChart = ({
   };
 
   const appliesPerDayData = {
-    labels: Object.keys(chartData?.appliesPerDay ?? {}),
+    labels: Object.keys(appliesPerDayDataRaw?.appliesPerDay ?? {}),
     datasets: [
       {
         label: t("chart_appliesPerDay"),
-        data: Object.values(chartData?.appliesPerDay ?? {}),
+        data: Object.values(appliesPerDayDataRaw?.appliesPerDay ?? {}),
         backgroundColor: "#677fed",
         borderRadius: 8,
         maxBarThickness: 60,
