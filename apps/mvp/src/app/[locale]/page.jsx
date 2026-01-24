@@ -46,14 +46,14 @@ export default function ApliciranoLanding() {
   const [usersWait, setUsersWait] = useState(null);
 
   useEffect(() => {
-    async function fetchUsers(){
+    async function fetchUsers() {
       const res = await fetch("/api/waitlist");
       const data = await res.json();
       setUsersWait(data);
-    };
+    }
 
     fetchUsers();
-  }, [])
+  }, []);
 
   async function handleWaitlistSubmit(e) {
     e.preventDefault();
@@ -283,7 +283,9 @@ export default function ApliciranoLanding() {
                 <span className="bg-gray-100 relative right-14 z-10 text-purple-400 flex items-center justify-center p-1 rounded-full w-10 h-10 border-2 border-gray-100">
                   <User />
                 </span>
-                <span className="text-purple-600 relative right-13">{usersWait} {t.hero.waitlist_label ?? 0}</span>
+                <span className="text-purple-600 relative right-13">
+                  {usersWait} {t.hero.waitlist_label ?? 0}
+                </span>
               </div>
             )}
 
@@ -304,50 +306,10 @@ export default function ApliciranoLanding() {
               </a>
             </div>
 
-            {/* Screenshots */}
-            <div className="relative mt-10 h-[360px] sm:h-[420px]">
-              <img
-                src="https://i.postimg.cc/sgTxFMZy/Screenshot-2026-01-24-01-25-41.png"
-                alt=""
-                className="
-        absolute left-1/2 top-12
-        -translate-x-[80%]
-        w-[280px] sm:w-[360px]
-        rounded-xl
-        shadow-2xl
-        rotate-[-9deg]
-        opacity-90
-      "
-              />
-
-              {/* Screenshot left */}
-              <img
-                src="https://i.postimg.cc/N0ygWpcy/Screenshot-2026-01-24-01-28-45.png"
-                alt=""
-                className="
-        absolute left-1/2 top-8
-        -translate-x-[70%]
-        w-[280px] sm:w-[320px]
-        rounded-xl
-        shadow-2xl
-        rotate-[-4deg]
-        opacity-90
-      "
-              />
-
-              {/* Screenshot right (main) */}
-              <img
-                src="https://i.postimg.cc/tCy4Y3hf/Screenshot-2026-01-24-01-27-33.png"
-                alt=""
-                className="
-        absolute left-1/2 top-5
-        -translate-x-[30%]
-        w-[300px] sm:w-[420px]
-        rounded-xl
-        shadow-2xl
-        z-10
-      "
-              />
+            <div className="w-auto mt-12">
+              <video autoPlay loop muted playsInline className="rounded-4xl border-purple-200 border-5">
+                <source src="/demo.mp4" type="video/mp4" />
+              </video>
             </div>
 
             {/* Note */}
@@ -594,7 +556,12 @@ export default function ApliciranoLanding() {
       <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <button onClick={() => setIsModalOpen(false)} className="absolute right-4 top-2 cursor-pointer">x</button>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute right-4 top-2 cursor-pointer"
+            >
+              x
+            </button>
             <AlertDialogTitle className="flex gap-1 items-center">
               {lang === "en"
                 ? "Join the waitlist"

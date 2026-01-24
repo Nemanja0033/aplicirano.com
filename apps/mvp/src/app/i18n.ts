@@ -15,7 +15,7 @@ export const translations: any = {
       subtitle:
         "Sve tvoje prijave, statistika i pametni alati na jednom mestu. Bez haosa. Bez gubljenja vremena. Bez zaboravljenih prijava.",
       ctaPrimary: "Prijavi se na listu čekanja",
-      ctaSecondary: "Pogledaj kako funkcioniše",
+      ctaSecondary: "Vidi funkcionalnosti",
       note: "Bez kreditne kartice • Instant pristup • Otkaži kad god želiš",
       waitlist_label: "Korisnika čeka!"
     },
