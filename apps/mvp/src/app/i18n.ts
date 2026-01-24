@@ -129,7 +129,7 @@ export const translations: any = {
     },
 
     pricing: {
-      title: "Jednostavno i pošteno plaćanje",
+      title: "Jednostavno plaćanje",
       subtitle: "Počni besplatno, nadogradi kad ti odgovara",
 
       free: {
@@ -148,7 +148,7 @@ export const translations: any = {
 
       pro: {
         title: "Pro",
-        subtitle: "Jednom plati — koristi zauvek",
+        subtitle: "Jednom plati - koristi zauvek",
         price: "One-time",
         features: [
           "Neograničen broj prijava",
