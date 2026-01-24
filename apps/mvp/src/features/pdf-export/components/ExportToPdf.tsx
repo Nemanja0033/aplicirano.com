@@ -41,7 +41,7 @@ const ExportToPdf = ({ elementRef, isDisabled }: { elementRef: any; isDisabled: 
     return <Loader type="WAITING_FOR_PDF" />;
   }
 
-  const disabled = isDisabled || !currentUserData?.isProUser;
+  const disabled = isDisabled || !currentUserData?.isProUSer;
 
   return (
     <TooltipProvider>

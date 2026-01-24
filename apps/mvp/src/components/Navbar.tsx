@@ -4,10 +4,13 @@ import { ModeToggle } from "./theme-toggler";
 import { Button } from "./ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "./ui/select";
 import { useRouter, usePathname } from "@/src/i18n/navigation";
+import UpgradeButton from "./UpgradeButton";
+import { useCurrentUser } from "../features/user/hooks/useCurrentUser";
 
 const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const { currentUserData } = useCurrentUser();
 
   function changeLang(locale: string) {
     router.push(pathname, { locale });
@@ -15,12 +18,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-end gap-2 items-center p-3 bg-transparent">
-      <Button size={"lg"}>
-        Nadogradi na{" "}
-        <span className="flex items-center gap-1 text-cyan-300 animate-pulse">
-          <SparklesIcon /> Pro
-        </span>
-      </Button>
+      {!currentUserData?.isProUSer ? <UpgradeButton /> : null}
       <ModeToggle />
 
       <Select onValueChange={changeLang}>
