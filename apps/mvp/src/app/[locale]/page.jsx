@@ -306,7 +306,7 @@ export default function ApliciranoLanding() {
             {/* Screenshots */}
             <div className="relative mt-10 h-[360px] sm:h-[420px]">
               <img
-                src="https://i.postimg.cc/g0J7mJGn/Screenshot-2026-01-10-19-31-04.png"
+                src="https://i.postimg.cc/sgTxFMZy/Screenshot-2026-01-24-01-25-41.png"
                 alt=""
                 className="
         absolute left-1/2 top-12
@@ -321,12 +321,12 @@ export default function ApliciranoLanding() {
 
               {/* Screenshot left */}
               <img
-                src="https://i.postimg.cc/K899q2tX/Screenshot-2026-01-10-19-31-39.png"
+                src="https://i.postimg.cc/N0ygWpcy/Screenshot-2026-01-24-01-28-45.png"
                 alt=""
                 className="
-        absolute left-1/2 top-12
-        -translate-x-[60%]
-        w-[280px] sm:w-[360px]
+        absolute left-1/2 top-8
+        -translate-x-[70%]
+        w-[280px] sm:w-[320px]
         rounded-xl
         shadow-2xl
         rotate-[-4deg]
@@ -336,7 +336,7 @@ export default function ApliciranoLanding() {
 
               {/* Screenshot right (main) */}
               <img
-                src="https://i.postimg.cc/5N1V5hgq/Screenshot-2026-01-16-23-35-47.png"
+                src="https://i.postimg.cc/tCy4Y3hf/Screenshot-2026-01-24-01-27-33.png"
                 alt=""
                 className="
         absolute left-1/2 top-5
@@ -593,6 +593,7 @@ export default function ApliciranoLanding() {
       <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
+            <button onClick={() => setIsModalOpen(false)} className="absolute right-4 top-2 cursor-pointer">x</button>
             <AlertDialogTitle className="flex gap-1 items-center">
               {lang === "en"
                 ? "Join the waitlist"
