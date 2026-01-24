@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/src/components/ui/table";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import JobFilters from "@/src/features/jobs/job-filters/components/FiltersToolbars";
 import { Job } from "../types";
 import { useFilters } from "@/src/features/jobs/job-filters/hooks/useFilters";
