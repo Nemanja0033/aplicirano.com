@@ -48,7 +48,7 @@ const JobStatsGrid = ({
         </Card>
 
         {/* Premium metrike - zaključane ako nije Pro */}
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        {/* <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
           <CardTitle className="flex gap-2 items-center text-[#237cb4]">
             <Calendar1 strokeWidth={1} /> {t("grid_avg_response_time")}
           </CardTitle>
@@ -56,7 +56,7 @@ const JobStatsGrid = ({
             <AnimatedNumber value={data?.avgResponseTime ?? 0} /> /d
           </CardContent>
           {!isPro && <LockedOverlay />}
-        </Card>
+        </Card> */}
 
         <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
           <CardTitle className="flex gap-2 items-center text-[#fa1f1b]">

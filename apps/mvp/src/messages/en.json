@@ -166,6 +166,9 @@
     "grid_averageApplies": "Average Applies",
     "grid_averageApplies_suffix": "/ per day",
     "grid_interviewsRate": "% Interviews Rate",
+    "grid_avg_response_time": "Average response time",
+    "grid_avg_rejection_response": "Average rejection time",
+    "grid_avg_interview_response": "Average interview time",
     "locked_title": "Locked Feature",
     "locked_subtitle": "Upgrade to Pro to unlock detailed statistics",
     "upgrade_button": "Upgrade to Pro"
