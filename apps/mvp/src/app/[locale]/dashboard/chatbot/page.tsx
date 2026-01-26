@@ -75,22 +75,29 @@ export default function ChatbotPage() {
 
   async function sendPrompt(input: string) {
     if (!input.trim()) return;
+  
     setIsLoading(true);
-
-    setMessages((prev) => [...prev, { role: "user", content: input }]);
-
+  
+    const newUserMessage: Message = { role: "user", content: input };
+  
+    // 1. optimisticki dodaj user poruku
+    setMessages((prev) => [...prev, newUserMessage]);
+  
     try {
       const res = await axios.post(
         "/api/chatbot",
-        { message: input },
+        {
+          messages: [...messages, newUserMessage], // ✅ CEO CHAT IDE NA API
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+  
       const msg = res?.data.message ?? t("error_no_response");
-
+  
       setMessages((prev) => [...prev, { role: "ai", content: msg }]);
       queryClient.invalidateQueries({ queryKey: ["me"] });
     } catch (err) {
