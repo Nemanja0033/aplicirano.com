@@ -1,5 +1,5 @@
 "use client";
-import { SparklesIcon } from "lucide-react";
+import { Languages, SparklesIcon } from "lucide-react";
 import { ModeToggle } from "./theme-toggler";
 import { Button } from "./ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem } from "./ui/select";
@@ -23,7 +23,7 @@ const Navbar = () => {
 
       <Select onValueChange={changeLang}>
         <SelectTrigger className="w-fit">
-          <span>Lang</span>
+          <Languages />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="en">English</SelectItem>

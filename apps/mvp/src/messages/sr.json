@@ -266,12 +266,13 @@
     "csv_step2": "CSV fajl mora da sadrži polje \"title\" koje se odnosi na naziv kompanije.",
     "csv_step3": "Svaka prijava se učitava kao red u tabeli.",
     "manual_title": "RUČNI UNOS",
+    "manual_step0": "Odaberite profil i CV verziju sa kojim aplicirate na zeljenu poziciju",
     "manual_step1": "Kliknite na dugme \"+ Ručni unos\".",
     "manual_step2": "Unesite naziv kompanije i izaberite datum prijave.",
     "table_title": "PREGLED PRIJAVA",
     "table_step1": "Dvostrukim klikom na prijavu u tabeli otvara se modal.",
     "table_step2": "U modalu možete pregledati i uneti relevantne podatke za izabrani posao.",
-    "cancel_button": "Otkaži"
+    "cancel_button": "Razumem"
   },
 
   "Seo": {

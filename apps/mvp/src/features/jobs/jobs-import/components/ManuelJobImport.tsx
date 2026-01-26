@@ -63,6 +63,7 @@ const ManuelJobImport = ({
       await postSingleJob(jobObject, token, selectedProfile, selectedResume );
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"]});
       setIsModalOpen(false);
     } catch (err) {
       console.error(err);

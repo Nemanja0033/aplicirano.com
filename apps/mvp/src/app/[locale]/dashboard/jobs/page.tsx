@@ -78,7 +78,7 @@ export default function JobsPage() {
   }
 
   return (
-    <main className="w-full h-screen flex justify-center items-start overflow-auto">
+    <main className="w-full h-screen flex justify-center items-start">
       <div className="md:w-6xl p-3 w-full grid place-items-center gap-5">
         <JobsTable
           currentUser={currentUserData}

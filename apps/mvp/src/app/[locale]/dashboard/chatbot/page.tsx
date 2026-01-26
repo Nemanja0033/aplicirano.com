@@ -5,7 +5,7 @@ import { Textarea } from "@/src/components/ui/textarea";
 import { fetchCurrentUserData } from "@/src/features/user/service/user-service";
 import { useIsMobile } from "@/src/hooks/use-mobile";
 import { useFirebaseUser } from "@/src/hooks/useFirebaseUser";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Send, Sparkle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ interface Message {
 
 export default function ChatbotPage() {
   const t = useTranslations("ChatbotPage");
+  const queryClient = useQueryClient();
   const { user, token } = useFirebaseUser();
   const [messages, setMessages] = useState<Message[]>([
     { role: "ai", content: t("welcome_message") },
@@ -91,6 +92,7 @@ export default function ChatbotPage() {
       const msg = res?.data.message ?? t("error_no_response");
 
       setMessages((prev) => [...prev, { role: "ai", content: msg }]);
+      queryClient.invalidateQueries({ queryKey: ["me"] });
     } catch (err) {
       console.error(err);
       setMessages((prev) => [
