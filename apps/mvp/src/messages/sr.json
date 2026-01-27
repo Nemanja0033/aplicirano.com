@@ -304,7 +304,7 @@
     "description": "Pratite i upravljajte svojim prijavama za posao na jednom mestu. Aplicirano vam pomaže da ostanete organizovani, steknete uvide i poboljšate potragu za poslom uz pametnu analitiku i AI podršku."
   },
   "AuthPage": {
-    "title": "Prijavite se na Aplicirano.com",
+    "title": "Registruj se na Aplicirano.com",
     "subtitle": "Pristupite svom nalogu da pratite i upravljate prijavama za posao.",
     "email_label": "Email adresa",
     "password_label": "Lozinka",
@@ -315,7 +315,9 @@
     "register_link": "Kreirajte ga ovde",
     "terms_label": "Pročitao/la sam i slažem se sa",
     "terms_link": "Uslovima korišćenja",
-    "google_auth": "Prijavite Se Preko Google Naloga"
+    "google_auth": "Registrujte se reko Google naloga",
+    "have_acc": "Vec imate nalog?",
+    "google_login": "Prijavite se sa vasim Google nalogom"
   },
   "AuthMarketing": {
     "headline": "Ostani organizovan.\nNađi posao pametnije.",
