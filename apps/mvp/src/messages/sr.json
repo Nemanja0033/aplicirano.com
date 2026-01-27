@@ -98,7 +98,7 @@
     "mark_as_interview": "Obeleži kao intervju",
     "mark_as_rejected": "Obeleži kao odbijeno",
     "cancel": "Otkaži",
-    
+
     "resumes_label": "Uvezeni CV-jevi",
     "resumes_general": "Svi CV-jevi"
   },
@@ -246,6 +246,30 @@
     "confirm_delete_deleting": "Brišem...",
     "confirm_delete_confirm": "Obriši CV"
   },
+  "Navbar": {
+    "subscription_button": "Nadogradi na Pro",
+    "tooltip": "Prijavi grešku",
+    "title": "Prijavi grešku",
+    "description": "Primetio si problem? Prijavi i pomozi da unapredimo platformu.",
+    "bugTypeLabel": "* Domen greške",
+    "bugTypePlaceholder": "Odaberi domen",
+    "bugDescriptionLabel": "* Opis greške",
+    "cancel": "Otkaži",
+    "submit": "Potvrdi",
+    "success": "Greška je uspešno prijavljena",
+    "error": "Greška pri slanju prijave",
+    "validation": {
+      "type": "Molimo odaberite domen",
+      "description": "Opis mora imati najmanje 10 karaktera"
+    },
+    "domains": {
+      "jobs": "Lista poslova",
+      "ai": "AI asistent",
+      "stats": "Statistika",
+      "profile": "Profil",
+      "cv": "Skladište CV-ja"
+    }
+  },
   "Sidebar": {
     "dashboard": "Početna",
     "jobs": "Lista poslova",
@@ -266,12 +290,13 @@
     "csv_step2": "CSV fajl mora da sadrži polje \"title\" koje se odnosi na naziv kompanije.",
     "csv_step3": "Svaka prijava se učitava kao red u tabeli.",
     "manual_title": "RUČNI UNOS",
+    "manual_step0": "Odaberite profil i CV verziju sa kojim aplicirate na zeljenu poziciju",
     "manual_step1": "Kliknite na dugme \"+ Ručni unos\".",
     "manual_step2": "Unesite naziv kompanije i izaberite datum prijave.",
     "table_title": "PREGLED PRIJAVA",
     "table_step1": "Dvostrukim klikom na prijavu u tabeli otvara se modal.",
     "table_step2": "U modalu možete pregledati i uneti relevantne podatke za izabrani posao.",
-    "cancel_button": "Otkaži"
+    "cancel_button": "Razumem"
   },
 
   "Seo": {

@@ -67,7 +67,7 @@
 
     "modal_title": "Job Details",
     "applied_at": "Applied at",
-    "updated_at": "Updated at", 
+    "updated_at": "Updated at",
     "modal_company_label": "Company name",
     "modal_company_required": "*Required",
     "modal_company_error_required": "Company name is required",
@@ -246,6 +246,30 @@
     "confirm_delete_deleting": "Deleting...",
     "confirm_delete_confirm": "Delete resume"
   },
+  "Navbar": {
+    "subscription_button": "Upgrade to Pro",
+    "tooltip": "Report a bug",
+    "title": "Report a bug",
+    "description": "Found a problem? Let us know and help us improve the platform.",
+    "bugTypeLabel": "* Bug domain",
+    "bugTypePlaceholder": "Select domain",
+    "bugDescriptionLabel": "* Bug description",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "success": "Bug report sent successfully",
+    "error": "Failed to send bug report",
+    "validation": {
+      "type": "Please select bug domain",
+      "description": "Description must be at least 10 characters"
+    },
+    "domains": {
+      "jobs": "Jobs list",
+      "ai": "AI Assistant",
+      "stats": "Statistics",
+      "profile": "Profile",
+      "cv": "CV Storage"
+    }
+  },
   "Sidebar": {
     "dashboard": "Home",
     "jobs": "Jobs List",
@@ -266,12 +290,13 @@
     "csv_step2": "The CSV file must contain a field named \"title\" referring to the company name.",
     "csv_step3": "Each application is loaded as a row in the table.",
     "manual_title": "MANUAL ENTRY",
+    "manual_step0": "Select the profile and CV version that is using for job application",
     "manual_step1": "Click the \"+ Manual entry\" button.",
     "manual_step2": "Enter the company name and select the application date.",
     "table_title": "APPLICATION OVERVIEW",
     "table_step1": "Double‑clicking on a job in the table opens a modal.",
     "table_step2": "In the modal you can review and enter relevant details for the selected job.",
-    "cancel_button": "Cancel"
+    "cancel_button": "Got it"
   },
 
   "Seo": {

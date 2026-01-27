@@ -18,7 +18,7 @@ export default function AuthToggler() {
           {user ? (
             <img className="w-10 h-10 rounded-lg" src={user?.photoURL as string} alt="" />
           ) : (
-            <span className="font-semibold bg-primary p-2 h-10 w-10 flex items-center justify-center rounded-full"><User /></span>
+            <span className="font-semibold bg-gray-200 dark:bg-gray-700 p-2 h-10 w-10 flex items-center justify-center rounded-full"><User /></span>
           )}
           <div className="grid place-items-start">
            {user ? (

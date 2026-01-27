@@ -77,3 +77,11 @@ enum JobStatus {
   REJECTED
   INTERVIEW
 }
+
+model BugReport {
+  id             String   @id @default(ulid())
+  type           String
+  bugDescription String
+  reportedBy     String
+  reportedAt     DateTime @default(now())
+}

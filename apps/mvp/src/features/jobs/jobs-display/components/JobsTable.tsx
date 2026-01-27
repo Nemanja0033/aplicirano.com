@@ -349,7 +349,7 @@ export function JobsTable({
                   onDoubleClick={() => handleOpenModal(job)}
                   className={`${
                     selectedRows.includes(job.id)
-                      ? "dark:bg-gradient-to-b from-[#100c28] to-[#010216]"
+                      ? "dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-primary/10"
                       : ""
                   }`}
                   key={job.id}

@@ -87,6 +87,7 @@ export function FileImportForm({
         setFormState((prev) => ({ ...prev, isSubmitting: false }));
         queryClient.invalidateQueries({ queryKey: ["jobs"] });
         queryClient.invalidateQueries({ queryKey: ["me"] });
+        queryClient.invalidateQueries({ queryKey: ["stats"]});
         setIsSubmitButtonHidden(true);
       } catch (err: any) {
         setFormState({
@@ -140,6 +141,7 @@ export function FileImportForm({
         setFormState((prev) => ({ ...prev, isSubmitting: false }));
         queryClient.invalidateQueries({ queryKey: ["jobs"] });
         queryClient.invalidateQueries({ queryKey: ["me"] });
+        queryClient.invalidateQueries({ queryKey: ["stats"]});
         setIsSubmitButtonHidden(true);
       } catch (err: any) {
         setFormState({
