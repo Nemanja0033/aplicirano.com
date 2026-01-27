@@ -98,7 +98,7 @@
     "mark_as_interview": "Obeleži kao intervju",
     "mark_as_rejected": "Obeleži kao odbijeno",
     "cancel": "Otkaži",
-    
+
     "resumes_label": "Uvezeni CV-jevi",
     "resumes_general": "Svi CV-jevi"
   },
@@ -245,6 +245,30 @@
     "confirm_delete_cancel": "Otkaži",
     "confirm_delete_deleting": "Brišem...",
     "confirm_delete_confirm": "Obriši CV"
+  },
+  "Navbar": {
+    "subscription_button": "Nadogradi na Pro",
+    "tooltip": "Prijavi grešku",
+    "title": "Prijavi grešku",
+    "description": "Primetio si problem? Prijavi i pomozi da unapredimo platformu.",
+    "bugTypeLabel": "* Domen greške",
+    "bugTypePlaceholder": "Odaberi domen",
+    "bugDescriptionLabel": "* Opis greške",
+    "cancel": "Otkaži",
+    "submit": "Potvrdi",
+    "success": "Greška je uspešno prijavljena",
+    "error": "Greška pri slanju prijave",
+    "validation": {
+      "type": "Molimo odaberite domen",
+      "description": "Opis mora imati najmanje 10 karaktera"
+    },
+    "domains": {
+      "jobs": "Lista poslova",
+      "ai": "AI asistent",
+      "stats": "Statistika",
+      "profile": "Profil",
+      "cv": "Skladište CV-ja"
+    }
   },
   "Sidebar": {
     "dashboard": "Početna",

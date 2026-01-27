@@ -67,7 +67,7 @@
 
     "modal_title": "Job Details",
     "applied_at": "Applied at",
-    "updated_at": "Updated at", 
+    "updated_at": "Updated at",
     "modal_company_label": "Company name",
     "modal_company_required": "*Required",
     "modal_company_error_required": "Company name is required",
@@ -245,6 +245,30 @@
     "confirm_delete_cancel": "Cancel",
     "confirm_delete_deleting": "Deleting...",
     "confirm_delete_confirm": "Delete resume"
+  },
+  "Navbar": {
+    "subscription_button": "Upgrade to Pro",
+    "tooltip": "Report a bug",
+    "title": "Report a bug",
+    "description": "Found a problem? Let us know and help us improve the platform.",
+    "bugTypeLabel": "* Bug domain",
+    "bugTypePlaceholder": "Select domain",
+    "bugDescriptionLabel": "* Bug description",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "success": "Bug report sent successfully",
+    "error": "Failed to send bug report",
+    "validation": {
+      "type": "Please select bug domain",
+      "description": "Description must be at least 10 characters"
+    },
+    "domains": {
+      "jobs": "Jobs list",
+      "ai": "AI Assistant",
+      "stats": "Statistics",
+      "profile": "Profile",
+      "cv": "CV Storage"
+    }
   },
   "Sidebar": {
     "dashboard": "Home",
