@@ -315,7 +315,9 @@
     "register_link": "Create one here",
     "terms_label": "I have read and agree to the",
     "terms_link": "Terms of Service",
-    "google_auth": "Continue With Google"
+    "google_auth": "Continue With Google",
+    "have_acc": "Already have account?",
+    "google_login": "Login with your Google account"
   },
   "AuthMarketing": {
     "headline": "Stay organized.\nGet hired smarter.",

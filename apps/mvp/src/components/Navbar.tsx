@@ -88,7 +88,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-end gap-2 items-center p-3 bg-transparent">
-      {!currentUserData?.isProUSer ? <UpgradeButton /> : null}
+      {!currentUserData?.isProUSer && token !== null ? <UpgradeButton /> : null}
       <ModeToggle />
 
       <Select onValueChange={changeLang}>

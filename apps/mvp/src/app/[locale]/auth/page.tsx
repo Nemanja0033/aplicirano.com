@@ -3,9 +3,10 @@ import { Button } from "@/src/components/ui/button";
 import { useAuthContext } from "@/src/context/AuthProvider";
 import { useAuth } from "@/src/features/user/hooks/useAuth";
 import { useRouter } from "@/src/i18n/navigation";
+import { signInWithPopup } from "firebase/auth";
 import { useTranslations } from "next-intl";
-
 import { useEffect, useState } from "react";
+import { auth, provider } from "../../lib/firebaseConfig";
 
 export default function AuthPage() {
   const { user } = useAuthContext();
@@ -14,10 +15,36 @@ export default function AuthPage() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const { handleSignIn } = useAuth();
   const router = useRouter();
+  const { token } = useAuthContext();
 
-  async function signIn(){
+  useEffect(() => {
+    if(token){
+      location.href = '/dashboard'
+    }
+  }, [token]);
+
+  async function signIn() {
     await handleSignIn();
-    location.href = '/dashboard'
+    location.href = "/dashboard";
+  }
+
+  async function login() {
+    try {
+      const signInObserver = await signInWithPopup(auth, provider);
+      const token = await signInObserver.user.getIdToken();
+
+      await fetch("/api/auth/", {
+        method: "POST",
+        body: JSON.stringify({ isLogin: true }),
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      location.href = "/dashboard";
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -84,6 +111,14 @@ export default function AuthPage() {
             <img src="/google.svg" className="w-5" alt="" />
             {t("google_auth")}
           </Button>
+          <div className="grid gap-2">
+            <span className="text-muted-foreground text-sm">
+              {t("have_acc")}
+            </span>
+            <Button onClick={login} size={"lg"} className="h-16">
+              {t("google_login")}
+            </Button>
+          </div>
         </div>
       </section>
     </main>
