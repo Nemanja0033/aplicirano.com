@@ -327,5 +327,9 @@
       "two": "Resume storage with profile-based organization",
       "three": "Analytics and AI insights to improve your chances"
     }
+  },
+  "AuthScreen": {
+    "label": "Sign in to use this feature",
+    "cta": "Sign in"
   }
 }

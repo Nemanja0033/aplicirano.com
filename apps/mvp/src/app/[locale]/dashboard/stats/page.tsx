@@ -9,6 +9,7 @@ import StatsNav from "@/src/features/stats/components/StatsNav";
 import { useFirebaseUser } from "@/src/hooks/useFirebaseUser";
 import { useIsMobile } from "@/src/hooks/use-mobile";
 import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
+import { NotAuthScreen } from "@/src/components/NotAuthScreen";
 
 const ranges = {
   "7d": 7,
@@ -36,13 +37,7 @@ export default function StatsPage() {
   }
 
   if (!token) {
-    return (
-      <div className="w-full h-[60vh] flex justify-center items-center">
-        <span className="text-gray-400 text-2xl font-semibold">
-          Sign in to see you recent application statistics.
-        </span>
-      </div>
-    );
+    return <NotAuthScreen />
   }
 
   // if(isMobile){

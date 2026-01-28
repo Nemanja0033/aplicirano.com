@@ -10,9 +10,12 @@ export function useAuth(){
             await fetch("/api/auth/", {
                 method: "POST",
                 headers: {
+                  "Content-Type": "application/json",
                   Authorization: `Bearer ${token}`,
                 },
+                body: JSON.stringify({ isLogin: false }), // ili true ako je login
               });
+              
 
         }
         catch(err){

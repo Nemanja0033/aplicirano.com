@@ -25,6 +25,7 @@ import { useTranslations } from "next-intl";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
 import GlobalLoader from "@/src/components/gloabal-loader";
+import { NotAuthScreen } from "@/src/components/NotAuthScreen";
 
 type FormValues = {
   title: string;
@@ -161,13 +162,7 @@ export default function ResumesPage() {
   }
 
   if (!token) {
-    return (
-      <div className="w-full h-[60vh] flex justify-center items-center">
-        <span className="text-gray-400 text-2xl font-semibold">
-          Sign In To Start importing resumes
-        </span>
-      </div>
-    );
+    return <NotAuthScreen />
   }
 
   return (

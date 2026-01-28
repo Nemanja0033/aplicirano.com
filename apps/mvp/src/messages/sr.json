@@ -327,5 +327,9 @@
       "two": "Čuvanje CV-jeva po profilima",
       "three": "Statistike i AI uvidi za bolje rezultate"
     }
+  },
+  "AuthScreen": {
+    "label": "Prijavi se da korištiš ovu funkcionalnost",
+    "cta": "Prijavi se"
   }
 }

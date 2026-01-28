@@ -11,6 +11,7 @@ import { Send, Sparkle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { NotAuthScreen } from "@/src/components/NotAuthScreen";
 
 type Role = "user" | "ai";
 interface Message {
@@ -112,14 +113,13 @@ export default function ChatbotPage() {
     }
   }
 
-// useEffect(() => {
-//   if (!token) {
-//     location.href = "auth";
-//   }
-// }, []);
 
   if (isUserLoading) {
     return <Loader type="NORMAL" />;
+  }
+
+  if (!token) {
+    return <NotAuthScreen />
   }
 
   // if(isMobile){
