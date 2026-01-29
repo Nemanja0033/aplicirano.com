@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     // --- Parse multipart form ---
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+    const cvContent = formData.get("resume_content");
     const title = formData.get("title");
     const selectedProfile = formData.get("profile");
 
@@ -88,6 +89,7 @@ export async function POST(req: Request) {
           title: title as string,
           resumeUrl: data.publicUrl,
           fileSize: String(file.size),
+          resumeContent: cvContent as string
         },
       });
 

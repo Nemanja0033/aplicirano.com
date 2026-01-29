@@ -1,5 +1,6 @@
 import { db } from "@/src/app/lib/db";
 import { admin } from "@/src/app/lib/firebaseAdmin";
+import { ai } from "@/src/app/lib/geminiConfig";
 import openai from "@/src/app/lib/openaiConfig";
 import { endOfDay, startOfDay } from "date-fns";
 import { NextResponse } from "next/server";
@@ -129,35 +130,22 @@ export async function POST(req: Request) {
     // ==================
     // OPENAI CALL
     // ==================
-    const response = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: [
-        {
-          role: "system",
-          content: `
-Here is the user's personal data you MUST always consider:
+    const response = await ai.models.generateContent({
+      model: "gemini-3-flash-preview",
+      contents: `Here is the user's personal data you MUST always consider:
 
-User Data:
-- Name: ${user.username}
-- Interview Calls: ${serializedInterviews}
-- Recent jobs for analysis: ${serializedJobs}
+        User Data:
+        - Name: ${user.username}
+        - Interview Calls: ${serializedInterviews}
+        - Recent jobs for analysis: ${serializedJobs}
 
-IMPORTANT:
-- Use this data ONLY when relevant.
-- Always follow the ongoing conversation context.
-${systemPrompt}
-          `,
-        },
-        ...formattedMessages, // ✅ CEO CHAT = CEO KONTEKST
-      ],
-      temperature: 0.9,
-      max_tokens: 300,
-      top_p: 0.9,
-      presence_penalty: 0.1,
-      frequency_penalty: 0.1,
+        IMPORTANT:
+        - Use this data ONLY when relevant.
+        - Always follow the ongoing conversation context.
+        ${systemPrompt}`,
     });
 
-    const answer = response.choices[0].message;
+    const answer = response.text;
 
     // ==================
     // CREDITS
@@ -172,7 +160,7 @@ ${systemPrompt}
     });
 
     return NextResponse.json({
-      message: answer.content,
+      message: answer,
     });
   } catch (error: any) {
     console.error("Chat API Error:", error);

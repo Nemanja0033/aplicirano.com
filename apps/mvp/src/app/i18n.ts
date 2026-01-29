@@ -14,7 +14,7 @@ export const translations: any = {
       titleHighlight: "prijave za posao",
       subtitle:
         "Sve tvoje prijave, statistika i pametni alati na jednom mestu. Bez haosa. Bez gubljenja vremena. Bez zaboravljenih prijava.",
-      ctaPrimary: "Prijavi se na listu čekanja",
+      ctaPrimary: "Započnite besplatno",
       ctaSecondary: "Vidi funkcionalnosti",
       note: "Bez kreditne kartice • Instant pristup • Otkaži kad god želiš",
       waitlist_label: "Korisnika čeka!"
@@ -193,7 +193,7 @@ export const translations: any = {
       titleHighlight: "job applications",
       subtitle:
         "All your applications, statistics, and smart tools in one place. No chaos. No wasted time. No forgotten applications.",
-      ctaPrimary: "Join The Waitlist",
+      ctaPrimary: "Get started for free",
       ctaSecondary: "Explore features ",
       note: "No credit card required • Instant access • Cancel anytime",
       waitlist_label: "Users waiting!"

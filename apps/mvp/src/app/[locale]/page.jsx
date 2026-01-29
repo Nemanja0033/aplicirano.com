@@ -161,7 +161,8 @@ export default function ApliciranoLanding() {
           </li>
         ))}
       </ul>
-      {/* <button
+      <button
+        onClick={() => {location.href = '/auth'}}
         className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
           isPro
             ? "bg-white text-purple-600 hover:bg-purple-50 shadow-lg hover:shadow-xl"
@@ -169,7 +170,7 @@ export default function ApliciranoLanding() {
         }`}
       >
         {ctaText}
-      </button> */}
+      </button>
     </div>
   );
 
@@ -291,12 +292,13 @@ export default function ApliciranoLanding() {
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
+              <a 
+                href="/auth"
                 onClick={() => setIsModalOpen(true)}
                 className="group px-8 py-4 bg-purple-600 text-white rounded-xl font-semibold text-lg hover:bg-purple-700 transition-all shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2"
               >
-                {t.hero.ctaPrimary} <Mail />
-              </button>
+                {t.hero.ctaPrimary} 
+              </a>
 
               <a
                 href="#features"

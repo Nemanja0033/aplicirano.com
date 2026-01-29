@@ -27,16 +27,17 @@ model Job {
 }
 
 model resume {
-  id        String   @id @default(uuid())
-  title     String
-  resumeUrl String
-  fileSize  String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  profileId String?
-  profile   Profile? @relation(fields: [profileId], references: [id])
-  jobs      Job[]
-  createdAt DateTime @default(now())
+  id            String   @id @default(uuid())
+  title         String
+  resumeUrl     String
+  resumeContent String?
+  fileSize      String
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  profileId     String?
+  profile       Profile? @relation(fields: [profileId], references: [id])
+  jobs          Job[]
+  createdAt     DateTime @default(now())
 }
 
 model User {
