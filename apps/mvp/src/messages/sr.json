@@ -183,7 +183,8 @@
     "tokens_limit_warning": "Dostigli ste limit AI tokena. Nadogradite na Pro plan da biste nastavili.",
     "error_no_response": "Nažalost, nema odgovora.",
     "error_generic": "Došlo je do greške. Pokušaj ponovo.",
-    "desktop_only_message": "Za najbolje iskustvo koristite desktop verziju"
+    "desktop_only_message": "Za najbolje iskustvo koristite desktop verziju",
+    "resume_attached": "CV poslat"
   },
   "ProfilePage": {
     "title": "Profili",

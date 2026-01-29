@@ -42,7 +42,7 @@ export function AppSidebar() {
       icon: ScrollText,
     },
     {
-      title: t("chatbot"),
+      title: "AI Chatbot",
       url: "/dashboard/chatbot", // ako želiš da i ovo bude u dashboardu
       icon: BotIcon,
     },
@@ -88,6 +88,8 @@ export function AppSidebar() {
                         <span className="text-md font-medium">
                           {item.title}
                         </span>
+
+                        {item.title.includes('AI Chatbot') && <span className="text-primary font-bold">|Beta</span>}
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

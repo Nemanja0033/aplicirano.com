@@ -19,22 +19,6 @@ type ChatMessage = {
 const systemPrompt = `
 You are JobTrakifyAI — an assistant specialized in job searching, job analysis, and application strategy. 
 Your purpose is to help the user plan, optimize, and track their job applications.
-
-CRITICAL RULES:
-- You MUST ALWAYS respect and continue the conversation context based on previous messages.
-- Never reset the topic unless the user explicitly asks for a new topic.
-- Every response must logically follow the last user message AND the prior conversation history.
-
-Behavior rules:
-- Always ask the user if they want your core features: Cover letter generation, job application stats, or interview tracking.
-- ANSWER ONLY job-search-related questions.
-- If the user asks something unrelated, gently steer the conversation back to job searching.
-- Be concise, professional, and practical.
-- Ask clarifying questions when needed.
-- Always prioritize actionable advice.
-- Always call the user by their first name.
-- Never output harmful, illegal, or unsafe content.
-You must always speak as a professional career assistant.
 `;
 
 export async function POST(req: Request) {
@@ -43,6 +27,7 @@ export async function POST(req: Request) {
     // AUTH
     // ==================
     const authHeader = req.headers.get("Authorization");
+    const localeHeader = req.headers.get("x-locale") || req.headers.get("accept-language") || "sr";
 
     if (!authHeader) {
       return NextResponse.json(
@@ -62,11 +47,12 @@ export async function POST(req: Request) {
     // ==================
     // BODY
     // ==================
-    const { messages } = await req.json();
+    const { prompt, resumeContent } = await req.json();
+    console.log("PROMPT", prompt)
 
-    if (!messages || !Array.isArray(messages)) {
+    if (!prompt) {
       return NextResponse.json(
-        { error: "Missing or invalid 'messages' field" },
+        { error: "Missing or invalid 'prompt' field" },
         { status: 400 }
       );
     }
@@ -93,6 +79,42 @@ export async function POST(req: Request) {
     }
 
     // ==================
+    // RESUME CHECK SCENARIO
+    // ==================
+
+    if(resumeContent){
+      const response = await ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: `Oceni CV korisnika i odgovori mu detaljno, ponasaj se kao ATS skener:
+        
+          Korisnicki podaci:
+          - Ime: ${user.username}
+          - CV: ${resumeContent}
+
+          Jezik: ${localeHeader}
+          `,
+      });
+  
+      const answer = response.text;
+  
+      // ==================
+      // CREDITS
+      // ==================
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          apiCredits: {
+            decrement: 1,
+          },
+        },
+      });
+
+      return NextResponse.json({
+        message: answer,
+      });
+    }
+
+    // ==================
     // JOB DATA
     // ==================
     const interviews = await db.job.findMany({
@@ -109,10 +131,10 @@ export async function POST(req: Request) {
     const jobToAnalyze = await db.job.findMany({
       where: {
         userId: user.id,
-        appliedAt: {
-          gte: startOfDay(pastDate),
-          lte: endOfDay(currentDate),
-        },
+        // appliedAt: {
+        //   gte: startOfDay(pastDate),
+        //   lte: endOfDay(currentDate),
+        // },
       },
     });
 
@@ -120,16 +142,9 @@ export async function POST(req: Request) {
     const serializedJobs = JSON.stringify(jobToAnalyze, null, 2);
 
     // ==================
-    // FORMAT CHAT
+    // GEMINI CALL
     // ==================
-    const formattedMessages: ChatMessage[] = messages.map((m: any) => ({
-      role: m.role === "ai" ? "assistant" : "user",
-      content: m.content,
-    }));
-
-    // ==================
-    // OPENAI CALL
-    // ==================
+    console.log("JOBS LENGTH",serializedJobs.length)
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Here is the user's personal data you MUST always consider:
@@ -138,9 +153,13 @@ export async function POST(req: Request) {
         - Name: ${user.username}
         - Interview Calls: ${serializedInterviews}
         - Recent jobs for analysis: ${serializedJobs}
+        - Language for communication: ${localeHeader}
+        - User prompt: ${prompt}
 
         IMPORTANT:
-        - Use this data ONLY when relevant.
+        - Do not introduce yourself every time.
+        - Give on-point responeses
+        - Do not boring and asking user for further comunication
         - Always follow the ongoing conversation context.
         ${systemPrompt}`,
     });

@@ -23,6 +23,7 @@ export interface Job {
     userId: string;
     profileId?: string;
     createdAt: string;
+    resumeContent: string | null
     jobs: Job[];
   }
   

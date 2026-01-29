@@ -46,10 +46,10 @@ model User {
   email               String    @unique
   username            String
   avatarUrl           String?
-  apiCredits          Int       @default(10)
+  apiCredits          Int       @default(3)
   jobsLimit           Int       @default(25)
-  profileLimit        Int       @default(5)
-  resumeLimit         Int       @default(5)
+  profileLimit        Int       @default(3)
+  resumeLimit         Int       @default(3)
   isProUSer           Boolean   @default(false)
   isUserAcceptedTerms Boolean   @default(false)
   jobs                Job[]

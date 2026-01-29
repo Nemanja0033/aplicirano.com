@@ -183,7 +183,8 @@
     "tokens_limit_warning": "You have reached your AI tokens limit. Please upgrade to Pro to continue.",
     "error_no_response": "Sorry, no response.",
     "error_generic": "Something went wrong. Try again.",
-    "desktop_only_message": "Please use desktop version for best experience"
+    "desktop_only_message": "Please use desktop version for best experience",
+    "resume_attached": "Resume attached"
   },
   "ProfilePage": {
     "title": "Profile",
