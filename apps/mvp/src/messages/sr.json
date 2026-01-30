@@ -425,5 +425,9 @@
       "intro": "Za pitanja u vezi ovih Uslova, kontaktirajte:",
       "contact_email": "antonijevicnemanjaa@gmail.com"
     }
+  },
+  "Banner": {
+    "message": "Dobrodošli na Aplicirano — {version}. Radimo na novim funkcijama koje će vam pomoći da lakše pronađete, pratite i upravljate prijavama za posao.",
+    "shortMessage": "Dobrodošli na Aplicirano {version} — Uskoro nove funkcije za praćenje i unapređenje vaše potrage za poslom."
   }
 }

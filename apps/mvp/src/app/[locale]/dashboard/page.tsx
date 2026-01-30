@@ -10,6 +10,7 @@ import {
 import { getStatsInsightsColor } from "@/helpers";
 import { ArrowRight, BotIcon, ChartBar, ScrollText, User, Database } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 // *TODO* Add two card sections: Profile stats (api credits & info), Usage stats plan usage, jobs limit, ai chat limits
 
@@ -150,11 +151,11 @@ export default function Home() {
                 </span>
               </CardContent>
               <CardFooter>
-                <a href={c.url}>
+                <Link href={c.url}>
                   <Button>
                     {c.cta} <ArrowRight />
                   </Button>
-                </a>
+                </Link>
               </CardFooter>
             </Card>
           ))}
