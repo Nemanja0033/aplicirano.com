@@ -1,10 +1,14 @@
 "use client"
 import { Button } from "@/src/components/ui/button";
-import { X, Save } from "lucide-react";
+import { X, Save, Loader2 } from "lucide-react";
 import { bulkUpdateJobStatuses } from "../server-actions/bulkUpdateJobStatus";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 
 const UpdateJobsStatus = ({ setIsStatusChanged, selectedRowsWithStatus} : any) => { 
+  const t = useTranslations("StatusButtons");
+  const queryClient = useQueryClient();
   const [loading, setIsLoading] = useState(false);
   
   const handleUpdateJobs = async () => {
@@ -12,6 +16,7 @@ const UpdateJobsStatus = ({ setIsStatusChanged, selectedRowsWithStatus} : any) =
       setIsLoading(true);
       console.log(selectedRowsWithStatus)
       await bulkUpdateJobStatuses(selectedRowsWithStatus);
+      queryClient.invalidateQueries({ queryKey: ['jobs']})
       setIsStatusChanged(false);
     }
     catch(err){
@@ -31,7 +36,7 @@ const UpdateJobsStatus = ({ setIsStatusChanged, selectedRowsWithStatus} : any) =
         variant={'outline'}
       >
         <X />
-        Cancel
+        {t("cancel")}
       </Button>
       <Button
         size={"sm"}
@@ -40,7 +45,7 @@ const UpdateJobsStatus = ({ setIsStatusChanged, selectedRowsWithStatus} : any) =
         onClick={handleUpdateJobs}
       >
         <Save />
-        {loading ? "Saving Changes..." : "Save Changes"}
+        {loading ? <Loader2  className="animate-spin"/> : t("save")}
       </Button>
     </div>
   );

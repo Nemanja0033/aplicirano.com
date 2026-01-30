@@ -429,5 +429,9 @@
   "Banner": {
     "message": "Welcome to Aplicirano — {version}. We're building new features to help you find, track, and manage job opportunities.",
     "shortMessage": "Welcome to Aplicirano {version} — New features coming to help you track and improve your job search."
+  },
+  "StatusButtons":{
+    "cancel": "Cancel",
+    "save": "Save"
   }
 }

@@ -31,126 +31,61 @@ export function FileImportForm({
   type: "TXT" | "CSV";
   currentUser: any;
   selectedProfile: any;
-  selectedResume: any
+  selectedResume: any;
 }) {
   const t = useTranslations("FileImport");
   const [formState, setFormState] = useState(initialFormState);
   const queryClient = useQueryClient();
   const { token } = useFirebaseUser();
-  const [isSubmitButtonHidden, setIsSubmitButtonHidden] = useState(true);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (type === "TXT") {
-      setFormState((prev) => ({ ...prev, isSubmitting: true }));
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      toast.error(t("error_no_file"));
+      return;
+    }
 
-      const form = e.currentTarget;
-      const fileInput = form.elements.namedItem("text") as HTMLInputElement;
-      const file = fileInput?.files?.[0];
+    setFormState((prev) => ({ ...prev, isSubmitting: true }));
 
-      if (!file) {
-        setFormState({
-          isSubmitting: false,
-          isError: true,
-          errorMessage: t("error_no_file"),
-          fileName: "",
-        });
-        toast.error(t("error_no_file"));
-        return;
+    const formData = new FormData();
+    formData.append(type === "TXT" ? "text" : "csv-file", file);
+    formData.append("profileId", selectedProfile);
+    formData.append("resumeId", selectedResume);
+
+    try {
+      const res = await fetch(type === "TXT" ? "/api/jobs" : "/api/csv-import", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        const message =
+          typeof errorData?.error === "string"
+            ? errorData.error
+            : t("error_upload_failed");
+        toast.error(message);
       }
 
-      // Here send data to server
-      const formData = new FormData();
-      formData.append("text", file);
-      formData.append("profileId", selectedProfile);
-      formData.append("resumeId", selectedResume);
-
-      try {
-        const res = await fetch("/api/jobs", {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          const message =
-            typeof errorData?.error === "string"
-              ? errorData.error
-              : t("error_upload_failed");
-          toast.error(message)
-        }
-
-        setFormState((prev) => ({ ...prev, isSubmitting: false }));
-        queryClient.invalidateQueries({ queryKey: ["jobs"] });
-        queryClient.invalidateQueries({ queryKey: ["me"] });
-        queryClient.invalidateQueries({ queryKey: ["stats"]});
-        setIsSubmitButtonHidden(true);
-      } catch (err: any) {
-        setFormState({
-          isSubmitting: false,
-          isError: true,
-          errorMessage: err.message || t("error_unexpected"),
-          fileName: "",
-        });
-      }
-    } else {
-      setFormState((prev) => ({ ...prev, isSubmitting: true }));
-
-      const form = e.currentTarget;
-      const fileInput = form.elements.namedItem("csv-file") as HTMLInputElement;
-      const file = fileInput?.files?.[0];
-
-      if (!file) {
-        setFormState({
-          isSubmitting: false,
-          isError: true,
-          errorMessage: t("error_no_file"),
-          fileName: "",
-        });
-        toast.error("No file selected")
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("csv-file", file);
-      formData.append("profileId", selectedProfile);
-      formData.append("resumeId", selectedResume);
-
-      try {
-        const res = await fetch("/api/csv-import", {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json();
-          const message =
-            typeof errorData?.error === "string"
-              ? errorData.error
-              : t("error_upload_failed");
-          toast.error(message);
-        }
-
-        setFormState((prev) => ({ ...prev, isSubmitting: false }));
-        queryClient.invalidateQueries({ queryKey: ["jobs"] });
-        queryClient.invalidateQueries({ queryKey: ["me"] });
-        queryClient.invalidateQueries({ queryKey: ["stats"]});
-        setIsSubmitButtonHidden(true);
-      } catch (err: any) {
-        setFormState({
-          isSubmitting: false,
-          isError: true,
-          errorMessage: err.message || t("error_unexpected"),
-          fileName: "",
-        });
-      }
+      setFormState((prev) => ({ ...prev, isSubmitting: false }));
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
+    } catch (err: any) {
+      setFormState({
+        isSubmitting: false,
+        isError: true,
+        errorMessage: err.message || t("error_unexpected"),
+        fileName: "",
+      });
+      toast.error(err.message || t("error_unexpected"));
+    }
+    finally{
+      e.target.value = "";
     }
   };
 
@@ -158,14 +93,11 @@ export function FileImportForm({
 
   return (
     <TooltipProvider>
-      <form
-        onSubmit={handleFormSubmit}
-        className="flex justify-between items-center gap-2"
-      >
+      <div className="flex justify-between items-center gap-2">
         <div className="items-center gap-2 flex">
           <input
             ref={fileInputRef}
-            onChange={() => setIsSubmitButtonHidden(false)}
+            onChange={handleFileChange}
             disabled={isOutOfCredits}
             type="file"
             accept={type === "TXT" ? ".txt" : ".csv"}
@@ -178,11 +110,13 @@ export function FileImportForm({
               <span>
                 <Button
                   type="button"
-                  disabled={isOutOfCredits}
+                  disabled={isOutOfCredits || formState.isSubmitting}
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <Upload />
-                  {type === "CSV"
+                  {formState.isSubmitting
+                    ? t("button_submit_uploading")
+                    : type === "CSV"
                     ? t("button_import_csv")
                     : t("button_import_txt")}
                 </Button>
@@ -194,24 +128,8 @@ export function FileImportForm({
               </TooltipContent>
             )}
           </Tooltip>
-
-          {!isSubmitButtonHidden && (
-            <Button
-              type="submit"
-              disabled={formState.isSubmitting || isDisabled}
-            >
-              {formState.isSubmitting
-                ? t("button_submit_uploading")
-                : t("button_submit")}
-            </Button>
-          )}
         </div>
-        {/* {formState.isError && (
-          <span className="text-red-500 text-sm ml-2">
-            {formState.errorMessage}
-          </span>
-        )} */}
-      </form>
+      </div>
     </TooltipProvider>
   );
 }

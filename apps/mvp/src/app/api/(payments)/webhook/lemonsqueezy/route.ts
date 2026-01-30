@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         data: {
           isProUSer: true,
           jobsLimit: 15000,
-          apiCredits: 100,
+          apiCredits: 20,
           profileLimit: 10,
           resumeLimit: 30
         },

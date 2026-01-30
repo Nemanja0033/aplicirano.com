@@ -44,21 +44,21 @@ export default function JobsPage() {
     enabled: !!token,
   });
 
-  // const { data: resumes, isFetching: isResumesFetching } = useQuery({
-  //   queryKey: ["resumes", selectedProfile],
-  //   queryFn: async () => {
-  //     if (!token) return [];
-  //     const res = await fetch(`/api/cv-storage?profile=${selectedProfile}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //     if (!res.ok) throw new Error("Failed to fetch resumes");
-  //     return await res.json();
-  //   },
-  //   staleTime: 60 * 5000,
-  //   enabled: !!token,
-  // });
+  const { data: resumes, isFetching: isResumesFetching } = useQuery({
+    queryKey: ["resumes", selectedProfile],
+    queryFn: async () => {
+      if (!token) return [];
+      const res = await fetch(`/api/cv-storage?profile=${selectedProfile}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) throw new Error("Failed to fetch resumes");
+      return await res.json();
+    },
+    staleTime: 60 * 5000,
+    enabled: !!token,
+  });
 
   const { currentUserData, isUserLoading } = useCurrentUser();
 
@@ -75,11 +75,11 @@ export default function JobsPage() {
       <div className="md:w-6xl p-3 w-full grid place-items-center gap-5">
         <JobsTable
           currentUser={currentUserData}
-          isLoading={isFetching || isUserLoading}
+          isLoading={isFetching || isResumesFetching}
           jobs={jobsResponse?.jobs ?? []}
           total={jobsResponse?.total ?? 0}
           page={page}
-          resumes={currentUserData?.resumes}
+          resumes={resumes}
           setPage={setPage}
           pageSize={PAGE_SIZE}
           selectedProfile={selectedProfile}
