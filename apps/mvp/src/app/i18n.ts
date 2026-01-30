@@ -309,7 +309,7 @@ export const translations: any = {
     },
 
     pricing: {
-      title: "Simple and fair pricing",
+      title: "Simple pricing",
       subtitle: "Start free, upgrade when it suits you",
 
       free: {

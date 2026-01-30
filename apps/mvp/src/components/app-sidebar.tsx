@@ -102,7 +102,7 @@ export function AppSidebar() {
         <SidebarFooter>
           <SignInButton />
           <hr />
-          <span className="text-[9px] text-muted-foreground absolute bottom-1 left-[40%]">v.0.1.0</span>
+          <span className="text-[9px] text-muted-foreground absolute bottom-1 left-[40%]">v.1.0.0</span>
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>

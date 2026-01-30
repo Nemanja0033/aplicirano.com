@@ -184,7 +184,15 @@
     "error_no_response": "Nažalost, nema odgovora.",
     "error_generic": "Došlo je do greške. Pokušaj ponovo.",
     "desktop_only_message": "Za najbolje iskustvo koristite desktop verziju",
-    "resume_attached": "CV poslat"
+    "resume_attached": "CV poslat",
+    "pro_label": "Pro",
+    "evaluate_cv": "Oceni mi CV",
+    "quick_stats": "Brza statistika",
+    "quick_stats_prompt": "Mozes li mi poslati statistiku svih mojih prijava? Brojeve prijava, statusa i ostalog...",
+    "interviews": "Imam li zakazane intervjue?",
+    "interviews_prompt": "Imam li zakazane intervjue?",
+    "progress": "Kako napredujem kroz vreme?",
+    "progress_prompt": "Kako napredujem kroz vreme?"
   },
   "ProfilePage": {
     "title": "Profili",
@@ -332,5 +340,90 @@
   "AuthScreen": {
     "label": "Prijavi se da korištiš ovu funkcionalnost",
     "cta": "Prijavi se"
+  },
+  "PrivacyPolicy": {
+    "title": "Politika privatnosti",
+    "last_updated": "Poslednje ažurirano: januar 2026",
+    "intro": "Aplicirano (\"mi\", \"naš\", ili \"nas\") poštuje vašu privatnost i posvećeno je zaštiti vaših ličnih podataka. Ova Politika privatnosti objašnjava kako prikupljamo, koristimo i štitimo vaše informacije kada koristite našu platformu.",
+    "section1": {
+      "title": "1. Koje podatke prikupljamo",
+      "intro": "Prikupljamo samo podatke koji su neophodni za pružanje osnovne funkcionalnosti Aplicirano.",
+      "item_account": "Podaci o nalogu (email, identifikatori za autentifikaciju)",
+      "item_applications": "Podaci o prijavama koje unosite (ime kompanije, pozicija, datumi, beleške, linkovi)",
+      "item_documents": "Otpremljeni dokumenti kao što su CV fajlovi",
+      "item_usage": "Podaci o upotrebi za potrebe performansi i otklanjanja grešaka"
+    },
+    "section2": {
+      "title": "2. Kako koristimo vaše podatke",
+      "intro": "Vaši podaci se koriste isključivo za:",
+      "item_provide": "Pružanje i upravljanje platformom Aplicirano",
+      "item_enable": "Omogućavanje praćenja prijava, analitike i AI funkcija",
+      "item_improve": "Poboljšanje stabilnosti platforme i korisničkog iskustva",
+      "item_support": "Odgovaranje na zahteve za podršku",
+      "no_sell": "Ne prodajemo, ne iznajmljujemo niti ne trgujemo vašim ličnim podacima."
+    },
+    "section3": {
+      "title": "3. AI funkcije",
+      "intro1": "Aplicirano pruža AI funkcije koje pomažu korisnicima u vezi sa prijavama za posao, optimizacijom CV-a i uvidima.",
+      "intro2": "AI interakcije se obrađuju isključivo radi isporuke tražene funkcionalnosti. Ne koristimo AI razgovore ili otpremljeni sadržaj za oglašavanje ili treniranje sopstvenih modela."
+    },
+    "section4": {
+      "title": "4. Čuvanje podataka i bezbednost",
+      "intro1": "Koristimo industrijski standardne servise i bezbednosne prakse za zaštitu vaših podataka. Pristup ličnim podacima je ograničen i zaštićen.",
+      "intro2": "Iako se trudimo da zaštitimo vaše informacije, nijedan online servis ne može garantovati apsolutnu bezbednost."
+    },
+    "section5": {
+      "title": "5. Vaša prava",
+      "intro": "Ako se nalazite u Evropskoj uniji, imate pravo da:",
+      "item_access": "Pristupite svojim ličnim podacima",
+      "item_request": "Zahtevate ispravku ili brisanje",
+      "item_withdraw": "Povučete pristanak",
+      "manage_account": "Možete upravljati ili obrisati svoj nalog u bilo kom trenutku iz aplikacije."
+    },
+    "section6": {
+      "title": "6. Kontakt",
+      "intro": "Ako imate pitanja u vezi sa ovom Politikom privatnosti, možete nas kontaktirati na:",
+      "contact_email": "antonijevicnemanjaa@gmail.com"
+    }
+  },
+  "TermsOfService": {
+    "title": "Uslovi korišćenja",
+    "last_updated": "Poslednje ažurirano: januar 2026",
+    "intro": "Pristupanjem ili korišćenjem Aplicirano slažete se da ćete poštovati ove Uslove korišćenja. Ako se ne slažete, molimo vas da ne koristite platformu.",
+    "section1": {
+      "title": "1. Opis usluge",
+      "content": "Aplicirano je platforma kao usluga (SaaS) koja pomaže korisnicima da prate, organizuju i analiziraju prijave za posao, čuvaju CV-ove i koriste AI funkcije vezane za traženje posla."
+    },
+    "section2": {
+      "title": "2. Odgovornosti korisnika",
+      "item_accuracy": "Odgovorni ste za tačnost podataka koje pružate",
+      "item_misuse": "Ne smete zloupotrebljavati platformu niti pokušavati neovlašćen pristup",
+      "item_illegal": "Ne smete otpremati ilegalan ili štetan sadržaj"
+    },
+    "section3": {
+      "title": "3. Nalozi",
+      "content": "Odgovorni ste za čuvanje poverljivosti podataka za prijavu. Aplicirano nije odgovorno za neovlašćen pristup koji je posledica nemara korisnika."
+    },
+    "section4": {
+      "title": "4. Dostupnost",
+      "content": "Aplicirano se pruža \"kao što jeste\" i \"kada je dostupno\". Ne garantujemo neprekidan pristup niti rad bez grešaka."
+    },
+    "section5": {
+      "title": "5. Ograničenje odgovornosti",
+      "content": "Aplicirano neće biti odgovorno za indirektnu, slučajnu ili posledičnu štetu koja proizilazi iz korišćenja platforme."
+    },
+    "section6": {
+      "title": "6. Prestanak",
+      "content": "Zadržavamo pravo da suspendujemo ili obrišemo naloge koji krše ove uslove ili zloupotrebljavaju platformu."
+    },
+    "section7": {
+      "title": "7. Izmene",
+      "content": "Možemo povremeno ažurirati ove Uslove. Nastavak korišćenja platforme nakon izmena podrazumeva prihvatanje."
+    },
+    "section8": {
+      "title": "8. Kontakt",
+      "intro": "Za pitanja u vezi ovih Uslova, kontaktirajte:",
+      "contact_email": "antonijevicnemanjaa@gmail.com"
+    }
   }
 }

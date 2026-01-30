@@ -132,7 +132,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="gap-5 grid md:grid-cols-3">
+        <div className="gap-5 grid md:grid-cols-3 sm:grid-cols-2">
           {pageContent.map((c) => (
             <Card className="dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216]">
               <CardHeader>

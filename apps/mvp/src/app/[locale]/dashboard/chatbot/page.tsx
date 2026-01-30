@@ -304,41 +304,50 @@ export default function ChatbotPage() {
 
         <div className="w-full justify-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-white dark:bg-sidebar p-3 items-center rounded-lg flex gap-3 relative">
           <Button
-            disabled={isLoading || !currentUserData?.isProUSer || currentUserData?.apiCredits === 0}
+            disabled={
+              isLoading ||
+              !currentUserData?.isProUSer ||
+              currentUserData?.apiCredits === 0
+            }
             onClick={() => setIsCvSelectModalOpen(true)}
             className="border-none rounded-full p-4 text-muted-foreground hover:bg-primary relative hover:text-white"
             variant={"outline"}
           >
-            {!currentUserData?.isProUSer && <span className="text-xs absolute text-purple-500 top-0 left-0">Pro</span>}
-            Oceni mi CV
-          </Button>
+            {" "}
+            {!currentUserData?.isProUSer && (
+              <span className="text-xs absolute text-purple-500 top-0 left-0">
+                {" "}
+                {t("pro_label")}{" "}
+              </span>
+            )}{" "}
+            {t("evaluate_cv")}{" "}
+          </Button>{" "}
           <Button
             disabled={isLoading || currentUserData?.apiCredits === 0}
-            onClick={() =>
-              sendPrompt(
-                "Mozes li mi poslati statistiku svih mojih prijava? Brojeve prijava, statusa i ostalog..."
-              )
-            }
+            onClick={() => sendPrompt(t("quick_stats_prompt"))}
             className="border-none rounded-full p-4 text-muted-foreground hover:bg-primary hover:text-white"
             variant={"outline"}
           >
-            Brza statistika
-          </Button>
+            {" "}
+            {t("quick_stats")}{" "}
+          </Button>{" "}
           <Button
             disabled={isLoading || currentUserData?.apiCredits === 0}
-            onClick={() => sendPrompt("Imam li zakazane intervjue?")}
+            onClick={() => sendPrompt(t("interviews_prompt"))}
             className="border-none rounded-full p-4 text-muted-foreground hover:bg-primary hover:text-white"
             variant={"outline"}
           >
-            Imam li zakazane intervjue?
-          </Button>
+            {" "}
+            {t("interviews")}{" "}
+          </Button>{" "}
           <Button
             disabled={isLoading || currentUserData?.apiCredits === 0}
-            onClick={() => sendPrompt("Kako napredujem kroz vreme?")}
+            onClick={() => sendPrompt(t("progress_prompt"))}
             className="border-none rounded-full p-4 text-muted-foreground hover:bg-primary hover:text-white"
             variant={"outline"}
           >
-            Kako napredujem kroz vreme?
+            {" "}
+            {t("progress")}{" "}
           </Button>
         </div>
 
