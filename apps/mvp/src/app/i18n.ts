@@ -9,7 +9,7 @@ export const translations: any = {
     },
 
     hero: {
-      badge: "✨ Dostupno od 31. januara!",
+      badge: "🚀 v.1.0.0",
       titleMain: "Aplicirano - lakši način da pratiš",
       titleHighlight: "prijave za posao",
       subtitle:
@@ -188,7 +188,7 @@ export const translations: any = {
     },
 
     hero: {
-      badge: "✨ Available from January 31st!",
+      badge: "🚀 v.1.0.0",
       titleMain: "Aplicirano – an easier way to track",
       titleHighlight: "job applications",
       subtitle:

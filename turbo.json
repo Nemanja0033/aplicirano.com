@@ -20,7 +20,13 @@
         "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET",
         "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
         "NEXT_PUBLIC_FIREBASE_APP_ID",
-        "OPENAI_KEY"
+        "OPENAI_KEY",
+        "GEMINI_API_KEY",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "LEMON_API_KEY",
+        "LEMON_STORE_ID",
+        "LEMON_SECRET"
       ]
     },
     "lint": {
