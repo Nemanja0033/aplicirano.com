@@ -19,6 +19,8 @@ const ExportToPdf = ({ elementRef, isDisabled }: { elementRef: any; isDisabled: 
   const { currentUserData } = useCurrentUser();
 
   const handleDownloadPdf = async () => {
+    if(currentUserData?.isProUSer === false) return;
+    
     setIsLoading(true);
 
     await new Promise(resolve => setTimeout(resolve, 0));

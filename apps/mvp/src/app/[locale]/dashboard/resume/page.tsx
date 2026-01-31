@@ -25,6 +25,8 @@ import { useTranslations } from "next-intl";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
 import GlobalLoader from "@/src/components/gloabal-loader";
+import { NotAuthScreen } from "@/src/components/NotAuthScreen";
+import pdfToText from "react-pdftotext";
 
 type FormValues = {
   title: string;
@@ -97,8 +99,20 @@ export default function ResumesPage() {
       return;
     }
 
+    // Parse cv content and send to server
+    let cvContent: null | string = null;
+    try{
+      cvContent = await pdfToText(file);
+      console.log("CV text", cvContent);
+    }
+    catch(err){
+      console.log("Parsing pdf error",err);
+      toast.error("Resume sucessfully uploaded, but we having trouble parsing it right now");
+    }
+
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("resume_content", cvContent ?? '');
     formData.append("title", data.title);
     formData.append("profile", selectedProfile as string);
 
@@ -161,13 +175,7 @@ export default function ResumesPage() {
   }
 
   if (!token) {
-    return (
-      <div className="w-full h-[60vh] flex justify-center items-center">
-        <span className="text-gray-400 text-2xl font-semibold">
-          Sign In To Start importing resumes
-        </span>
-      </div>
-    );
+    return <NotAuthScreen />
   }
 
   return (

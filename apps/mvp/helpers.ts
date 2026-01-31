@@ -1,3 +1,5 @@
+import PDFParser from "pdf2json";
+
 export function getTextColor(status: string){
     let textColor = '';
 
@@ -129,3 +131,17 @@ export function formatFileSize(bytes: number) {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
+
+// export async function extractPdfText(buffer: Buffer): Promise<string> {
+//   return new Promise((resolve, reject) => {
+//     const pdfParser = new PDFParser();
+//     pdfParser.on("pdfParser_dataError", err => reject(err));
+//     pdfParser.on("pdfParser_dataReady", pdfData => {
+//       const text = pdfData.Pages.map(page =>
+//         page.Texts.map(t => decodeURIComponent(t.R[0].T)).join(" ")
+//       ).join("\n");
+//       resolve(text);
+//     });
+//     pdfParser.parseBuffer(buffer);
+//   });
+// }

@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     // --- Parse multipart form ---
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+    const cvContent = formData.get("resume_content");
     const title = formData.get("title");
     const selectedProfile = formData.get("profile");
 
@@ -88,6 +89,7 @@ export async function POST(req: Request) {
           title: title as string,
           resumeUrl: data.publicUrl,
           fileSize: String(file.size),
+          resumeContent: cvContent as string
         },
       });
 
@@ -230,14 +232,36 @@ export async function DELETE(req: Request) {
     const body = await req.json();
     const { cvToDeleteId } = body;
 
-    await db.resume.delete({
-      where: {
-        id: cvToDeleteId
-      }
+    // prvo nadji CV u bazi da bi znao path u storage-u
+    const resume = await db.resume.findUnique({
+      where: { id: cvToDeleteId },
     });
 
-    return NextResponse.json({ succes: true }, { status: 200 });
+    if (!resume) {
+      return NextResponse.json({ error: "Resume not found" }, { status: 404 });
+    }
+
+    // izvući path iz URL-a (pretpostavka: publicUrl sadrži path posle bucket-a)
+    const filePath = resume.resumeUrl.split("/resumes/")[1];
+
+    // obriši fajl iz Supabase Storage
+    const { error: deleteError } = await supabaseStorage.storage
+      .from("resumes")
+      .remove([filePath]);
+
+    if (deleteError) {
+      console.error(deleteError);
+      return NextResponse.json({ error: "Failed to delete file from storage" }, { status: 500 });
+    }
+
+    // obriši zapis iz baze
+    await db.resume.delete({
+      where: { id: cvToDeleteId },
+    });
+
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ error: "Internal server error "}, { status: 500 });
+    console.error(err);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

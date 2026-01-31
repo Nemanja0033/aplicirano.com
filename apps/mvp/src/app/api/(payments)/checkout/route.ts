@@ -31,7 +31,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const variantId = "1242079";
+    const variantId = "1263627"; //ovo je novi variant
 
     const res = await fetch("https://api.lemonsqueezy.com/v1/checkouts", {
       method: "POST",

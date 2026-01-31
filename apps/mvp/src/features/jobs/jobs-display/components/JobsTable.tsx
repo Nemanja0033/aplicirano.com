@@ -686,11 +686,11 @@ export function JobsTable({
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-2 mt-3">
-              <Button type="button" onClick={() => setIsJobModalOpen(false)}>
+            <div className="flex justify-end gap-2 mt-3">
+              <Button type="button" className="w-32" variant={'outline'} onClick={() => setIsJobModalOpen(false)}>
                 {t("modal_buttons_cancel")}
               </Button>
-              <Button disabled={!isDirty} type="submit">
+              <Button disabled={!isDirty} type="submit" className="w-32">
                 {isSubmitting
                   ? t("modal_buttons_submitting")
                   : t("modal_buttons_save")}

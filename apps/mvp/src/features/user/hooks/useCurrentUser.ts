@@ -9,6 +9,7 @@ export function useCurrentUser() {
     queryKey: ["me"],
     queryFn: () => fetchCurrentUserData(token as any),
     enabled: !!token,
+    staleTime: 60 * 3000,
   });
 
   return { currentUserData, isUserLoading }

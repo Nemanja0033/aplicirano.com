@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Check if client calls for a login logic  
     const body = await req.json();
     const { isLogin } = body;
-    console.log("IS LOGIN",isLogin)
+    console.log("IS LOGINwwwwwww",isLogin)
 
     // 3. Check if user exists
     let user = await db.user.findUnique({
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     if (isLogin) {
       if (!user) {
         return NextResponse.json(
-          { error: "User is not registered " },
+          { error: "User is not registered. " },
           { status: 400 }
         );
       }

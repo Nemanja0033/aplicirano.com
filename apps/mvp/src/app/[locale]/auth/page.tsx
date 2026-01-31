@@ -7,6 +7,7 @@ import { signInWithPopup } from "firebase/auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { auth, provider } from "../../lib/firebaseConfig";
+import { toast } from "sonner";
 
 export default function AuthPage() {
   const { user } = useAuthContext();
@@ -17,11 +18,11 @@ export default function AuthPage() {
   const router = useRouter();
   const { token } = useAuthContext();
 
-  useEffect(() => {
-    if(token){
-      location.href = '/dashboard'
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if(token){
+  //     location.href = '/dashboard'
+  //   }
+  // }, [token]);
 
   async function signIn() {
     await handleSignIn();
@@ -33,13 +34,25 @@ export default function AuthPage() {
       const signInObserver = await signInWithPopup(auth, provider);
       const token = await signInObserver.user.getIdToken();
 
-      await fetch("/api/auth/", {
+      const res = await fetch("/api/auth/", {
         method: "POST",
         body: JSON.stringify({ isLogin: true }),
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        const message =
+          typeof errorData?.error === "string"
+            ? errorData.error
+            : t("error_upload_failed");
+        toast.error(message);
+
+        return;
+      }
 
       location.href = "/dashboard";
     } catch (err) {

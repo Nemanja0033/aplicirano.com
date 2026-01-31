@@ -1,7 +1,9 @@
 "use client";
 import Loader from "@/src/components/Loader";
+import { NotAuthScreen } from "@/src/components/NotAuthScreen";
 import { useAuthContext } from "@/src/context/AuthProvider";
 import { JobsTable } from "@/src/features/jobs/jobs-display/components/JobsTable";
+import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 import { fetchCurrentUserData } from "@/src/features/user/service/user-service";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -54,27 +56,18 @@ export default function JobsPage() {
       if (!res.ok) throw new Error("Failed to fetch resumes");
       return await res.json();
     },
-    enabled: !!token
-  });
-
-  const { data: currentUserData, isLoading: isUserLoading } = useQuery({
-    queryKey: ["me"],
-    queryFn: () => fetchCurrentUserData(token as any),
+    staleTime: 60 * 5000,
     enabled: !!token,
   });
+
+  const { currentUserData, isUserLoading } = useCurrentUser();
 
   if (isUserLoading) {
     return <Loader type="NORMAL" />;
   }
 
   if (!token) {
-    return (
-      <div className="w-full h-[60vh] flex justify-center items-center">
-        <span className="text-gray-400 text-2xl font-semibold">
-          Sign In To Start importing jobs
-        </span>
-      </div>
-    );
+    return <NotAuthScreen />
   }
 
   return (

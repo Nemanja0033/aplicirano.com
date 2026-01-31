@@ -127,7 +127,7 @@ export default function ApliciranoLanding() {
     >
       {isPro && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-purple-900 px-4 py-1 rounded-full text-sm font-bold">
-          {lang === "sr" ? "Najpopularnije" : "Most Popular"}
+          {lang === "sr" ? "Promo Ponuda" : "Promo"}
         </div>
       )}
       <div className="text-center mb-8">
@@ -161,7 +161,8 @@ export default function ApliciranoLanding() {
           </li>
         ))}
       </ul>
-      {/* <button
+      <button
+        onClick={() => {location.href = '/auth'}}
         className={`w-full py-4 rounded-xl font-semibold transition-all duration-300 ${
           isPro
             ? "bg-white text-purple-600 hover:bg-purple-50 shadow-lg hover:shadow-xl"
@@ -169,7 +170,7 @@ export default function ApliciranoLanding() {
         }`}
       >
         {ctaText}
-      </button> */}
+      </button>
     </div>
   );
 
@@ -183,9 +184,11 @@ export default function ApliciranoLanding() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+            {/* <div className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
               Aplicirano.com
-            </div>
+            </div> */}
+
+            <img src="/logo.svg" className="w-50" alt="" />
 
             <div className="hidden md:flex items-center gap-8">
               <a
@@ -291,12 +294,12 @@ export default function ApliciranoLanding() {
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button
-                onClick={() => setIsModalOpen(true)}
+              <a 
+                href="/auth"
                 className="group px-8 py-4 bg-purple-600 text-white rounded-xl font-semibold text-lg hover:bg-purple-700 transition-all shadow-lg hover:shadow-xl hover:scale-105 flex items-center gap-2"
               >
-                {t.hero.ctaPrimary} <Mail />
-              </button>
+                {t.hero.ctaPrimary} 
+              </a>
 
               <a
                 href="#features"
@@ -466,7 +469,7 @@ export default function ApliciranoLanding() {
             <PricingCard
               title={t.pricing.pro.title}
               subtitle={t.pricing.pro.subtitle}
-              price={t.pricing.pro.price}
+              price={'999 RSD'}
               features={t.pricing.pro.features}
               ctaText={t.pricing.pro.cta}
               isPro
@@ -485,7 +488,7 @@ export default function ApliciranoLanding() {
           <p className="text-xl text-purple-100 mb-10">{t.finalCta.subtitle}</p>
 
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => { location.href = '/auth'}}
             className="px-10 py-5 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-purple-50 transition-all shadow-2xl hover:shadow-3xl hover:scale-105 inline-flex items-center gap-3"
           >
             {t.finalCta.button}
