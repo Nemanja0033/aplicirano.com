@@ -272,7 +272,7 @@ const ManuelJobImport = ({
               mode="single"
               selected={date}
               onSelect={setDate}
-              className="rounded-md w-full border shadow-sm"
+              className="rounded-md md:grid hidden w-full border shadow-sm"
               captionLayout="dropdown"
             />
 
