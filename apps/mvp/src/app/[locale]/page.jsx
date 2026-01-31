@@ -275,7 +275,7 @@ export default function ApliciranoLanding() {
               {t.hero.subtitle}
             </p>
 
-            {usersWait > 0 && (
+            {/* {usersWait > 0 && (
               <div className="w-full flex items-center mb-3 animate-pulse justify-center gap-2">
                 <span className="bg-gray-100 text-purple-400 z-30 flex items-center justify-center p-1 rounded-full w-10 h-10 border-2 border-gray-100">
                   <User />
@@ -290,7 +290,7 @@ export default function ApliciranoLanding() {
                   {usersWait} {t.hero.waitlist_label ?? 0}
                 </span>
               </div>
-            )}
+            )} */}
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
