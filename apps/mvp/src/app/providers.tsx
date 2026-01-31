@@ -11,10 +11,12 @@ import { AuthProvider } from '@/src/context/AuthProvider'
 import { usePathname } from 'next/navigation'
 import { Toaster } from 'sonner';
 import TopBanner from '../components/AppBanner';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   const pathname = usePathname();
+  const isMobile = useIsMobile()
 
   return (
     <AuthProvider>
@@ -24,15 +26,25 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
             children
           ) : (
             <>
-              <TopBanner />
-              <main className='mt-5'>
-                <Navbar />
-                <SidebarProvider>
-                  <AppSidebar />
-                  <SidebarTrigger />
-                  {children}
-                </SidebarProvider>
-              </main>
+              {!isMobile ? (
+                <>
+                  <TopBanner />
+                  <main className='mt-5'>
+                    <Navbar />
+                    <SidebarProvider>
+                      <AppSidebar />
+                      <SidebarTrigger />
+                      {children}
+                    </SidebarProvider>
+                  </main>
+                </>
+              ) : (
+                <div className="flex items-center justify-center h-screen">
+                  <p className="text-center text-lg font-semibold">
+                    This application is best viewed on a larger screen. Please switch to a desktop or tablet for the best experience.
+                  </p>
+                </div>
+              )}
             </>
           )}
           <Toaster position='top-center' />
