@@ -99,7 +99,7 @@ const ManuelJobImport = ({
             <AlertDialogTitle>{t("modal_title")}</AlertDialogTitle>
           </AlertDialogHeader>
           <form onSubmit={handleSubmit(handleSubmitJob)} className="grid gap-2">
-            <div className="grid gap-2 overflow-auto h-[200px]">
+            <div className="grid gap-2 overflow-auto md:h-[200px]">
               {/* Company */}
               <div className="grid gap-1">
                 <Label htmlFor="company" className="text-xs dark:text-gray-400">
@@ -264,7 +264,7 @@ const ManuelJobImport = ({
             </div>
 
             {/* Applied At */}
-            <Label htmlFor="appliedAt" className="text-xs dark:text-gray-400">
+            <Label htmlFor="appliedAt" className="text-xs md:grid hidden dark:text-gray-400">
               {t("form_appliedAt_label")}
             </Label>
             <Calendar
