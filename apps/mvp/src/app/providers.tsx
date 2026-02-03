@@ -26,7 +26,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
             children
           ) : (
             <>
-              {!isMobile ? (
+              {/* {!isMobile ? ( */}
                 <>
                   <TopBanner />
                   <main className='mt-5'>
@@ -38,13 +38,13 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
                     </SidebarProvider>
                   </main>
                 </>
-              ) : (
+              {/* ) : (
                 <div className="flex items-center justify-center h-screen">
                   <p className="text-center text-lg font-semibold">
                     This application is best viewed on a larger screen. Please switch to a desktop or tablet for the best experience.
                   </p>
                 </div>
-              )}
+              )} */}
             </>
           )}
           <Toaster position='top-center' />

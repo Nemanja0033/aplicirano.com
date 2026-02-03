@@ -259,6 +259,18 @@ export async function DELETE(req: Request) {
       where: { id: cvToDeleteId },
     });
 
+    // **FIXED update resumeLimit after succesfully deleted.
+    await db.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        resumeLimit: {
+          increment: 1
+        }
+      }
+    });
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
     console.error(err);
