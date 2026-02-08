@@ -103,7 +103,6 @@ export default function ResumesPage() {
     let cvContent: null | string = null;
     try{
       cvContent = await pdfToText(file);
-      console.log("CV text", cvContent);
     }
     catch(err){
       console.log("Parsing pdf error",err);

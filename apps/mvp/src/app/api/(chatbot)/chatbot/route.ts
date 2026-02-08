@@ -48,7 +48,6 @@ export async function POST(req: Request) {
     // BODY
     // ==================
     const { prompt, resumeContent } = await req.json();
-    console.log("PROMPT", prompt)
 
     if (!prompt) {
       return NextResponse.json(
@@ -144,7 +143,6 @@ export async function POST(req: Request) {
     // ==================
     // GEMINI CALL
     // ==================
-    console.log("JOBS LENGTH",serializedJobs.length)
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: `Here is the user's personal data you MUST always consider:

@@ -27,7 +27,6 @@ export async function POST(req: Request) {
     // Check if client calls for a login logic  
     const body = await req.json();
     const { isLogin } = body;
-    console.log("IS LOGINwwwwwww",isLogin)
 
     // 3. Check if user exists
     let user = await db.user.findUnique({
