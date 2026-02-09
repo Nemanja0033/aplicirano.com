@@ -277,15 +277,30 @@
       "stats": "Statistics",
       "profile": "Profile",
       "cv": "CV Storage"
-    }
+    },
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": "Language",
+    "languages": {
+      "en": "English",
+      "sr": "Serbian"
+    },
+    "logout": "Logout",
+    "login": "Login"
   },
   "Sidebar": {
     "dashboard": "Home",
-    "jobs": "Jobs List",
-    "chatbot": "JobTrack AI",
+    "jobs": "Applications",
+    "chatbot": "Chatbot",
     "stats": "Statistics",
     "profile": "Profiles",
-    "resume": "Resume Storage"
+    "resume": "Resume Storage",
+    "pro_plan_message": "Get pro plan and enjoy all the features",
+    "pro_plan_button": "Upgrade to pro"
   },
   "ImportGuide": {
     "button_guide": "Guide",

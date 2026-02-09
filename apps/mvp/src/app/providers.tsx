@@ -28,15 +28,13 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
             <>
               {/* {!isMobile ? ( */}
                 <>
-                  <TopBanner />
-                  <main className='mt-5'>
+                  {/* <TopBanner /> */}
                     <Navbar />
                     <SidebarProvider>
                       <AppSidebar />
                       <SidebarTrigger />
                       {children}
                     </SidebarProvider>
-                  </main>
                 </>
               {/* ) : (
                 <div className="flex items-center justify-center h-screen">

@@ -4,10 +4,14 @@ import {
   Inbox,
   ChartBar,
   BotIcon,
-  ChartBarIncreasingIcon,
   Home,
   User2,
   File,
+  ChartLine,
+  MessageCircle,
+  FileText,
+  Sparkle,
+  SparkleIcon,
 } from "lucide-react";
 
 import {
@@ -21,14 +25,18 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/src/components/ui/sidebar";
-import SignInButton from "../features/user/components/AuthToggler";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { usePathname } from "../i18n/navigation";
+import { Button } from "./ui/button";
+import { useCurrentUser } from "../features/user/hooks/useCurrentUser";
+import { useAuthContext } from "../context/AuthProvider";
 
 export function AppSidebar() {
-  const pathname = usePathname();
+  const pathname = usePathname()
   const t = useTranslations("Sidebar");
+  const { currentUserData } = useCurrentUser();
+  const { token } = useAuthContext();
 
   const items = [
     {
@@ -42,14 +50,14 @@ export function AppSidebar() {
       icon: ScrollText,
     },
     {
-      title: "AI Chatbot",
+      title: "Chatbot",
       url: "/dashboard/chatbot", // ako želiš da i ovo bude u dashboardu
-      icon: BotIcon,
+      icon: MessageCircle,
     },
     {
       title: t("stats"),
       url: "/dashboard/stats", // isto
-      icon: ChartBar,
+      icon: ChartLine,
     },
     {
       title: t("profile"),
@@ -59,33 +67,34 @@ export function AppSidebar() {
     {
       title: t("resume"),
       url: "/dashboard/resume", // isto
-      icon: File,
+      icon: FileText,
     },
   ];
 
+  console.log(pathname.split("/dashboard")[1])
+
   return (
     <Sidebar>
-      <SidebarContent className="flex flex-col justify-between h-full px-2 py-4">
+      <SidebarContent className="flex flex-col justify-between h-full p-2">
         <div>
           <SidebarGroup>
-            <SidebarGroupLabel className="flex gap-2 items-center justify-center text-2xl py-7 text-primary font-bold px-3 mb-2 border-b rounded-none">
-              {/* <span className="bg-primary rounded-lg text-white p-1 text-md">JT</span> JobTrakify */}
-              <img className="w-full mr-20" src="/logo.svg" />
+            <SidebarGroupLabel className="flex w-full border-b-1 py-7 items-center justify-start">
+              <span className="text-2xl font-semibold text-primary">aplicirano</span>
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                      className={`${pathname === item.url.slice(0) ? "bg-primary/20 text-primary" : ""}`}
+                      className={`${pathname.split("/dashboard")[1] === item.url.split("/dashboard")[1] ? "bg-gray-400/10" : ""}`}
                       asChild
                     >
                       <Link
                         href={item.url}
-                        className="flex items-center text-lg px-3 py-2 rounded-md transition-colors"
+                        className="flex items-center text-lg p-5 rounded-md transition-colors"
                       >
-                        <item.icon size={40} />
-                        <span className="text-md font-medium">
+                        <item.icon size={40} strokeWidth={1} />
+                        <span className="text-md">
                           {item.title}
                         </span>
 
@@ -100,9 +109,13 @@ export function AppSidebar() {
         </div>
 
         <SidebarFooter>
-          <SignInButton />
-          <hr />
-          <span className="text-[9px] text-muted-foreground absolute bottom-1 left-[40%]">v.1.0.0</span>
+          {!currentUserData?.isProUSer && token !== null ? (
+            <div className="bg-primary/20 p-[16px] rounded-[8px] grid gap-3">
+              <Button className="bg-primary/20 text-primary font-semibold w-fit hover:bg-primary/20 cursor-default"><SparkleIcon className="text-primary" />Pro plan</Button>
+              <p className="text-primary/80 text-sm">{t("pro_plan_message")}</p>
+              <Button>{t("pro_plan_button")}</Button>
+            </div>
+          ) : null}
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>
