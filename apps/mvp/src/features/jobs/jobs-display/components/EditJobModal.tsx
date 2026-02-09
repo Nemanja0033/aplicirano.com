@@ -69,7 +69,7 @@ export default function EditJobModal({
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       queryClient.invalidateQueries({ queryKey: ["stats"] });
       onOpenChange(false);
-      toast.success(t("modal_success_update")); // Added success toast if missing in original
+      // toast.success(t("modal_success_update"));  
     } catch (err) {
       toast.error("Something went wrong");
     }

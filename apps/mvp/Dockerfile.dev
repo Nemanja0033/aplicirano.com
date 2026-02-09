@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install dependencies needed for some node modules
+RUN apk add --no-cache libc6-compat
+
+COPY package*.json ./
+COPY prisma ./prisma/
+
+RUN npm install
+
+# We don't copy the source code here because we'll mount it as a volume in docker-compose
+# This enables hot-reloading
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
