@@ -18,13 +18,21 @@ services:
     container_name: jobtracker_app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     restart: always
     depends_on:
       - db
+    volumes:
+      - ./:/app
+      - /app/node_modules
     environment:
-      DATABASE_URL: "postgresql://postgres:postgres@db:5432/jobtracker"
+      # Connect to the 'db' service defined above
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/jobtracker?schema=public"
+      DATABASE_URL_UNPOOLED: "postgresql://postgres:postgres@db:5432/jobtracker?schema=public"
+      # Other env vars from .env will be loaded automatically if present, or can be overridden here
       NEXTAUTH_URL: "http://localhost:3000"
+      # Ensure host is 0.0.0.0 for docker
+      HOSTNAME: "0.0.0.0"
     ports:
       - "3000:3000"
 

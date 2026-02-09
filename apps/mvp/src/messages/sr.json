@@ -277,7 +277,20 @@
       "stats": "Statistika",
       "profile": "Profil",
       "cv": "Skladište CV-ja"
-    }
+    },
+    "theme": "Tema",
+    "themes": {
+      "light": "Svetla",
+      "dark": "Tamna",
+      "system": "Sistemska"
+    },
+    "language": "Jezik",
+    "languages": {
+      "en": "Engleski",
+      "sr": "Srpski"
+    },
+    "logout": "Izloguj se",
+    "login": "Prijavi se"
   },
   "Sidebar": {
     "dashboard": "Početna",
@@ -285,7 +298,9 @@
     "chatbot": "JobTrack AI",
     "stats": "Statistika",
     "profile": "Profili",
-    "resume": "Skladište CV-ja"
+    "resume": "Skladište CV-ja",
+    "pro_plan_message": "Nabavite Pro plan i uživajte u svim funkcijama",
+    "pro_plan_button": "Nadogradi na Pro"
   },
   "ImportGuide": {
     "button_guide": "Vodič",

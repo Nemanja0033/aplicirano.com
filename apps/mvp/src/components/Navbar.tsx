@@ -1,7 +1,6 @@
 "use client";
 
-import { Bug, Languages } from "lucide-react";
-import { ModeToggle } from "./theme-toggler";
+import { Bug, Languages, LogOut, Moon, Sun, User, LogIn } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -32,6 +31,16 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { useAuthContext } from "../context/AuthProvider";
+import { useTheme } from "next-themes";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { useAuth } from "../features/user/hooks/useAuth";
 
 interface BugReportForm {
   bugType: string;
@@ -45,6 +54,8 @@ const Navbar = () => {
   const { currentUserData } = useCurrentUser();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useAuthContext();
+  const { setTheme } = useTheme();
+  const { handleSignOut, handleSignIn } = useAuth()
 
   const {
     handleSubmit,
@@ -89,31 +100,84 @@ const Navbar = () => {
   return (
     <div className="flex justify-end gap-2 items-center p-3 bg-transparent">
       {!currentUserData?.isProUSer && token !== null ? <UpgradeButton /> : null}
-      <ModeToggle />
 
-      <Select onValueChange={changeLang}>
-        <SelectTrigger>
-          <Languages />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="en">English</SelectItem>
-          <SelectItem value="sr">Srpski</SelectItem>
-        </SelectContent>
-      </Select>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <button className="w-[42px] h-[41px] rounded-full flex items-center justify-center bg-primary/20 text-primary outline-none hover:bg-primary/30 transition-all cursor-pointer">
+            {currentUserData?.username ? (
+              currentUserData.username[0].toUpperCase()
+            ) : (
+              <User size={20} strokeWidth={1.5} />
+            )}
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-fit p-3">
+          {currentUserData ? (
+            <div className="flex gap-2 items-center border-b-1 py-3 mb-2">
+              <button className="w-[38px] h-[38px] rounded-full flex items-center justify-center bg-primary/20 text-primary outline-none hover:bg-primary/30 transition-all cursor-pointer">
+                {currentUserData?.username[0].toUpperCase()}
+              </button>
+              <div className="grid gap-1">
+                <p className="text-sm">{currentUserData?.username}</p>
+                <p className="text-[10px] text-muted-foreground">{currentUserData?.email}</p>
+              </div>
+            </div>
+          ) : null}
 
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
+          <DropdownMenuLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            {t("theme")}
+          </DropdownMenuLabel>
+          <div className="flex gap-2">
+            <Button variant={"secondary"} onClick={() => setTheme("light")} className="flex items-center gap-2">
+              <Sun className="mr-2 h-4 w-4" />
+              <span>{t("themes.light")}</span>
+            </Button>
+
+            <Button variant={"secondary"} onClick={() => setTheme("dark")} className="flex items-center gap-2">
+              <Moon className="mr-2 h-4 w-4" />
+              <span>{t("themes.dark")}</span>
+            </Button>
+          </div>
+
+          <DropdownMenuLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            {t("language")}
+          </DropdownMenuLabel>
+          <div className="flex gap-2">
+            <Button variant={"secondary"} onClick={() => changeLang("en")} className="flex items-center gap-2">
+              🇬🇧
+              <span>{t("languages.en")}</span>
+            </Button>
+            <Button variant={"secondary"} onClick={() => changeLang("sr")} className="flex items-center gap-2">
+              🇷🇸
+              <span>{t("languages.sr")}</span>
+            </Button>
+          </div>
+
+          <DropdownMenuSeparator className="my-2" />
+
+          {currentUserData ? (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="p-2 border bg-accent/40 rounded-lg cursor-pointer"
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors"
             >
-              <Bug size={19} strokeWidth={1} />
+              <Bug className="h-4 w-4" strokeWidth={1.5} />
+              <span>{t("tooltip")}</span>
             </button>
-          </TooltipTrigger>
-          <TooltipContent>{t("tooltip")}</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+          ) : null}
+
+          {currentUserData ? (
+            <button onClick={handleSignOut} className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors">
+              <LogOut strokeWidth={1.5} className="h-4 w-4" />
+              <span>{t("logout")}</span>
+            </button>
+          ) : (
+            <button onClick={handleSignIn} className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors">
+              <LogIn strokeWidth={1.5} className="h-4 w-4" />
+              <span>{t("login")}</span>
+            </button>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       <AlertDialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <AlertDialogContent>
@@ -128,11 +192,11 @@ const Navbar = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-2"
           >
-            {/* BUG TYPE */}
             <label className="text-xs">{t("bugTypeLabel")}</label>
 
             <Select
-              {...register("bugType", { required: true 
+              {...register("bugType", {
+                required: true
               })}
               onValueChange={(val) =>
                 setValue("bugType", val, { shouldValidate: true })
@@ -156,7 +220,6 @@ const Navbar = () => {
               </span>
             )}
 
-            {/* DESCRIPTION */}
             <label className="text-xs mt-2">
               {t("bugDescriptionLabel")}
             </label>
@@ -175,7 +238,6 @@ const Navbar = () => {
               </span>
             )}
 
-            {/* ACTIONS */}
             <div className="flex justify-end gap-3 mt-4">
               <Button
                 type="button"

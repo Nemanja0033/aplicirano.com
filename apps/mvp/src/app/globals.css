@@ -58,7 +58,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #413aa1;
+  --primary: #4F679A;
   --interview: #f3e8ff;
   --interview-text: #c751de;
   --applied: #dbeafe;
@@ -153,9 +153,14 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
 }
 
-@layer base { img { display: initial; } }
+@layer base {
+  img {
+    display: initial;
+  }
+}
