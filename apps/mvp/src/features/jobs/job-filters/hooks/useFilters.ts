@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// This hook filter already filtered data from server(e.g Applied, date, salary etc. . .)
+
 export function useFilters(data: any, type: "JOBS" | "EMAIL"){
     const [query, setQuery] = useState('');
     const [status, setStatus] = useState('');

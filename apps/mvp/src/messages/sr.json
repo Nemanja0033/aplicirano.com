@@ -267,6 +267,16 @@
     "submit": "Potvrdi",
     "success": "Greška je uspešno prijavljena",
     "error": "Greška pri slanju prijave",
+    "pro_plan": "Pro plan",
+    "price": "{value} RSD",
+    "pay_once": "Plati jednom, koristi zauvek.",
+    "feature_unlimited_applications": "Neograničene prijave",
+    "feature_advanced_statistics": "Napredna statistika",
+    "feature_more_messages": "Više poruka sa AI Chatbotom",
+    "feature_unlimited_resumes": "Neograničeni CV-ovi",
+    "feature_priority_updates": "Prioritetne nadogradnje",
+    "upgrade_button": "Nadogradi na Pro",
+    "no_thanks": "Ne hvala",
     "validation": {
       "type": "Molimo odaberite domen",
       "description": "Opis mora imati najmanje 10 karaktera"
@@ -445,7 +455,7 @@
     "message": "Dobrodošli na Aplicirano — {version}. Radimo na novim funkcijama koje će vam pomoći da lakše pronađete, pratite i upravljate prijavama za posao.",
     "shortMessage": "Dobrodošli na Aplicirano {version} — Uskoro nove funkcije za praćenje i unapređenje vaše potrage za poslom."
   },
-  "StatusButtons":{
+  "StatusButtons": {
     "cancel": "Otkaži",
     "save": "Sačuvaj izmene"
   }
