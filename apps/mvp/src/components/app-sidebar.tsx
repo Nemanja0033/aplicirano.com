@@ -71,15 +71,14 @@ export function AppSidebar() {
     },
   ];
 
-  console.log(pathname.split("/dashboard")[1])
-
   return (
     <Sidebar>
       <SidebarContent className="flex flex-col justify-between h-full p-2">
         <div>
           <SidebarGroup>
             <SidebarGroupLabel className="flex w-full border-b-1 py-7 items-center justify-start">
-              <span className="text-2xl font-semibold text-primary">aplicirano</span>
+              <img src="/logo.png" className="w-12" alt="" />
+              <span className="text-2xl font-semibold text-primary">Aplicirano</span>
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
