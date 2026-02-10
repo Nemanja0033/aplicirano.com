@@ -1,10 +1,9 @@
 import { Loader2 } from 'lucide-react'
-import Loader from './Loader'
 
 const GlobalLoader = () => {
   return (
-    <div className='z-[9999] absolute mx-auto flex w-full h-screen justify-center items-center'>
-      <Loader type='NORMAL' />
+    <div className='z-9999 fixed top-0 bg-black/30 flex w-full h-screen justify-center items-center pointer-events-auto'>
+      <Loader2 className='text-primary animate-spin' />
     </div>
   )
 }
