@@ -2,12 +2,7 @@
 
 import { Bug, Languages, LogOut, Moon, Sun, User, LogIn } from "lucide-react";
 import { Button } from "./ui/button";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from "./ui/select";
+import { Select, SelectTrigger, SelectContent, SelectItem } from "./ui/select";
 import { useRouter, usePathname } from "@/src/i18n/navigation";
 import UpgradeButton from "./UpgradeButton";
 import { useCurrentUser } from "../features/user/hooks/useCurrentUser";
@@ -55,7 +50,7 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { token } = useAuthContext();
   const { setTheme } = useTheme();
-  const { handleSignOut, handleSignIn } = useAuth()
+  const { handleSignOut, handleSignIn } = useAuth();
 
   const {
     handleSubmit,
@@ -78,16 +73,12 @@ const Navbar = () => {
     }
 
     try {
-      await axios.post(
-        "/api/bug-report",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axios.post("/api/bug-report", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       toast.success(t("success"));
       reset();
@@ -119,7 +110,9 @@ const Navbar = () => {
               </button>
               <div className="grid gap-1">
                 <p className="text-sm">{currentUserData?.username}</p>
-                <p className="text-[10px] text-muted-foreground">{currentUserData?.email}</p>
+                <p className="text-[10px] text-muted-foreground">
+                  {currentUserData?.email}
+                </p>
               </div>
             </div>
           ) : null}
@@ -128,12 +121,20 @@ const Navbar = () => {
             {t("theme")}
           </DropdownMenuLabel>
           <div className="flex gap-2">
-            <Button variant={"secondary"} onClick={() => setTheme("light")} className="flex items-center gap-2">
+            <Button
+              variant={"secondary"}
+              onClick={() => setTheme("light")}
+              className="flex items-center gap-2"
+            >
               <Sun className="mr-2 h-4 w-4" />
               <span>{t("themes.light")}</span>
             </Button>
 
-            <Button variant={"secondary"} onClick={() => setTheme("dark")} className="flex items-center gap-2">
+            <Button
+              variant={"secondary"}
+              onClick={() => setTheme("dark")}
+              className="flex items-center gap-2"
+            >
               <Moon className="mr-2 h-4 w-4" />
               <span>{t("themes.dark")}</span>
             </Button>
@@ -143,11 +144,19 @@ const Navbar = () => {
             {t("language")}
           </DropdownMenuLabel>
           <div className="flex gap-2">
-            <Button variant={"secondary"} onClick={() => changeLang("en")} className="flex items-center gap-2">
+            <Button
+              variant={"secondary"}
+              onClick={() => changeLang("en")}
+              className="flex items-center gap-2"
+            >
               🇬🇧
               <span>{t("languages.en")}</span>
             </Button>
-            <Button variant={"secondary"} onClick={() => changeLang("sr")} className="flex items-center gap-2">
+            <Button
+              variant={"secondary"}
+              onClick={() => changeLang("sr")}
+              className="flex items-center gap-2"
+            >
               🇷🇸
               <span>{t("languages.sr")}</span>
             </Button>
@@ -166,12 +175,18 @@ const Navbar = () => {
           ) : null}
 
           {currentUserData ? (
-            <button onClick={handleSignOut} className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors">
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors"
+            >
               <LogOut strokeWidth={1.5} className="h-4 w-4" />
               <span>{t("logout")}</span>
             </button>
           ) : (
-            <button onClick={handleSignIn} className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors">
+            <button
+              onClick={handleSignIn}
+              className="w-full flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm hover:bg-accent hover:text-accent-foreground cursor-pointer transition-colors"
+            >
               <LogIn strokeWidth={1.5} className="h-4 w-4" />
               <span>{t("login")}</span>
             </button>
@@ -183,9 +198,7 @@ const Navbar = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>{t("title")}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t("description")}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{t("description")}</AlertDialogDescription>
           </AlertDialogHeader>
 
           <form
@@ -196,13 +209,13 @@ const Navbar = () => {
 
             <Select
               {...register("bugType", {
-                required: true
+                required: true,
               })}
               onValueChange={(val) =>
                 setValue("bugType", val, { shouldValidate: true })
               }
             >
-              <SelectTrigger>
+              <SelectTrigger className="w-full">
                 {t("bugTypePlaceholder")}
               </SelectTrigger>
               <SelectContent>
@@ -220,9 +233,7 @@ const Navbar = () => {
               </span>
             )}
 
-            <label className="text-xs mt-2">
-              {t("bugDescriptionLabel")}
-            </label>
+            <label className="text-xs mt-2">{t("bugDescriptionLabel")}</label>
 
             <Textarea
               className="min-h-24"
@@ -230,6 +241,7 @@ const Navbar = () => {
                 required: true,
                 minLength: 10,
               })}
+              placeholder="Description"
             />
 
             {errors.bugDescription && (
@@ -238,19 +250,25 @@ const Navbar = () => {
               </span>
             )}
 
-            <div className="flex justify-end gap-3 mt-4">
+            <div className="flex w-full justify-center gap-[8px] mt-4">
               <Button
+                className="w-1/2"
                 type="button"
                 variant="outline"
                 onClick={() => setIsModalOpen(false)}
               >
                 {t("cancel")}
               </Button>
-              <Button type="submit" disabled={isSubmitting || !isDirty}>
+              <Button
+                className="w-1/2"
+                type="submit"
+                disabled={isSubmitting || !isDirty}
+              >
                 {t("submit")}
               </Button>
             </div>
           </form>
+          <button onClick={() => setIsModalOpen(false)} className="absolute top-3 right-3 text-muted-foreground cursor-pointer">X</button>
         </AlertDialogContent>
       </AlertDialog>
     </div>
