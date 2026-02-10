@@ -30,7 +30,6 @@ import { useTheme } from "next-themes";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -215,7 +214,7 @@ const Navbar = () => {
                 setValue("bugType", val, { shouldValidate: true })
               }
             >
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full h-[52px]!">
                 {t("bugTypePlaceholder")}
               </SelectTrigger>
               <SelectContent>

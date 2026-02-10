@@ -19,13 +19,11 @@ export default function UpgradeButton() {
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    if (isMobile && isOpen && contentRef.current) {
-      setTimeout(() => {
-        console.log("FUNC TRIGERED")
-        contentRef.current?.scrollIntoView({ behavior: "smooth" });
-      }, 150);
-    }
-  }, [isOpen, isMobile]);
+    // Use timeout to wait for rened of content
+    setTimeout(() => {
+      contentRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+  }, [isOpen, isMobile, contentRef.current]);
 
   const handleCheckout = async () => {
     try {
@@ -54,7 +52,7 @@ export default function UpgradeButton() {
     <>
       <Button onClick={openModal}>{t("subscription_button")}</Button>
       <AlertDialog open={isOpen} onOpenChange={closeModal}>
-        <AlertDialogContent className="md:flex grid gap-2 min-w-[70vw] overflow-auto md:min-w-[781px] p-0 max-h-[80vh] md:min-h-[469px] justify-between items-center">
+        <AlertDialogContent className="md:flex z-50! grid gap-2 min-w-[70vw] overflow-auto md:min-w-[781px] p-0 max-h-[80vh] md:min-h-[469px] justify-between items-center">
           <img
             src="/pro-banner.png"
             className="h-full md:w-1/2 w-[400px] rounded-l-xl"
@@ -80,24 +78,27 @@ export default function UpgradeButton() {
 
               <div
                 ref={contentRef}
-                className="gap-3 grid mt-5 font-medium text-primary text-sm"
+                className="gap-3 grid mt-5 font-medium overflow-x-auto text-primary text-sm"
               >
                 <span className="flex gap-3 items-center">
-                  <CircleCheck height={16} width={16} /> Unlimited applications
+                  <CircleCheck height={16} width={16} />{" "}
+                  {t("feature_unlimited_applications")}
                 </span>
                 <span className="flex gap-3 items-center">
-                  <CircleCheck height={16} width={16} /> Advanced statistics
+                  <CircleCheck height={16} width={16} />{" "}
+                  {t("feature_advanced_statistics")}
                 </span>
                 <span className="flex gap-3 items-center">
-                  <CircleCheck height={16} width={16} /> More messages with AI
-                  Chatbot
+                  <CircleCheck height={16} width={16} />{" "}
+                  {t("feature_more_messages")}
                 </span>
                 <span className="flex gap-3 items-center">
-                  <CircleCheck height={16} width={16} /> Unlimited resumes
+                  <CircleCheck height={16} width={16} />{" "}
+                  {t("feature_unlimited_resumes")}
                 </span>
                 <span className="flex gap-3 items-center">
-                  <CircleCheck height={16} width={16} /> Priority feature
-                  updates
+                  <CircleCheck height={16} width={16} />{" "}
+                  {t("feature_priority_updates")}
                 </span>
               </div>
 

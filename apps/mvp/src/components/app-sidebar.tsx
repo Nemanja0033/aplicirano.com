@@ -31,6 +31,7 @@ import { usePathname } from "../i18n/navigation";
 import { Button } from "./ui/button";
 import { useCurrentUser } from "../features/user/hooks/useCurrentUser";
 import { useAuthContext } from "../context/AuthProvider";
+import UpgradeButton from "./UpgradeButton";
 
 export function AppSidebar() {
   const pathname = usePathname()
@@ -112,7 +113,7 @@ export function AppSidebar() {
             <div className="bg-primary/20 p-[16px] rounded-[8px] grid gap-3">
               <Button className="bg-primary/20 text-primary font-semibold w-fit hover:bg-primary/20 cursor-default"><SparkleIcon className="text-primary" />Pro plan</Button>
               <p className="text-primary/80 text-sm">{t("pro_plan_message")}</p>
-              <Button>{t("pro_plan_button")}</Button>
+              <UpgradeButton />
             </div>
           ) : null}
         </SidebarFooter>

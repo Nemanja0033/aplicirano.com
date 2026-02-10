@@ -289,6 +289,16 @@
       "en": "English",
       "sr": "Serbian"
     },
+    "pro_plan": "Pro plan",
+    "price": "999 RSD",
+    "pay_once": "Pay once, use forever.",
+    "feature_unlimited_applications": "Unlimited applications",
+    "feature_advanced_statistics": "Advanced statistics",
+    "feature_more_messages": "More messages with AI Chatbot",
+    "feature_unlimited_resumes": "Unlimited resumes",
+    "feature_priority_updates": "Priority feature updates",
+    "upgrade_button": "Upgrade to Pro",
+    "no_thanks": "No thanks",
     "logout": "Logout",
     "login": "Login"
   },
@@ -445,7 +455,7 @@
     "message": "Welcome to Aplicirano — {version}. We're building new features to help you find, track, and manage job opportunities.",
     "shortMessage": "Welcome to Aplicirano {version} — New features coming to help you track and improve your job search."
   },
-  "StatusButtons":{
+  "StatusButtons": {
     "cancel": "Cancel",
     "save": "Save"
   }
