@@ -188,7 +188,7 @@ export const translations: any = {
     },
 
     hero: {
-      badge: "🚀 v.1.0.0",
+      badge: "🚀 v.2.0.0 + New Design Soon!",
       titleMain: "Aplicirano – an easier way to track",
       titleHighlight: "job applications",
       subtitle:
