@@ -259,7 +259,7 @@ export default function ApliciranoLanding() {
 
             {/* Badge */}
             <div className="inline-block animate-pulse mb-10 px-4 py-2 bg-purple-100 rounded-full text-purple-700 font-medium text-sm">
-              {t.hero.badge}
+            🚀 v.2.0.0 + New Design Soon!
             </div>
 
             {/* Title */}
