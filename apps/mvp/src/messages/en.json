@@ -58,6 +58,8 @@
     "table_columns_company": "Company",
     "table_columns_appliedAt": "Applied At",
     "table_columns_status": "Status",
+    "table_columns_position": "Position",
+    "table_columns_location": "Location",
 
     "pagination_total": "Total",
     "pagination_prev": "Prev",

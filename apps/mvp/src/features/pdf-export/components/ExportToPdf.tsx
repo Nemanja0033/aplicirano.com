@@ -12,14 +12,19 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/src/components/ui/tooltip";
+import { usePurchaseModal } from "@/src/store/purchase-store";
 
 const ExportToPdf = ({ elementRef, isDisabled }: { elementRef: any; isDisabled: boolean }) => {
   const [isLoading, setIsLoading] = useState(false);
   const t = useTranslations("FileExport");
   const { currentUserData } = useCurrentUser();
+  const { openModal } = usePurchaseModal();
 
   const handleDownloadPdf = async () => {
-    if(currentUserData?.isProUSer === false) return;
+    if(!currentUserData?.isProUSer){
+      openModal();
+      return;
+    };
     
     setIsLoading(true);
 
@@ -45,23 +50,19 @@ const ExportToPdf = ({ elementRef, isDisabled }: { elementRef: any; isDisabled: 
 
   const disabled = isDisabled || !currentUserData?.isProUSer;
 
+  // Removed tooltip content for now
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
           {/* wrap u span jer disabled button ne emituje events */}
           <span>
-            <Button disabled={disabled} onClick={handleDownloadPdf}>
+            <Button variant={'secondary'} onClick={handleDownloadPdf}>
               <Download />
               {t("export_btn")}
             </Button>
           </span>
         </TooltipTrigger>
-        {disabled && (
-          <TooltipContent className="bg-background text-black dark:text-white">
-            <p>{t("disabled_tooltip")}</p>
-          </TooltipContent>
-        )}
       </Tooltip>
     </TooltipProvider>
   );

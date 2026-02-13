@@ -10,10 +10,8 @@ import {
 } from "@/src/components/ui/table";
 import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/src/hooks/use-mobile";
-import UpdateJobsStatus from "./UpdateJobsStatus";
 import { toast } from "sonner";
-import { Button } from "@/src/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { ChevronsUpDown, Loader2, ScrollText } from "lucide-react";
 import { useAuthContext } from "@/src/context/AuthProvider";
 import { useTranslations } from "next-intl";
 import EditJobModal from "./EditJobModal";
@@ -23,6 +21,7 @@ import JobsTableToolbar from "./JobsTableToolbar";
 import { Job } from "../types";
 import { useFilters } from "@/src/features/jobs/job-filters/hooks/useFilters";
 import { useSelectRows } from "../hooks/useSelectRows";
+import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
 
 interface JobsTableProps {
   jobs: Job[];
@@ -65,6 +64,8 @@ export function JobsTable({
     filteredData: jobsToDisplay,
     isStatusChanged,
     setIsStatusChanged,
+    sortBy,
+    setSortBy,
   } = useFilters(jobs, "JOBS");
   const {
     checkAllRows,
@@ -108,7 +109,7 @@ export function JobsTable({
   const t = useTranslations("JobsTable");
 
   return (
-    <main className="w-full">
+    <main className="w-full md:py-4 md:px-8">
       <JobsTableToolbar
         query={query}
         setQuery={setQuery}
@@ -128,67 +129,112 @@ export function JobsTable({
         tableRef={tableRef}
       />
 
-      <div
-        ref={tableRef}
-        className="mt-5 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white shadow-md p-5 rounded-lg shadow-md"
-      >
-        {isLoading ? (
-          <div className="w-full h-[50vh] flex items-center justify-center">
-            <Loader2 className="animate-spin" />
-          </div>
-        ) : (
-          <Table>
-            <TableCaption>{t("table_caption")}</TableCaption>
-            <TableHeader>
-              <TableRow data-html2canvas-ignore>
-                <TableHead>
-                  <input
-                    aria-label="select row for action"
-                    data-html2canvas-ignore
-                    checked={
-                      selectedRows.length >= jobs.length && jobs.length > 0
-                    }
-                    onChange={(e) => checkAllRows(e, jobs)}
-                    type="checkbox"
-                  />
-                </TableHead>
-                <TableHead className="w-[100px] flex items-center gap-2 font-bold">
-                  {t("table_columns_company")}
-                </TableHead>
-                {!isMobile ? (
-                  <TableHead className="font-bold">
-                    {t("table_columns_appliedAt")}
-                  </TableHead>
-                ) : null}
-                <TableHead className="font-bold">
-                  {t("table_columns_status")}
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {jobsToDisplay.map((job: Job) => (
-                <JobRow
-                  key={job.id}
-                  job={job}
-                  selectedRows={selectedRows}
-                  checkSingleRow={checkSingleRow}
-                  handleOpenModal={handleOpenModal}
-                  isMobile={isMobile}
-                  setIsStatusChanged={setIsStatusChanged}
-                  checkRowsWithStatus={checkRowsWithStatus}
-                />
-              ))}
-            </TableBody>
-            <TablePagination
-              total={total}
-              page={page}
-              pageCount={pageCount}
-              goToPage={goToPage}
-              isLoading={isLoading}
+      {jobsToDisplay.length === 0 ? (
+        <div className="w-full h-[60vh] flex justify-center items-center">
+          <div className="grid gap-2 place-items-center">
+            <ScrollText
+              className="font-bold"
+              width={20}
+              height={20}
+              strokeWidth={1}
             />
-          </Table>
-        )}
-      </div>
+            <h4 className="font-bold">No applications yet</h4>
+            <p className="text-muted-foreground">
+              Click the button below to add application.
+            </p>
+            <ManuelJobImport
+              selectedResume={selectedResume}
+              selectedProfile={selectedProfile}
+              currentUser={currentUser}
+              isDisabled={selectedRows.length > 0}
+            />
+          </div>
+        </div>
+      ) : (
+        <div
+          ref={tableRef}
+          className="dark:bg-gradient-to-b p-[16px] from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white"
+        >
+          {isLoading ? (
+            <div className="w-full h-[50vh] flex items-center justify-center">
+              <Loader2 className="animate-spin" />
+            </div>
+          ) : (
+            <Table>
+              <TableCaption>{t("table_caption")}</TableCaption>
+              <TableHeader>
+                <TableRow data-html2canvas-ignore>
+                  <TableHead className="text-muted-foreground flex items-center gap-2">
+                    <input
+                      className="cursor-pointer h-[18px] w-[18px] rounded-[12px]"
+                      aria-label="select row for action"
+                      data-html2canvas-ignore
+                      checked={
+                        selectedRows.length >= jobs.length && jobs.length > 0
+                      }
+                      onChange={(e) => checkAllRows(e, jobs)}
+                      type="checkbox"
+                    />
+                    {t("table_columns_company")}
+                  </TableHead>
+                  {!isMobile ? (
+                    <TableHead className="text-muted-foreground cursor-pointer">
+                      <span
+                        onClick={() =>
+                          sortBy === "DATE_ASC"
+                            ? setSortBy("DATE_DESC")
+                            : setSortBy("DATE_ASC")
+                        }
+                        className="flex items-center gap-1"
+                      >
+                        {t("table_columns_appliedAt")}
+                        <ChevronsUpDown size={16} />
+                      </span>
+                    </TableHead>
+                  ) : null}
+                  <TableHead className="text-muted-foreground cursor-pointer">
+                    <span className="flex items-center gap-1">
+                      {t("table_columns_status")}
+                    </span>
+                  </TableHead>
+                  <TableHead className="text-muted-foreground cursor-pointer">
+                    <span className="flex items-center gap-1">
+                      {t("table_columns_position")}
+                    </span>
+                  </TableHead>
+                  <TableHead className="text-muted-foreground cursor-pointer">
+                    <span className="flex items-center gap-1">
+                      {t("table_columns_location")}
+                    </span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {jobsToDisplay.map((job: Job, i: number) => (
+                  <JobRow
+                    key={job.id}
+                    index={i}
+                    job={job}
+                    selectedRows={selectedRows}
+                    checkSingleRow={checkSingleRow}
+                    handleOpenModal={handleOpenModal}
+                    isMobile={isMobile}
+                    setIsStatusChanged={setIsStatusChanged}
+                    checkRowsWithStatus={checkRowsWithStatus}
+                  />
+                ))}
+              </TableBody>
+              <TablePagination
+                total={total}
+                page={page}
+                pageCount={pageCount}
+                goToPage={goToPage}
+                isLoading={isLoading}
+              />
+            </Table>
+          )}
+        </div>
+      )}
 
       <EditJobModal
         selectedJob={selectedJob}
