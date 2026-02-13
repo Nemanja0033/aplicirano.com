@@ -50,7 +50,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={params.locale} className={inter.className}>
-      <body className="antialiased bg-background">
+      <body className="antialiased bg-white dark:bg-background">
         <NextIntlClientProvider locale={params.locale} messages={messages}>
           <Providers>{children}</Providers>
         </NextIntlClientProvider>

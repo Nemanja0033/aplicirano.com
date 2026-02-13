@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 interface JobRowProps {
   job: Job;
+  index: number;
   selectedRows: string[];
   checkSingleRow: (e: any, id: string) => void;
   handleOpenModal: (job: Job) => void;
@@ -17,6 +18,7 @@ interface JobRowProps {
 
 export default function JobRow({
   job,
+  index,
   selectedRows,
   checkSingleRow,
   handleOpenModal,
@@ -29,23 +31,23 @@ export default function JobRow({
   return (
     <TableRow
       onDoubleClick={() => handleOpenModal(job)}
-      className={`${
-        selectedRows.includes(job.id)
-          ? "dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-primary/10"
-          : ""
+      onTouchStart={() => handleOpenModal(job)}
+      className={`h-[48px] rounded-b-[0.7px] ${index % 2 === 0 ? "bg-white" : "bg-[#F6F6F6]"} ${
+        selectedRows.includes(job.id) ? "" : ""
       }`}
     >
-      <TableCell>
+      <TableCell className="">
         <input
+          className="cursor-pointer h-[18px] w-[18px] rounded-[12px]"
           aria-label="select job for action"
           data-html2canvas-ignore
           value={job.id}
           checked={selectedRows.includes(job.id)}
           onChange={(e) => checkSingleRow(e, job.id)}
           type="checkbox"
-        />
+        />{" "}
+        {job.title}
       </TableCell>
-      <TableCell className="font-medium">{job.title}</TableCell>
       <TableCell className="font-medium md:flex hidden">
         {new Date(job.appliedAt).toLocaleDateString()}
       </TableCell>
@@ -60,14 +62,14 @@ export default function JobRow({
               status: e.target.value,
             });
           }}
-          className={`cursor-pointer text-[13px] font-medium w-33 p-1 rounded-2xl dark:opacity-65 ${getBadgeLightColor(
+          className={`cursor-pointer text-[13px] font-medium w-fit p-1 rounded-[6px] dark:opacity-65 ${getBadgeLightColor(
             job.status
           )} bg-accent`}
           defaultValue={job.status}
           name={`status-${job.id}`}
         >
           <option value={job.status}>
-            • {t(`status_${job.status.toLowerCase()}`)}
+            {t(`status_${job.status.toLowerCase()}`)}
           </option>
           {job.status === "APPLIED" || job.status === "INTERVIEW" ? (
             <>
@@ -77,6 +79,12 @@ export default function JobRow({
             </>
           ) : null}
         </select>
+      </TableCell>
+      <TableCell>
+        {job.position ?? 'Unknown'}
+      </TableCell>
+      <TableCell>
+        {job.location ?? 'Unknown'}
       </TableCell>
     </TableRow>
   );

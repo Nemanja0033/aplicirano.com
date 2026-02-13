@@ -31,14 +31,14 @@ export default function TablePagination({
             </span>
 
             <div className="flex items-center gap-2">
-              <Button
+              {/* <Button
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => goToPage(page - 1)}
                 disabled={page <= 1 || isLoading}
               >
                 {t("pagination_prev")}
-              </Button>
+              </Button> */}
 
               {Array.from({ length: pageCount }).map((_, idx) => {
                 const p = idx + 1;
@@ -93,14 +93,14 @@ export default function TablePagination({
                 );
               })}
 
-              <Button
+              {/* <Button
                 variant={"outline"}
                 size={"sm"}
                 onClick={() => goToPage(page + 1)}
                 disabled={page >= pageCount || isLoading}
               >
                 {t("pagination_next")}
-              </Button>
+              </Button> */}
             </div>
           </div>
         </TableCell>

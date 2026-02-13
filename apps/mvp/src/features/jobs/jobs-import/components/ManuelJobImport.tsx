@@ -24,6 +24,7 @@ import {
 } from "@/src/components/ui/tooltip";
 import { Textarea } from "@/src/components/ui/textarea";
 import { useTranslations } from "next-intl";
+import { usePurchaseModal } from "@/src/store/purchase-store";
 
 export interface JobImportForm {
   company: string;
@@ -39,9 +40,9 @@ const ManuelJobImport = ({
   isDisabled,
   currentUser,
   selectedProfile,
-  selectedResume
+  selectedResume,
 }: {
-  selectedResume: any
+  selectedResume: any;
   selectedProfile: any;
   isDisabled: boolean;
   currentUser: any;
@@ -56,14 +57,15 @@ const ManuelJobImport = ({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<JobImportForm>({ mode: "onSubmit" });
+  const { openModal } = usePurchaseModal();
 
   const handleSubmitJob = async (data: JobImportForm) => {
     try {
       const jobObject = { ...data, appliedAt: date };
-      await postSingleJob(jobObject, token, selectedProfile, selectedResume );
+      await postSingleJob(jobObject, token, selectedProfile, selectedResume);
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
       queryClient.invalidateQueries({ queryKey: ["me"] });
-      queryClient.invalidateQueries({ queryKey: ["stats"]});
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
       setIsModalOpen(false);
     } catch (err) {
       console.error(err);
@@ -79,8 +81,14 @@ const ManuelJobImport = ({
           <span>
             <Button
               type="button"
-              disabled={isOutOfCredits}
-              onClick={() => setIsModalOpen(true)}
+              // disabled={isOutOfCredits}
+              onClick={() => {
+                if (isOutOfCredits) {
+                  openModal();
+                  return;
+                }
+                setIsModalOpen(true);
+              }}
             >
               {t("add_button")}
             </Button>
@@ -264,7 +272,10 @@ const ManuelJobImport = ({
             </div>
 
             {/* Applied At */}
-            <Label htmlFor="appliedAt" className="text-xs md:grid hidden dark:text-gray-400">
+            <Label
+              htmlFor="appliedAt"
+              className="text-xs md:grid hidden dark:text-gray-400"
+            >
               {t("form_appliedAt_label")}
             </Label>
             <Calendar
@@ -281,7 +292,7 @@ const ManuelJobImport = ({
               <AlertDialogCancel className="cursor-pointer">
                 {t("form_cancel")}
               </AlertDialogCancel>
-              <Button disabled={isSubmitting} type="submit">
+              <Button type="submit">
                 {isSubmitting ? t("form_submit_submitting") : t("form_submit")}
               </Button>
             </div>
