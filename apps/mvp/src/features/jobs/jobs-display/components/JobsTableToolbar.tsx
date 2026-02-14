@@ -173,7 +173,7 @@ export default function JobsTableToolbar({
         {/* )} */}
       </div>
 
-      <div>
+      <div className="mb-5">
         {selectedRows.length > 0 && !isStatusChanged && (
           <UpdateJobStatusButtons
             resetRows={resetRows}
