@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Upload } from "lucide-react";
+import { FileIcon, Info, Upload } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/src/components/ui/button";
 import { useFirebaseUser } from "@/src/hooks/useFirebaseUser";
@@ -14,6 +14,7 @@ import {
   DropdownMenuItem,
 } from "@/src/components/ui/dropdown-menu";
 import { usePurchaseModal } from "../../../../store/purchase-store";
+import ImportGuideModal from "./ImportGuideModal";
 
 const initialFormState = {
   isSubmitting: false,
@@ -34,7 +35,9 @@ export function FileImportForm({
   selectedResume: any;
 }) {
   const t = useTranslations("FileImport");
+  const t2 = useTranslations("ImportGuide");
   const [formState, setFormState] = useState(initialFormState);
+  const [isGuideOpen, setIsGuideOpen] = useState(false);
   const queryClient = useQueryClient();
   const { token } = useFirebaseUser();
 
@@ -119,73 +122,91 @@ export function FileImportForm({
   const isOutOfCredits = isDisabled || currentUser.jobsLimit === 0;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          variant="secondary"
-          // disabled={isOutOfCredits || formState.isSubmitting}
-        >
-          <Upload className="mr-2 h-4 w-4" />
-          {formState.isSubmitting ? t("button_submit_uploading") : "Import"}
-        </Button>
-      </DropdownMenuTrigger>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            type="button"
+            variant="secondary"
+            // disabled={isOutOfCredits || formState.isSubmitting}
+          >
+            <Upload className="mr-2 h-4 w-4" />
+            {formState.isSubmitting
+              ? t("button_submit_uploading")
+              : t("button_import")}
+          </Button>
+        </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="grid gap-3 p-3">
-        {/* Hidden inputs */}
-        <input
-          ref={csvInputRef}
-          onChange={(e) => {
-            if (isDisabled || currentUser.jobsLimit === 0) {
-              openModal();
-              return;
-            }
-            handleFileChange(e, "CSV");
-          }}
-          type="file"
-          accept=".csv"
-          name="csv-file"
-          className="absolute w-0 h-0 opacity-0"
-        />
+        <DropdownMenuContent className="grid gap-3 p-3">
+          {/* Hidden inputs */}
+          <input
+            ref={csvInputRef}
+            onChange={(e) => {
+              if (isDisabled || currentUser.jobsLimit === 0) {
+                openModal();
+                return;
+              }
+              handleFileChange(e, "CSV");
+            }}
+            type="file"
+            accept=".csv"
+            name="csv-file"
+            className="absolute w-0 h-0 opacity-0"
+          />
 
-        <input
-          ref={txtInputRef}
-          onChange={(e) => handleFileChange(e, "TXT")}
-          type="file"
-          accept=".txt"
-          name="text"
-          className="absolute w-0 h-0 opacity-0"
-        />
+          <input
+            ref={txtInputRef}
+            onChange={(e) => handleFileChange(e, "TXT")}
+            type="file"
+            accept=".txt"
+            name="text"
+            className="absolute w-0 h-0 opacity-0"
+          />
 
-        {/* Dropdown items */}
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-            if (isDisabled || currentUser.jobsLimit === 0) {
-              openModal();
-              return;
-            }
-            csvInputRef.current?.click();
-          }}
-          // disabled={isOutOfCredits}
-        >
-          Upload CSV
-        </DropdownMenuItem>
+          {/* Dropdown items */}
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              if (isDisabled || currentUser.jobsLimit === 0) {
+                openModal();
+                return;
+              }
+              csvInputRef.current?.click();
+            }}
+            // disabled={isOutOfCredits}
+          >
+            <FileIcon size={16} />
 
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-            if (isDisabled || currentUser.jobsLimit === 0) {
-              openModal();
-              return;
-            }
-            txtInputRef.current?.click();
-          }}
-          // disabled={isOutOfCredits}
-        >
-          Upload TXT
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+            {t("button_import_csv")}
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              if (isDisabled || currentUser.jobsLimit === 0) {
+                openModal();
+                return;
+              }
+              txtInputRef.current?.click();
+            }}
+            // disabled={isOutOfCredits}
+          >
+            <FileIcon size={16} />
+            {t("button_import_txt")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+              setIsGuideOpen(true);
+            }}
+          >
+            <Info size={16} />
+            {t2("button_guide")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <ImportGuideModal open={isGuideOpen} onOpenChange={setIsGuideOpen} />
+    </>
   );
 }

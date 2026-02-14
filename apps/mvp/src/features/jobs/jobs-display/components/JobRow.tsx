@@ -4,6 +4,13 @@ import { TableCell, TableRow } from "@/src/components/ui/table";
 import { getBadgeLightColor } from "@/helpers";
 import { Job } from "../types";
 import { useTranslations } from "next-intl";
+import { Edit2, EllipsisVertical, Trash } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/src/components/ui/dropdown-menu";
 
 interface JobRowProps {
   job: Job;
@@ -30,23 +37,24 @@ export default function JobRow({
 
   return (
     <TableRow
-      onDoubleClick={() => handleOpenModal(job)}
       onTouchStart={() => handleOpenModal(job)}
-      className={`h-[48px] rounded-b-[0.7px] ${index % 2 === 0 ? "bg-white" : "bg-[#F6F6F6]"} ${
+      className={`h-[48px] rounded-b-[0.7px] ${index % 2 === 0 ? "bg-white dark:bg-background" : "bg-[#F6F6F6] dark:bg-accent"} ${
         selectedRows.includes(job.id) ? "" : ""
       }`}
     >
       <TableCell className="">
-        <input
-          className="cursor-pointer h-[18px] w-[18px] rounded-[12px]"
-          aria-label="select job for action"
-          data-html2canvas-ignore
-          value={job.id}
-          checked={selectedRows.includes(job.id)}
-          onChange={(e) => checkSingleRow(e, job.id)}
-          type="checkbox"
-        />{" "}
-        {job.title}
+        <div className="flex items-center gap-3">
+          <input
+            className="cursor-pointer h-[18px] w-[18px] rounded-[12px]"
+            aria-label="select job for action"
+            data-html2canvas-ignore
+            value={job.id}
+            checked={selectedRows.includes(job.id)}
+            onChange={(e) => checkSingleRow(e, job.id)}
+            type="checkbox"
+          />{" "}
+          {job.title}
+        </div>
       </TableCell>
       <TableCell className="font-medium md:flex hidden">
         {new Date(job.appliedAt).toLocaleDateString()}
@@ -62,7 +70,7 @@ export default function JobRow({
               status: e.target.value,
             });
           }}
-          className={`cursor-pointer text-[13px] font-medium w-fit p-1 rounded-[6px] dark:opacity-65 ${getBadgeLightColor(
+          className={`cursor-pointer text-[13px] font-medium w-30 p-1 rounded-[6px] dark:opacity-65 ${getBadgeLightColor(
             job.status
           )} bg-accent`}
           defaultValue={job.status}
@@ -80,11 +88,20 @@ export default function JobRow({
           ) : null}
         </select>
       </TableCell>
+      <TableCell>{job.position ?? t("unknown")}</TableCell>
+      <TableCell>{job.location ?? t("unknown")}</TableCell>
       <TableCell>
-        {job.position ?? 'Unknown'}
-      </TableCell>
-      <TableCell>
-        {job.location ?? 'Unknown'}
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <button className="text-muted-foreground cursor-pointer">
+              <EllipsisVertical size={16} />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => handleOpenModal(job)} className="cursor-pointer"><Edit2 /> Edit application</DropdownMenuItem>
+            {/* <DropdownMenuItem className="cursor-pointer"><Trash /> Delete application</DropdownMenuItem> */}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </TableCell>
     </TableRow>
   );

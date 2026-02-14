@@ -22,6 +22,7 @@ import { Job } from "../types";
 import { useFilters } from "@/src/features/jobs/job-filters/hooks/useFilters";
 import { useSelectRows } from "../hooks/useSelectRows";
 import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
+import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 
 interface JobsTableProps {
   jobs: Job[];
@@ -80,6 +81,9 @@ export function JobsTable({
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
 
+  // implement jobs calculation from
+  const { currentUserData } = useCurrentUser();
+
   useEffect(() => {
     if (tableRef.current) {
       setIsTableReady(true);
@@ -89,7 +93,7 @@ export function JobsTable({
   useEffect(() => {
     if (currentUser?.jobsLimit === 0) {
       toast.warning(
-        "You have reached your job application limit. Please upgrade to Pro to continue."
+        t("limit_reached")
       );
     }
   }, [currentUser]);
@@ -129,7 +133,7 @@ export function JobsTable({
         tableRef={tableRef}
       />
 
-      {jobsToDisplay.length === 0 ? (
+      {jobsToDisplay.length === 0 && !isLoading ? (
         <div className="w-full h-[60vh] flex justify-center items-center">
           <div className="grid gap-2 place-items-center">
             <ScrollText
@@ -138,9 +142,9 @@ export function JobsTable({
               height={20}
               strokeWidth={1}
             />
-            <h4 className="font-bold">No applications yet</h4>
+            <h4 className="font-bold">{t("no_applications")}</h4>
             <p className="text-muted-foreground">
-              Click the button below to add application.
+              {t("no_applications_body")}
             </p>
             <ManuelJobImport
               selectedResume={selectedResume}
@@ -153,7 +157,7 @@ export function JobsTable({
       ) : (
         <div
           ref={tableRef}
-          className="dark:bg-gradient-to-b p-[16px] from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white"
+          className="bg-white dark:bg-background"
         >
           {isLoading ? (
             <div className="w-full h-[50vh] flex items-center justify-center">
@@ -206,6 +210,9 @@ export function JobsTable({
                     <span className="flex items-center gap-1">
                       {t("table_columns_location")}
                     </span>
+                  </TableHead>
+                  <TableHead>
+                    
                   </TableHead>
                 </TableRow>
               </TableHeader>

@@ -104,6 +104,9 @@ export default function TablePagination({
             </div>
           </div>
         </TableCell>
+        <TableCell>
+          
+        </TableCell>
       </TableRow>
     </TableFooter>
   );

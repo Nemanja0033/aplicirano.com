@@ -1,5 +1,3 @@
-import PDFParser from "pdf2json";
-
 export function getTextColor(status: string){
     let textColor = '';
 
@@ -23,7 +21,7 @@ export function getBadgeLightColor(status: string){
 
   switch(status){
     case "APPLIED":
-      badgeColor="bg-applied text-blue-700";
+      badgeColor="bg-applied text-[#4F679A]";
       break;
     case "REJECTED":
       badgeColor="bg-rejected text-red-700";

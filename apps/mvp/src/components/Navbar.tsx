@@ -89,7 +89,7 @@ const Navbar = () => {
 
   return (
     <div className="flex fixed z-50 right-0 top-3 justify-end gap-2 items-center p-3 bg-transparent">
-      {!currentUserData?.isProUSer && token !== null ? <UpgradeButton /> : null}
+      {/* {!currentUserData?.isProUSer && token !== null ? <UpgradeButton /> : null} */}
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
