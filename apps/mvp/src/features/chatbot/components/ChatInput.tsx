@@ -23,22 +23,23 @@ export const ChatInput = ({
   const t = useTranslations("ChatbotPage");
 
   return (
-    <div className="w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-white dark:bg-sidebar p-3 items-center rounded-lg flex gap-3 relative">
+    <div className="w-full bg-white dark:bg-background p-3 rounded-lg flex items-end gap-3">
       <Textarea
         disabled={!token || apiCredits === 0}
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        className="max-h-20 rounded-xl bg-accent/40 max-w-[1010px] pr-32"
         placeholder={t("placeholder")}
         aria-label={t("placeholder")}
+        className="flex-1 min-w-0 max-h-20 rounded-xl bg-accent/40 resize-none"
       />
+
       <Button
         aria-label={t("send_button")}
         name="send-message-button"
-        className="absolute right-3 h-16 w-20 top-3"
         onClick={onSend}
         size="lg"
         disabled={isLoading || !token || apiCredits === 0}
+        className="h-16 w-20 shrink-0"
       >
         <Send />
       </Button>

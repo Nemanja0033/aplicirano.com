@@ -12,7 +12,7 @@ export const ChatList = ({ messages, isLoading, userPhoto }: ChatListProps) => {
   const t = useTranslations("ChatbotPage");
 
   return (
-    <div className="w-full p-5 dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] bg-white dark:bg-sidebar overflow-auto rounded-xl border h-[80vh]">
+    <div className="w-full p-3 bg-white dark:bg-background overflow-auto md:h-[67vh] h-screen border-b">
       <div className="flex flex-col gap-6">
         {messages.map((m, i) => (
           <ChatMessage key={i} message={m} userPhoto={userPhoto} />

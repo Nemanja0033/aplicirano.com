@@ -34,7 +34,7 @@ export default function ChatbotPage() {
 
   return (
     <main className="w-full h-screen flex justify-center items-start">
-      <div className="md:w-6xl w-full p-3 grid place-items-center gap-5">
+      <div className="w-full p-3 grid place-items-center ">
         <ChatHeader />
 
         <ChatList
