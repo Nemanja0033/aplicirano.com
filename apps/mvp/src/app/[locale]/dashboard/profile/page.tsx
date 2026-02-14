@@ -51,34 +51,32 @@ export default function ProfilePage() {
         isDeleting={isDeleting}
       />
 
-      <section className="md:w-6xl p-3 w-full grid place-items-center gap-5">
+      <section className="p-3 w-full grid place-items-center gap-5">
         <ProfileHeader />
 
-        <section className="w-full rounded-lg bg-white shadow-md p-5 dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216]">
-          <div className="grid gap-4">
-            <div className="flex items-center justify-between">
+        <section className="w-full rounded-lg bg-white dark:bg-background p-5">
+          <div className="grid gap-4 w-full">
+            <div className="fle w-full items-center justify-between">
               <div className="text-right">
                 <span className="text-sm text-muted-foreground">
                   {t("used_label", { count: profiles?.length ?? 0 })}
                 </span>
               </div>
+
+              <AddProfileForm
+                name={name}
+                setName={setName}
+                handleCreate={handleCreate}
+                isSubmitting={isSubmitting}
+                canCreate={canCreate}
+                currentUserData={currentUserData}
+              />
             </div>
 
             <ProfileList
               profiles={profiles}
               onDelete={confirmDelete}
               isDeleting={isDeleting}
-            />
-
-            <AddProfileForm
-              isAddingNewProfile={isAddingNewProfile}
-              setIsAddingNewProfile={setIsAddingNewProfile}
-              name={name}
-              setName={setName}
-              handleCreate={handleCreate}
-              isSubmitting={isSubmitting}
-              canCreate={canCreate}
-              currentUserData={currentUserData}
             />
           </div>
         </section>

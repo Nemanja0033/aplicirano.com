@@ -225,7 +225,8 @@
     "confirm_delete_profile": "Profil",
     "confirm_delete_cancel": "Otkaži",
     "confirm_delete_deleting": "Brišem...",
-    "confirm_delete_confirm": "Obriši profil i poslove"
+    "confirm_delete_confirm": "Obriši profil i poslove",
+    "cancel": "Otkaži"
   },
   "ResumePage": {
     "title": "Skladište CV-a",

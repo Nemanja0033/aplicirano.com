@@ -91,6 +91,7 @@ export function useProfiles() {
       toast.success(t("toast_deleted"));
       queryClient.invalidateQueries({ queryKey: ["profiles"] });
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
     } catch (err) {
       console.error(err);
       toast.error(t("toast_error_delete"));
