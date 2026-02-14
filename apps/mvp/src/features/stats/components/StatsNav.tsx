@@ -3,12 +3,12 @@ import { useTranslations } from "next-intl"
 const   StatsNav = ({ range, onChange }: { range: any, onChange: (e: any) => void }) => {
   const t = useTranslations("StatsPage")
   return (
-    <section className="flex bg-white shadow-md dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] p-5 rounded-lg w-full justify-between">
+    <section className="flex bg-white dark:bg-background p-3 w-full border-b justify-between">
       <div className="grid p-1">
         <h1 className="font-bold text-2xl">{t("title")}</h1>
         <p className="text-muted-foreground text-sm">{t("subtitle")}</p>
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 mr-20 items-center">
         <select aria-label={t("range_label")} className="border-2 rounded-md px-3 py-2 dark:border-[#151046] dark:border-2" value={range} onChange={onChange} >
           <option value="7d" className="dark:bg-[#100c28] bg-white dark:text-white text-black">
             {t("range_7d")}

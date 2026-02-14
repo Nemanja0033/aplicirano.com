@@ -17,7 +17,7 @@ const JobStatsGrid = ({
   const t = useTranslations("StatsPage");
 
   return (
-    <div className="grid gap-6 w-full">
+    <div className="grid gap-6 w-full p-5">
       <section className="grid w-full md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
         {/* Osnovne metrike - dostupne svima */}
         <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
