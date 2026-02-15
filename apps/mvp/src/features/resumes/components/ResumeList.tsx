@@ -11,7 +11,7 @@ export const ResumeList = ({ resumes, onDelete }: ResumeListProps) => {
   const t = useTranslations("ResumePage");
 
   return (
-    <div className="mt-6 grid grid-cols-4 w-full md:gap-15 gap-3">
+    <div className="mt-6 grid md:grid-cols-4 grid-cols-1 w-full md:gap-15 gap-3">
       {resumes?.length === 0 && (
         <div className="text-sm w-full flex justify-center text-muted-foreground text-center py-6 rounded-lg">
           {t("no_resumes")}

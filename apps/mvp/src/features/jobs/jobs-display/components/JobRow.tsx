@@ -38,7 +38,6 @@ export default function JobRow({
   return (
     <TableRow
       onDoubleClick={() => handleOpenModal(job)}
-      onTouchStart={() => handleOpenModal(job)}
       className={`h-[48px] rounded-b-[0.7px] ${index % 2 === 0 ? "bg-white dark:bg-background" : "bg-[#F6F6F6] dark:bg-accent"} ${
         selectedRows.includes(job.id) ? "" : ""
       }`}
