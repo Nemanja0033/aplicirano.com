@@ -125,15 +125,15 @@ export default function Home() {
 
   return (
     <main className="w-full h-full flex justify-center items-center">
-      <div className="w-full md:w-6xl h-fit grid p-3 gap-5 justify-center">
-        <section className='flex bg-white dark:bg-background dark:border shadow-md p-5 rounded-lg w-full justify-between'>
+      <div className="w-full h-fit grid p-3 gap-5 justify-center">
+        <section className='flex bg-white dark:bg-background border-b p-3 w-full justify-between'>
           <div className="grid p-1">
             <h1 className="font-bold text-2xl">{t("title")}</h1>
             <p className="text-muted-foreground text-sm">{t("subtitle")}</p>
           </div>
         </section>
 
-        <div className="gap-5 grid md:grid-cols-3 sm:grid-cols-2">
+        <div className="gap-5 p-5 grid md:grid-cols-3 sm:grid-cols-2">
           {pageContent.map((c) => (
             <Card className="dark:border-2">
               <CardHeader>
