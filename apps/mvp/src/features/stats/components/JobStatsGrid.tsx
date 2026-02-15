@@ -1,7 +1,5 @@
-import React from "react";
 import { Card, CardTitle, CardContent } from "@/src/components/ui/card";
 import { FileText, Mic, X, CalendarCheck, Calendar1 } from "lucide-react";
-import { StatsData } from "../types";
 import AnimatedNumber from "./AnimatedStats";
 import { useTranslations } from "next-intl";
 // Pretpostavljam da ćeš importovati LockedOverlay
@@ -20,7 +18,7 @@ const JobStatsGrid = ({
     <div className="grid gap-6 w-full p-5">
       <section className="grid w-full md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3">
         {/* Osnovne metrike - dostupne svima */}
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex items-center gap-2 text-primary">
             <FileText strokeWidth={1} /> {t("grid_totalApplied")}
           </CardTitle>
@@ -29,7 +27,7 @@ const JobStatsGrid = ({
           </CardContent>
         </Card>
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#FB7185]">
             <X strokeWidth={1} /> {t("grid_totalRejections")}
           </CardTitle>
@@ -38,7 +36,7 @@ const JobStatsGrid = ({
           </CardContent>
         </Card>
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#98de51]">
             <Mic strokeWidth={1} /> {t("grid_totalInterviews")}
           </CardTitle>
@@ -48,7 +46,7 @@ const JobStatsGrid = ({
         </Card>
 
         {/* Premium metrike - zaključane ako nije Pro */}
-        {/* <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        {/* <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#237cb4]">
             <Calendar1 strokeWidth={1} /> {t("grid_avg_response_time")}
           </CardTitle>
@@ -58,7 +56,7 @@ const JobStatsGrid = ({
           {!isPro && <LockedOverlay />}
         </Card> */}
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#fa1f1b]">
             <Calendar1 strokeWidth={1} /> {t("grid_avg_rejection_response")}
           </CardTitle>
@@ -68,7 +66,7 @@ const JobStatsGrid = ({
           {!isPro && <LockedOverlay />}
         </Card>
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#75f399]">
             <Calendar1 strokeWidth={1} /> {t("grid_avg_interview_response")}
           </CardTitle>
@@ -78,7 +76,7 @@ const JobStatsGrid = ({
           {!isPro && <LockedOverlay />}
         </Card>
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#FBBF24]">
             <Calendar1 strokeWidth={1} /> {t("grid_totalActiveDays")}
           </CardTitle>
@@ -88,7 +86,7 @@ const JobStatsGrid = ({
           {!isPro && <LockedOverlay />}
         </Card>
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#10B981]">
             <CalendarCheck strokeWidth={1} /> {t("grid_averageApplies")}
           </CardTitle>
@@ -101,7 +99,7 @@ const JobStatsGrid = ({
           {!isPro && <LockedOverlay />}
         </Card>
 
-        <Card className="relative grid place-items-center dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:text-[#E6E9F2]">
+        <Card className="relative grid place-items-center">
           <CardTitle className="flex gap-2 items-center text-[#71f66a]">
             {t("grid_interviewsRate")}
           </CardTitle>

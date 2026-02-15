@@ -8,8 +8,8 @@ const   StatsNav = ({ range, onChange }: { range: any, onChange: (e: any) => voi
         <h1 className="font-bold text-2xl">{t("title")}</h1>
         <p className="text-muted-foreground text-sm">{t("subtitle")}</p>
       </div>
-      <div className="flex gap-2 mr-20 items-center">
-        <select aria-label={t("range_label")} className="border-2 rounded-md px-3 py-2 dark:border-[#151046] dark:border-2" value={range} onChange={onChange} >
+      <div className="flex gap-2 mr-12 items-center">
+        <select aria-label={t("range_label")} className="border-2 rounded-md px-3 py-2 dark:border-2" value={range} onChange={onChange} >
           <option value="7d" className="dark:bg-[#100c28] bg-white dark:text-white text-black">
             {t("range_7d")}
           </option>

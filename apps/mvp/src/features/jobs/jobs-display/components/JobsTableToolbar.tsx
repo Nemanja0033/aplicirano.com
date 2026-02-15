@@ -67,6 +67,7 @@ export default function JobsTableToolbar({
         />
       </div>
 
+      {/* Resumes */}
       {/* <div className="grid gap-2 w-full border-b pb-3">
         <span className="text-sm text-muted-foreground">
           {t("resumes_label")}
@@ -154,9 +155,12 @@ export default function JobsTableToolbar({
                 />
 
               <ManuelJobImport
-                selectedResume={selectedResume}
                 selectedProfile={selectedProfile}
+                setSelectedProfile={setSelectedProfile}
                 currentUser={currentUser}
+                selectedResume={selectedResume}
+                setSelectedResume={setSelectedResume}
+                resumes={resumes}
                 isDisabled={selectedRows.length > 0}
               />
               {/* <ImportGuideModal /> */}

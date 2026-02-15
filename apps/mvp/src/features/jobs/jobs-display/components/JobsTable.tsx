@@ -147,6 +147,9 @@ export function JobsTable({
               {t("no_applications_body")}
             </p>
             <ManuelJobImport
+              setSelectedProfile={setSelectedProfile}
+              resumes={resumes}
+              setSelectedResume={setSelectedResume}
               selectedResume={selectedResume}
               selectedProfile={selectedProfile}
               currentUser={currentUser}

@@ -262,7 +262,8 @@
     "confirm_delete_resume_label": "Resume",
     "confirm_delete_cancel": "Cancel",
     "confirm_delete_deleting": "Deleting...",
-    "confirm_delete_confirm": "Delete resume"
+    "confirm_delete_confirm": "Delete resume",
+    "resume_delete": "Delete"
   },
   "Navbar": {
     "subscription_button": "Upgrade to Pro",
