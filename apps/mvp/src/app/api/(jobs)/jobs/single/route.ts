@@ -46,8 +46,8 @@ export async function POST(req: Request){
                 appliedAt: appliedAt,
                 salarly: salary === "" ? null : Number(salary),
                 jobUrl,
-                position,
-                location,
+                position: position === "" ? null : position,
+                location: location === "" ? null : location,
                 notes,
                 profileId: profileId,
                 resumeId: resumeId

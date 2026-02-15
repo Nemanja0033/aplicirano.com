@@ -58,6 +58,9 @@
     "table_columns_company": "Company",
     "table_columns_appliedAt": "Applied At",
     "table_columns_status": "Status",
+    "table_columns_position": "Position",
+    "table_columns_location": "Location",
+    "unknown": "Unknown",
 
     "pagination_total": "Total",
     "pagination_prev": "Prev",
@@ -100,9 +103,14 @@
     "mark_as_offer": "Mark as offer",
     "mark_as_interview": "Mark as interview",
     "mark_as_rejected": "Mark as rejected",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "limit_reached": "You have reached your job application limit. Please upgrade to Pro to continue.",
+    "jobs_count": "Applications",
+    "no_applications": "No applications yet",
+    "no_applications_body": "Click the button below to add application."
   },
   "FileImport": {
+    "button_import": "Import",
     "button_import_csv": "Import CSV",
     "button_import_txt": "Import TXT",
     "tooltip_out_of_credits": "You have no more job credits...",
@@ -217,7 +225,8 @@
     "confirm_delete_profile": "Profile",
     "confirm_delete_cancel": "Cancel",
     "confirm_delete_deleting": "Deleting...",
-    "confirm_delete_confirm": "Delete profile and jobs"
+    "confirm_delete_confirm": "Delete profile and jobs",
+    "cancel": "Close"
   },
   "ResumePage": {
     "title": "Resume Storage",
@@ -253,7 +262,8 @@
     "confirm_delete_resume_label": "Resume",
     "confirm_delete_cancel": "Cancel",
     "confirm_delete_deleting": "Deleting...",
-    "confirm_delete_confirm": "Delete resume"
+    "confirm_delete_confirm": "Delete resume",
+    "resume_delete": "Delete"
   },
   "Navbar": {
     "subscription_button": "Upgrade to Pro",

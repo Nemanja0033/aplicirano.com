@@ -2,7 +2,7 @@
 
 import { Button } from "@/src/components/ui/button";
 import JobFilters from "@/src/features/jobs/job-filters/components/FiltersToolbars";
-import { ScrollText } from "lucide-react";
+import { ScrollText, Upload } from "lucide-react";
 import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
 import { FileImportForm } from "../../jobs-import/components/ImportForm";
 import ExportToPdf from "@/src/features/pdf-export/components/ExportToPdf";
@@ -51,7 +51,7 @@ export default function JobsTableToolbar({
   const t = useTranslations("JobsTable");
 
   return (
-    <section className="md:w-full dark:border-[#151046] dark:border-2 dark:bg-gradient-to-b from-[#100c28] to-[#010216] w-fit grid gap-5 p-5 rounded-lg shadow-md bg-white dark:bg-sidebar">
+    <section className="md:w-full w-fit grid gap-5 bg-white dark:bg-sidebar">
       <div className="grid gap-1 w-full border-b py-3">
         <h1 className="font-bold text-2xl">{t("title")}</h1>
         <p className="text-muted-foreground text-sm">{t("subtitle")}</p>
@@ -67,38 +67,8 @@ export default function JobsTableToolbar({
         />
       </div>
 
-      <div className="grid gap-2 w-full border-b py-3">
-        <span className="text-sm text-muted-foreground">
-          {t("profiles_label")}
-        </span>
-        <div className="flex gap-3 items-center">
-          <Button
-            onClick={() => setSelectedProfile(null)}
-            className={`${
-              selectedProfile !== null
-                ? "text-primary bg-transparent hover:text-white"
-                : "text-white bg-primary"
-            } border-2 border-primary`}
-          >
-            {t("profiles_general")}
-          </Button>
-          {currentUser.profiles.map((p: any) => (
-            <Button
-              key={p.id}
-              onClick={() => setSelectedProfile(p.id)}
-              className={`${
-                selectedProfile !== p.id
-                  ? "bg-transparent text-primary hover:text-white"
-                  : "bg-primary text-white"
-              } border-2 border-primary`}
-            >
-              {p.name}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid gap-2 w-full border-b pb-3">
+      {/* Resumes */}
+      {/* <div className="grid gap-2 w-full border-b pb-3">
         <span className="text-sm text-muted-foreground">
           {t("resumes_label")}
         </span>
@@ -128,55 +98,91 @@ export default function JobsTableToolbar({
             </Button>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      <div className="flex w-full justify-start">
-        {isTableReady && (
-          <div className="flex">
-            {selectedRows.length === 0 && !isStatusChanged && (
-              <div className="flex gap-2">
-                <ManuelJobImport
-                  selectedResume={selectedResume}
-                  selectedProfile={selectedProfile}
-                  currentUser={currentUser}
-                  isDisabled={selectedRows.length > 0}
-                />
-                <FileImportForm
+      <div className="md:flex grid gap-5 md:gap-0 mt-2 items-center w-full md:justify-end">
+        <div className="grid gap-2 w-full">
+          {/* <span className="text-sm text-muted-foreground">
+            {t("profiles_label")}
+          </span> */}
+          <div className="flex gap-3 items-center">
+            <Button
+              onClick={() => setSelectedProfile(null)}
+              className={`${
+                selectedProfile !== null
+                  ? "text-primary bg-transparent hover:text-white"
+                  : "text-white bg-primary"
+              } border-2 border-primary`}
+            >
+              {t("profiles_general")}
+            </Button>
+            {currentUser.profiles.map((p: any) => (
+              <Button
+                key={p.id}
+                onClick={() => setSelectedProfile(p.id)}
+                className={`${
+                  selectedProfile !== p.id
+                    ? "bg-transparent text-primary hover:text-white"
+                    : "bg-primary text-white"
+                } border-2 border-primary`}
+              >
+                {p.name}
+              </Button>
+            ))}
+          </div>
+        </div>
+        {/* {isTableReady && ( */}
+        <div className="flex">
+          {selectedRows.length === 0 && !isStatusChanged && (
+            <div className="flex gap-2">
+              {/* <FileImportForm
                   selectedResume={selectedResume}
                   selectedProfile={selectedProfile}
                   currentUser={currentUser}
                   type="TXT"
                   isDisabled={selectedRows.length > 0}
-                />
-                <FileImportForm
+                /> */}
+
+              <ExportToPdf
+                isDisabled={selectedRows.length > 0}
+                elementRef={tableRef.current}
+              />
+              <FileImportForm
                   selectedResume={selectedResume}
                   selectedProfile={selectedProfile}
                   currentUser={currentUser}
-                  type="CSV"
                   isDisabled={selectedRows.length > 0}
                 />
-                <ExportToPdf
-                  isDisabled={selectedRows.length > 0}
-                  elementRef={tableRef.current}
-                />
-                <ImportGuideModal />
-              </div>
-            )}
 
-            {selectedRows.length > 0 && !isStatusChanged && (
-              <UpdateJobStatusButtons
-                resetRows={resetRows}
-                selectedRows={selectedRows}
+              <ManuelJobImport
+                selectedProfile={selectedProfile}
+                setSelectedProfile={setSelectedProfile}
+                currentUser={currentUser}
+                selectedResume={selectedResume}
+                setSelectedResume={setSelectedResume}
+                resumes={resumes}
+                isDisabled={selectedRows.length > 0}
               />
-            )}
+              {/* <ImportGuideModal /> */}
+            </div>
+          )}
 
-            {isStatusChanged && (
-              <UpdateJobsStatus
-                setIsStatusChanged={setIsStatusChanged}
-                selectedRowsWithStatus={selectedRowsWithStatus}
-              />
-            )}
-          </div>
+          {isStatusChanged && (
+            <UpdateJobsStatus
+              setIsStatusChanged={setIsStatusChanged}
+              selectedRowsWithStatus={selectedRowsWithStatus}
+            />
+          )}
+        </div>
+        {/* )} */}
+      </div>
+
+      <div className="mb-5">
+        {selectedRows.length > 0 && !isStatusChanged && (
+          <UpdateJobStatusButtons
+            resetRows={resetRows}
+            selectedRows={selectedRows}
+          />
         )}
       </div>
     </section>

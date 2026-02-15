@@ -28,8 +28,13 @@ export async function GET(req: Request) {
             firebaseUid: userData.uid
         },
         include: {
+          _count: {
+            select: {
+              jobs: true
+            }
+          },
           profiles: true,
-          resumes: true
+          resumes: true,
         }
     });
 

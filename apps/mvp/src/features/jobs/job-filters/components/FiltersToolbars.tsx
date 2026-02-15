@@ -1,26 +1,67 @@
 import { Input } from "@/src/components/ui/input";
 import { Filters } from "../types";
-import { Search } from "lucide-react";
+import { Search, Settings2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/src/components/ui/select";
+import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 
-export default function FiltersToolbar({ filterType,searchTerm, isDisabled, handleSearch, changeStatus}: Filters){
+export default function FiltersToolbar({
+  filterType,
+  searchTerm,
+  isDisabled,
+  handleSearch,
+  changeStatus,
+}: Filters) {
   const t = useTranslations("JobsTable");
+  const { currentUserData } = useCurrentUser();
 
   return (
-      <div className="flex w-full items-center gap-2">
+    <div className="md:flex grid w-full justify-between items-center gap-2">
+      <div className="flex gap-2 items-center">
         <div className="relative md:w-full w-64">
-          <Search aria-label="search icon" className="absolute text-gray-400 top-1.5 left-2" />
-          <Input aria-label="search applied jobs" disabled={isDisabled} value={searchTerm} onChange={handleSearch} className="w-full h-10 border px-10" placeholder={t("search_label")} />
+          <Search
+            aria-label="search icon"
+            className="absolute text-gray-400 w-[16px] h-[16px] top-[30%] left-4"
+          />
+          <Input
+            aria-label="search applied jobs"
+            disabled={isDisabled}
+            value={searchTerm}
+            onChange={handleSearch}
+            className="w-full h-11! rounded-lg border px-10"
+            placeholder={t("search_label")}
+          />
         </div>
-          {filterType === 'JOBS' && (
-            <select aria-label="filter the jobs" defaultValue={""} onChange={(e) => changeStatus(e.target.value)} className={`cursor-pointer h-10 w-28 p-1 border rounded-md bg-accent/40`}>
-                <option className="bg-background" value="">{t("all_status")}</option>
-                <option className="bg-background" value={"APPLIED"}>{t("status_applied")}</option>
-                <option className="bg-background" value={"REJECTED"}>{t("status_rejected")}</option>
-                <option className="bg-background" value={"INTERVIEW"}>{t("status_interview")}</option>
-                <option className="bg-background" value={"OFFER"}>{t("status_offer")}</option>
-            </select>
-          )}
+        <Select onValueChange={(value) => changeStatus(value)}>
+          <SelectTrigger className="flex items-center gap-2 h-[44px]! rounded-[8px]!">
+            <Settings2 /> {t("all_status")}
+          </SelectTrigger>
+          <SelectContent
+            onChange={(e) =>
+              changeStatus((e.target as HTMLSelectElement).value)
+            }
+          >
+            <SelectItem value=" ">{t("all_status")}</SelectItem>
+            <SelectItem value={"APPLIED"}>{t("status_applied")}</SelectItem>
+            <SelectItem value={"REJECTED"}>{t("status_rejected")}</SelectItem>
+            <SelectItem value={"INTERVIEW"}>{t("status_interview")}</SelectItem>
+            <SelectItem value={"OFFER"}>{t("status_offer")}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {!currentUserData?.isProUSer && (
+        <div
+          className={`${currentUserData?._count.jobs === 25 ? "bg-[#AC363626] text-[#AC3636]" : "bg-green-100 text-green-400"} gap-[8px] p-[10px] rounded-[8px] w-fit`}
+        >
+          {25}/{currentUserData?._count.jobs} {t("jobs_count")}
         </div>
-    )
-  }
+      )}
+    </div>
+  );
+}

@@ -42,23 +42,19 @@ export default function ResumesPage() {
     <>
       <main className="w-full h-screen flex justify-center items-start overflow-auto">
         {isDeleting && <GlobalLoader />}
-        <div className="md:w-6xl p-3 w-full grid place-items-center gap-5">
+        <div className="p-3 px-4 w-full grid place-items-center gap-5">
           <div className="w-full">
             <ResumeHeader />
 
-            <div className="mt-5 dark:bg-gradient-to-b from-[#100c28] to-[#010216] dark:border-[#151046] dark:border-2 bg-white p-5 rounded-lg shadow-md">
+            <div className="mt-5 bg-white dark:bg-background p-3 rounded-lg">
               <ProfileSelector
+              setIsAddResumeModalOpen={setIsAddResumeModalOpen}
+              isAddResumeModalOpen={isAddResumeModalOpen}
+              form={form}
+              onSubmit={onSubmit}
                 currentUser={currentUser}
                 selectedProfile={selectedProfile}
                 onSelectProfile={setSelectedProfile}
-              />
-
-              <AddResumeModal
-                open={isAddResumeModalOpen}
-                onOpenChange={setIsAddResumeModalOpen}
-                currentUser={currentUser}
-                form={form}
-                onSubmit={onSubmit}
               />
 
               <ResumeList

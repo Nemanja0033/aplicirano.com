@@ -125,9 +125,9 @@ const JobChart = ({
   }, [isPro]);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 w-full p-5">
       {/* Freemium chart: prijave po danu */}
-      <Card className="w-full h-auto dark:border-[#151046] dark:border-2 bg-white dark:bg-gradient-to-b from-[#100c28] to-[#010216]">
+      <Card className="w-full h-auto bg-white dark:bg-background">
         <CardTitle className="px-4 pt-4 text-gray-800 dark:text-[#E6E9F2]">
           {t("chart_appliesPerDay_title")}
         </CardTitle>
@@ -189,7 +189,7 @@ const JobChart = ({
         ].map((item, idx) => (
           <Card
             key={idx}
-            className="relative p-4 dark:border-[#151046] dark:border-2 bg-white dark:bg-gradient-to-b from-[#100c28] to-[#010216]"
+            className="relative p-4 dark:border-2 bg-white dark:bg-background"
           >
             <CardTitle className="text-gray-800 dark:text-[#E6E9F2]">
               {item.title}

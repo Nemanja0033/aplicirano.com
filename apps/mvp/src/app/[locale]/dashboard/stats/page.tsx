@@ -55,8 +55,8 @@ export default function StatsPage() {
   // }, []);
 
   return (
-    <main className="w-full h-full flex justify-center items-center">
-      <section className="md:w-6xl p-3 w-xs grid place-items-center gap-5">
+    <main className="w-full h-full flex  items-center">
+      <section className="w-full p-3 grid place-items-center gap-5">
         <StatsNav
           onChange={(e) => setRange(e.target.value as keyof typeof ranges)}
           range={range}

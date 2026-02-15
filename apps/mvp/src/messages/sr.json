@@ -47,6 +47,7 @@
     "status_interview": "INTERVJU",
     "status_rejected": "ODBIJENO",
     "status_offer": "PONUDA",
+    "unknown": "Nepoznato",
 
     "search_label": "Pretraži kompanije...",
     "all_status": "Svi statusi",
@@ -55,6 +56,8 @@
     "table_columns_company": "Kompanija",
     "table_columns_appliedAt": "Datum prijave",
     "table_columns_status": "Status",
+    "table_columns_location": "Lokacija",
+    "table_columns_position": "Pozicija",
 
     "pagination_total": "Ukupno",
     "pagination_prev": "Prethodno",
@@ -100,9 +103,14 @@
     "cancel": "Otkaži",
 
     "resumes_label": "Uvezeni CV-jevi",
-    "resumes_general": "Svi CV-jevi"
+    "resumes_general": "Svi CV-jevi",
+    "limit_reached": "Dostigli ste ograničenje broja prijava za posao. Nadogradite na Pro da biste nastavili.",
+    "jobs_count": "Uvezenih poslova",
+    "no_applications": "Nemate apliciranih poslova",
+    "no_applications_body": "Kliknite dugme ispod za dodavanje poslova."
   },
   "FileImport": {
+    "button_import": "Uvezi",
     "button_import_csv": "Uvezi CSV",
     "button_import_txt": "Uvezi TXT",
     "tooltip_out_of_credits": "Nemate više kredita za poslove...",
@@ -217,7 +225,8 @@
     "confirm_delete_profile": "Profil",
     "confirm_delete_cancel": "Otkaži",
     "confirm_delete_deleting": "Brišem...",
-    "confirm_delete_confirm": "Obriši profil i poslove"
+    "confirm_delete_confirm": "Obriši profil i poslove",
+    "cancel": "Otkaži"
   },
   "ResumePage": {
     "title": "Skladište CV-a",
@@ -253,7 +262,8 @@
     "confirm_delete_resume_label": "CV",
     "confirm_delete_cancel": "Otkaži",
     "confirm_delete_deleting": "Brišem...",
-    "confirm_delete_confirm": "Obriši CV"
+    "confirm_delete_confirm": "Obriši CV",
+    "resume_delete": "Obriši CV"
   },
   "Navbar": {
     "subscription_button": "Nadogradi na Pro",

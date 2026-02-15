@@ -4,9 +4,8 @@ import { NotAuthScreen } from "@/src/components/NotAuthScreen";
 import { useAuthContext } from "@/src/context/AuthProvider";
 import { JobsTable } from "@/src/features/jobs/jobs-display/components/JobsTable";
 import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
-import { fetchCurrentUserData } from "@/src/features/user/service/user-service";
 import { useDebounce } from "@/src/hooks/useDebounce";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function JobsPage() {
@@ -72,7 +71,7 @@ export default function JobsPage() {
 
   return (
     <main className="w-full h-screen flex justify-center items-start">
-      <div className="md:w-6xl p-3 w-full grid place-items-center gap-5">
+      <div className="bg-white dark:bg-background w-full grid place-items-center gap-5">
         <JobsTable
           currentUser={currentUserData}
           isLoading={isFetching || isResumesFetching}

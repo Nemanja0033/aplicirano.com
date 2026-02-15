@@ -60,14 +60,14 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
         Selected Records ({selectedRows.length})
       </span>
       <div className="md:flex grid grid-cols-2 gap-2 items-center">
-        <Button onClick={resetRows}>
+        <Button size={'sm'} variant={'secondary'} onClick={resetRows}>
           {t("cancel")}
         </Button>
         <Button
           size="sm"
           type="button"
           onClick={() => handleUpdateStatus("INTERVIEW")}
-          variant="outline"
+          variant={'secondary'}
           disabled={isLoading}
         >
           {isLoading && loadingAction === "INTERVIEW"
@@ -79,7 +79,7 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           size="sm"
           type="button"
           onClick={() => handleUpdateStatus("REJECTED")}
-          variant="outline"
+          variant={'secondary'}
           disabled={isLoading}
         >
           {isLoading && loadingAction === "REJECTED"
@@ -91,7 +91,7 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           size="sm"
           type="button"
           onClick={() => handleUpdateStatus("OFFER")}
-          variant="outline"
+          variant={'secondary'}
           disabled={isLoading}
         >
           {isLoading && loadingAction === "OFFER"

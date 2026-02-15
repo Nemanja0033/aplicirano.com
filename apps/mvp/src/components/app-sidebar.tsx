@@ -73,11 +73,11 @@ export function AppSidebar() {
   ];
 
   return (
-    <Sidebar>
-      <SidebarContent className="flex flex-col justify-between h-full p-2">
+    <Sidebar className="w-[300px]">
+      <SidebarContent className="flex bg-white dark:bg-background flex-col justify-between h-full p-2">
         <div>
           <SidebarGroup>
-            <SidebarGroupLabel className="flex w-full border-b-1 py-7 items-center justify-start">
+            <SidebarGroupLabel className="flex w-full border-b-1 rounded-none py-10 items-center justify-start">
               <img src="/logo.png" className="w-12" alt="" />
               <span className="text-2xl font-semibold text-primary">Aplicirano</span>
             </SidebarGroupLabel>

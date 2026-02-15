@@ -16,7 +16,7 @@ export const ProfileList = ({
   const t = useTranslations("ProfilePage");
 
   return (
-    <div className="grid gap-2">
+    <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 md:gap-15 gap-3 w-full">
       {profiles && profiles.length > 0 ? (
         profiles.map((p) => (
           <ProfileItem
@@ -27,7 +27,7 @@ export const ProfileList = ({
           />
         ))
       ) : (
-        <div className="p-4 rounded-md bg-gray-100 dark:bg-gray-800/40">
+        <div className="p-4 rounded-md bg-white dark:bg-background">
           {t("no_profiles")}
         </div>
       )}
