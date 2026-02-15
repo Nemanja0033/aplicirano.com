@@ -1,4 +1,4 @@
-# AI-Powered JobTrakify
+# AI-Powered Aplicirano.com
 
 A modern, full-stack SaaS application designed to help job seekers track applications, analyze progress, and improve success rates using AI-powered insights. Built with scalability and clean architecture in mind.
 
