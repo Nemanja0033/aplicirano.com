@@ -82,7 +82,7 @@ export function AppSidebar() {
               <span className="text-2xl font-semibold text-primary">Aplicirano</span>
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
+              <SidebarMenu className="py-2">
                 {items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton

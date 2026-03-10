@@ -147,11 +147,7 @@ export function JobsTable({
               {t("no_applications_body")}
             </p>
             <ManuelJobImport
-              setSelectedProfile={setSelectedProfile}
               resumes={resumes}
-              setSelectedResume={setSelectedResume}
-              selectedResume={selectedResume}
-              selectedProfile={selectedProfile}
               currentUser={currentUser}
               isDisabled={selectedRows.length > 0}
             />
@@ -204,12 +200,12 @@ export function JobsTable({
                       {t("table_columns_status")}
                     </span>
                   </TableHead>
-                  <TableHead className="text-muted-foreground cursor-pointer">
+                  <TableHead className="max-sm:hidden text-muted-foreground cursor-pointer">
                     <span className="flex items-center gap-1">
                       {t("table_columns_position")}
                     </span>
                   </TableHead>
-                  <TableHead className="text-muted-foreground cursor-pointer">
+                  <TableHead className="max-sm:hidden text-muted-foreground cursor-pointer">
                     <span className="flex items-center gap-1">
                       {t("table_columns_location")}
                     </span>

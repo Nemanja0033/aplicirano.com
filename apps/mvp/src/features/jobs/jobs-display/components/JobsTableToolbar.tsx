@@ -2,11 +2,9 @@
 
 import { Button } from "@/src/components/ui/button";
 import JobFilters from "@/src/features/jobs/job-filters/components/FiltersToolbars";
-import { ScrollText, Upload } from "lucide-react";
 import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
 import { FileImportForm } from "../../jobs-import/components/ImportForm";
 import ExportToPdf from "@/src/features/pdf-export/components/ExportToPdf";
-import ImportGuideModal from "../../jobs-import/components/ImportGuideModal";
 import UpdateJobStatusButtons from "./UpdateJobStatusButtons";
 import UpdateJobsStatus from "./UpdateJobsStatus";
 import { useTranslations } from "next-intl";
@@ -155,11 +153,7 @@ export default function JobsTableToolbar({
                 />
 
               <ManuelJobImport
-                selectedProfile={selectedProfile}
-                setSelectedProfile={setSelectedProfile}
                 currentUser={currentUser}
-                selectedResume={selectedResume}
-                setSelectedResume={setSelectedResume}
                 resumes={resumes}
                 isDisabled={selectedRows.length > 0}
               />

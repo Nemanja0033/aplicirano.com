@@ -88,8 +88,8 @@ export default function JobRow({
           ) : null}
         </select>
       </TableCell>
-      <TableCell>{job.position ?? t("unknown")}</TableCell>
-      <TableCell>{job.location ?? t("unknown")}</TableCell>
+      <TableCell className="max-sm:hidden">{job.position ?? t("unknown")}</TableCell>
+      <TableCell className="max-sm:hidden">{job.location ?? t("unknown")}</TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger>
