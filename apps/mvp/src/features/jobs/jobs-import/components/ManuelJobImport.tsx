@@ -41,17 +41,9 @@ export interface JobImportForm {
 const ManuelJobImport = ({
   isDisabled,
   currentUser,
-  selectedProfile,
-  selectedResume,
-  setSelectedProfile,
-  setSelectedResume,
   resumes,
 }: {
   resumes: any;
-  setSelectedResume: any;
-  setSelectedProfile: any;
-  selectedResume: any;
-  selectedProfile: any;
   isDisabled: boolean;
   currentUser: any;
 }) => {
@@ -62,6 +54,10 @@ const ManuelJobImport = ({
   const [date, setDate] = useState<Date | undefined>(new Date());
   const { token } = useFirebaseUser();
   const { openModal } = usePurchaseModal();
+
+  // dont mutate external state..., use internal
+  const [selectedProfile, setSelectedProfile] = useState<any>(); 
+  const [selectedResume, setSelectedResume] = useState<any>(); 
 
   const {
     register,
