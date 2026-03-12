@@ -3,7 +3,6 @@ import {
   Table,
   TableBody,
   TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -12,17 +11,16 @@ import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "@/src/hooks/use-mobile";
 import { toast } from "sonner";
 import { ChevronsUpDown, Loader2, ScrollText } from "lucide-react";
-import { useAuthContext } from "@/src/context/AuthProvider";
 import { useTranslations } from "next-intl";
 import EditJobModal from "./EditJobModal";
 import JobRow from "./JobRow";
 import TablePagination from "./TablePagination";
 import JobsTableToolbar from "./JobsTableToolbar";
 import { Job } from "../types";
-import { useFilters } from "@/src/features/jobs/job-filters/hooks/useFilters";
+import { useFilters } from "@/src/features/jobs/jobs-display/hooks/useFilters";
 import { useSelectRows } from "../hooks/useSelectRows";
 import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
-import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
+import { motion } from "framer-motion";
 
 interface JobsTableProps {
   jobs: Job[];
@@ -59,15 +57,14 @@ export function JobsTable({
   selectedResume,
   setSelectedResume,
 }: JobsTableProps) {
-  const { token } = useAuthContext();
-  const [isTableReady, setIsTableReady] = useState(false);
   const {
+    setIsStatusChanged,
+    setSortBy,
     filteredData: jobsToDisplay,
     isStatusChanged,
-    setIsStatusChanged,
     sortBy,
-    setSortBy,
   } = useFilters(jobs, "JOBS");
+
   const {
     checkAllRows,
     checkSingleRow,
@@ -76,13 +73,17 @@ export function JobsTable({
     selectedRows,
     selectedRowsWithStatus,
   } = useSelectRows();
+
+  const t = useTranslations("JobsTable");
   const isMobile = useIsMobile();
   const tableRef = useRef<any>(null);
+
+  const [isTableReady, setIsTableReady] = useState(false);
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [isJobModalOpen, setIsJobModalOpen] = useState(false);
+  const [isSmoothActivated, setIsSmoothActivated] = useState(true);
 
-  // implement jobs calculation from
-  const { currentUserData } = useCurrentUser();
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
 
   useEffect(() => {
     if (tableRef.current) {
@@ -92,25 +93,30 @@ export function JobsTable({
 
   useEffect(() => {
     if (currentUser?.jobsLimit === 0) {
-      toast.warning(
-        t("limit_reached")
-      );
+      toast.warning(t("limit_reached"));
     }
   }, [currentUser]);
 
-  const pageCount = Math.max(1, Math.ceil(total / pageSize));
+  // util func to automaticly toggle smooth mode, disabling when need and enable when needed.
+  function toggleSmoothMode(){
+    setIsSmoothActivated(false);
+    setTimeout(() => {
+      setIsSmoothActivated(true)
+    }, 300);
+  } 
 
   function goToPage(p: number) {
+    // Disable when user switching beetween pages to prevent UI tweak
+    toggleSmoothMode();
     const next = Math.max(1, Math.min(pageCount, p));
     if (next !== page) setPage(next);
+    setTimeout(() => setIsSmoothActivated(true), 300)
   }
 
   function handleOpenModal(job: any) {
     setSelectedJob(job);
     setIsJobModalOpen(true);
   }
-
-  const t = useTranslations("JobsTable");
 
   return (
     <main className="w-full md:py-4 md:px-8">
@@ -131,6 +137,7 @@ export function JobsTable({
         resetRows={resetRows}
         selectedRowsWithStatus={selectedRowsWithStatus}
         tableRef={tableRef}
+        toggleSmoothMode={toggleSmoothMode}
       />
 
       {jobsToDisplay.length === 0 && !isLoading ? (
@@ -143,9 +150,7 @@ export function JobsTable({
               strokeWidth={1}
             />
             <h4 className="font-bold">{t("no_applications")}</h4>
-            <p className="text-muted-foreground">
-              {t("no_applications_body")}
-            </p>
+            <p className="text-muted-foreground">{t("no_applications_body")}</p>
             <ManuelJobImport
               resumes={resumes}
               currentUser={currentUser}
@@ -163,7 +168,8 @@ export function JobsTable({
               <Loader2 className="animate-spin" />
             </div>
           ) : (
-            <Table>
+            <motion.div key={'table'} layout={isSmoothActivated ? true : false} transition={{ duration: 0.3 }}>
+              <Table>
               <TableCaption>{t("table_caption")}</TableCaption>
               <TableHeader>
                 <TableRow data-html2canvas-ignore>
@@ -210,9 +216,7 @@ export function JobsTable({
                       {t("table_columns_location")}
                     </span>
                   </TableHead>
-                  <TableHead>
-                    
-                  </TableHead>
+                  <TableHead></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -238,6 +242,7 @@ export function JobsTable({
                 isLoading={isLoading}
               />
             </Table>
+            </motion.div>
           )}
         </div>
       )}

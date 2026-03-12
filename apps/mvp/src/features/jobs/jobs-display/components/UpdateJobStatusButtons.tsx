@@ -10,8 +10,17 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
+import { motion } from "framer-motion";
 
-const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: string[], resetRows: () => void }) => {
+const UpdateJobStatusButtons = ({
+  selectedRows,
+  resetRows,
+  setIsStatusChanged,
+}: {
+  selectedRows: string[];
+  resetRows: () => void;
+  setIsStatusChanged: any;
+}) => {
   const queryClient = useQueryClient();
   const { token } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
@@ -20,13 +29,15 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
   >(null);
   const t = useTranslations("JobsTable");
 
-  async function handleUpdateStatus(status: "INTERVIEW" | "REJECTED" | "OFFER") {
+  async function handleUpdateStatus(
+    status: "INTERVIEW" | "REJECTED" | "OFFER"
+  ) {
     try {
       setIsLoading(true);
       setLoadingAction(status);
       await updateRecordsStatus(selectedRows, status, token as any);
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ['me']})
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       resetRows();
     } catch (err) {
       toast.error("Something went wrong while updating status");
@@ -43,7 +54,7 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
       setLoadingAction("DELETE");
       await deleteRecords(selectedRows, token as any);
       queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ['me']})
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       resetRows();
     } catch (err) {
       toast.error("Something went wrong while deleting records");
@@ -55,48 +66,73 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
   }
 
   return (
-    <div className="w-full mt-3 grid gap-2 items-center justify-between">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      exit={{ opacity: 0 }}
+      className="w-full mt-3 grid gap-2 items-center justify-between"
+    >
       <span className="font-medium">
         Selected Records ({selectedRows.length})
       </span>
       <div className="md:flex grid grid-cols-2 gap-2 items-center">
-        <Button size={'sm'} variant={'secondary'} onClick={resetRows}>
+        <Button
+          size={"sm"}
+          variant={"secondary"}
+          onClick={() => {
+            resetRows();
+            setIsStatusChanged(false);
+          }}
+        >
           {t("cancel")}
         </Button>
         <Button
           size="sm"
           type="button"
           onClick={() => handleUpdateStatus("INTERVIEW")}
-          variant={'secondary'}
+          variant={"secondary"}
           disabled={isLoading}
         >
-          {isLoading && loadingAction === "INTERVIEW"
-            ? <span><Loader2 className="animate-spin" /></span>
-            : t("mark_as_interview")}
+          {isLoading && loadingAction === "INTERVIEW" ? (
+            <span>
+              <Loader2 className="animate-spin" />
+            </span>
+          ) : (
+            t("mark_as_interview")
+          )}
         </Button>
 
         <Button
           size="sm"
           type="button"
           onClick={() => handleUpdateStatus("REJECTED")}
-          variant={'secondary'}
+          variant={"secondary"}
           disabled={isLoading}
         >
-          {isLoading && loadingAction === "REJECTED"
-            ? <span><Loader2 className="animate-spin" /></span>
-            : t("mark_as_rejected")}
+          {isLoading && loadingAction === "REJECTED" ? (
+            <span>
+              <Loader2 className="animate-spin" />
+            </span>
+          ) : (
+            t("mark_as_rejected")
+          )}
         </Button>
 
         <Button
           size="sm"
           type="button"
           onClick={() => handleUpdateStatus("OFFER")}
-          variant={'secondary'}
+          variant={"secondary"}
           disabled={isLoading}
         >
-          {isLoading && loadingAction === "OFFER"
-            ? <span><Loader2 className="animate-spin" /></span>
-            : t("mark_as_offer")}
+          {isLoading && loadingAction === "OFFER" ? (
+            <span>
+              <Loader2 className="animate-spin" />
+            </span>
+          ) : (
+            t("mark_as_offer")
+          )}
         </Button>
 
         <Button
@@ -106,12 +142,16 @@ const UpdateJobStatusButtons = ({ selectedRows, resetRows }: { selectedRows: str
           variant="destructive"
           disabled={isLoading}
         >
-          {isLoading && loadingAction === "DELETE"
-            ? <span><Loader2 className="animate-spin" /></span>
-            : `${t("delete_button")} (${selectedRows.length})`}
+          {isLoading && loadingAction === "DELETE" ? (
+            <span>
+              <Loader2 className="animate-spin" />
+            </span>
+          ) : (
+            `${t("delete_button")} (${selectedRows.length})`
+          )}
         </Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

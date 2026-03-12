@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@/src/components/ui/button";
-import JobFilters from "@/src/features/jobs/job-filters/components/FiltersToolbars";
+import JobFilters from './FiltersToolbars'; 
 import ManuelJobImport from "../../jobs-import/components/ManuelJobImport";
 import { FileImportForm } from "../../jobs-import/components/ImportForm";
 import ExportToPdf from "@/src/features/pdf-export/components/ExportToPdf";
 import UpdateJobStatusButtons from "./UpdateJobStatusButtons";
 import UpdateJobsStatus from "./UpdateJobsStatus";
 import { useTranslations } from "next-intl";
+import { AnimatePresence } from "framer-motion";
 
 interface JobsTableToolbarProps {
   query: string | null;
@@ -26,6 +27,7 @@ interface JobsTableToolbarProps {
   resetRows: () => void;
   selectedRowsWithStatus: any[];
   tableRef: any;
+  toggleSmoothMode: any
 }
 
 export default function JobsTableToolbar({
@@ -45,6 +47,7 @@ export default function JobsTableToolbar({
   resetRows,
   selectedRowsWithStatus,
   tableRef,
+  toggleSmoothMode
 }: JobsTableToolbarProps) {
   const t = useTranslations("JobsTable");
 
@@ -98,14 +101,16 @@ export default function JobsTableToolbar({
         </div>
       </div> */}
 
-      <div className="md:flex grid gap-5 md:gap-0 mt-2 items-center w-full md:justify-end">
+      <div
+        className={`md:flex grid gap-5 md:gap-0 mt-2 items-center w-full md:justify-end`}
+      >
         <div className="grid gap-2 w-full">
           {/* <span className="text-sm text-muted-foreground">
             {t("profiles_label")}
           </span> */}
           <div className="flex gap-3 items-center">
             <Button
-              onClick={() => setSelectedProfile(null)}
+              onClick={() => {setSelectedProfile(null); toggleSmoothMode();}}
               className={`${
                 selectedProfile !== null
                   ? "text-primary bg-transparent hover:text-white"
@@ -117,7 +122,7 @@ export default function JobsTableToolbar({
             {currentUser.profiles.map((p: any) => (
               <Button
                 key={p.id}
-                onClick={() => setSelectedProfile(p.id)}
+                onClick={() => {setSelectedProfile(p.id); toggleSmoothMode()}}
                 className={`${
                   selectedProfile !== p.id
                     ? "bg-transparent text-primary hover:text-white"
@@ -146,11 +151,11 @@ export default function JobsTableToolbar({
                 elementRef={tableRef.current}
               />
               <FileImportForm
-                  selectedResume={selectedResume}
-                  selectedProfile={selectedProfile}
-                  currentUser={currentUser}
-                  isDisabled={selectedRows.length > 0}
-                />
+                selectedResume={selectedResume}
+                selectedProfile={selectedProfile}
+                currentUser={currentUser}
+                isDisabled={selectedRows.length > 0}
+              />
 
               <ManuelJobImport
                 currentUser={currentUser}
@@ -160,20 +165,22 @@ export default function JobsTableToolbar({
               {/* <ImportGuideModal /> */}
             </div>
           )}
-
-          {isStatusChanged && (
-            <UpdateJobsStatus
-              setIsStatusChanged={setIsStatusChanged}
-              selectedRowsWithStatus={selectedRowsWithStatus}
-            />
-          )}
         </div>
         {/* )} */}
       </div>
 
+      {/* TODO isStatusChanged is bad for this conditional render, consider some other state */}
       <div className="mb-5">
+        {isStatusChanged && (
+          <UpdateJobsStatus
+            setIsStatusChanged={setIsStatusChanged}
+            selectedRowsWithStatus={selectedRowsWithStatus}
+          />
+        )}
+
         {selectedRows.length > 0 && !isStatusChanged && (
           <UpdateJobStatusButtons
+            setIsStatusChanged={setIsStatusChanged}
             resetRows={resetRows}
             selectedRows={selectedRows}
           />
