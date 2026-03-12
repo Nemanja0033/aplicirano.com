@@ -1,5 +1,5 @@
 import { Input } from "@/src/components/ui/input";
-import { Filters } from "../types";
+import { Filters } from "../../job-filters/types";
 import { Search, Settings2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
@@ -58,7 +58,7 @@ export default function FiltersToolbar({
       {/* TODO extract this bagde from this compoennt and put inisde theri own */}
       {!currentUserData?.isProUSer && (
         <div
-          className={`${currentUserData?._count.jobs! > 20 ? "bg-orange-100 text-orange-400" : ''} ${currentUserData?._count.jobs === 25 ? "bg-[#AC363626] text-[#AC3636]" : "bg-green-100 text-green-400"} gap-[8px] p-[10px] rounded-[8px] w-fit`}
+          className={`opacity-50 ${currentUserData?._count.jobs! > 20 ? "bg-orange-100 text-orange-400" : ''} ${currentUserData?._count.jobs === 25 ? "bg-[#AC363626] text-[#AC3636]" : "bg-green-100 text-green-400"} gap-[8px] p-[10px] rounded-[8px] w-fit`}
         >
           {currentUserData?._count.jobs}/{25} {t("jobs_count")}
         </div>
