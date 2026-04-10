@@ -8,17 +8,14 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/src/components/ui/select";
-import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 
 export default function FiltersToolbar({
-  filterType,
   searchTerm,
   isDisabled,
   handleSearch,
   changeStatus,
 }: Filters) {
   const t = useTranslations("JobsTable");
-  const { currentUserData } = useCurrentUser();
 
   return (
     <div className="md:flex grid w-full justify-between items-center gap-2">
@@ -54,15 +51,6 @@ export default function FiltersToolbar({
           </SelectContent>
         </Select>
       </div>
-
-      {/* TODO extract this bagde from this compoennt and put inisde theri own */}
-      {!currentUserData?.isProUSer && (
-        <div
-          className={`opacity-50 ${currentUserData?._count.jobs! > 20 ? "bg-orange-100 text-orange-400" : ''} ${currentUserData?._count.jobs === 25 ? "bg-[#AC363626] text-[#AC3636]" : "bg-green-100 text-green-400"} gap-[8px] p-[10px] rounded-[8px] w-fit`}
-        >
-          {currentUserData?._count.jobs}/{25} {t("jobs_count")}
-        </div>
-      )}
     </div>
   );
 }

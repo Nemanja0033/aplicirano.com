@@ -118,7 +118,11 @@
     "error_upload_failed": "Učitavanje nije uspelo",
     "error_unexpected": "Neočekivana greška",
     "button_submit_uploading": "Učitavanje...",
-    "button_submit": "Potvrdi"
+    "button_submit": "Potvrdi",
+    "delete_modal_title": "Obriši posao",
+    "delete_modal_message": "Da li ste sigurni da zelite da obrisete ovaj posao?",
+    "delete_modal_close": "Otkaži",
+    "delete_modal_action": "Obriši posao"
   },
   "FileExport": {
     "export_btn": "Izvezi",

@@ -107,7 +107,11 @@
     "limit_reached": "You have reached your job application limit. Please upgrade to Pro to continue.",
     "jobs_count": "Applications",
     "no_applications": "No applications yet",
-    "no_applications_body": "Click the button below to add application."
+    "no_applications_body": "Click the button below to add application.",
+    "delete_modal_title": "Delete job",
+    "delete_modal_message": "Are you sure want to delete this job?",
+    "delete_modal_close": "Close",
+    "delete_modal_action": "Delete job"
   },
   "FileImport": {
     "button_import": "Import",

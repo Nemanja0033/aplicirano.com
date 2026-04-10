@@ -9,6 +9,7 @@ import UpdateJobStatusButtons from "./UpdateJobStatusButtons";
 import UpdateJobsStatus from "./UpdateJobsStatus";
 import { useTranslations } from "next-intl";
 import { AnimatePresence } from "framer-motion";
+import JobsLimitBadge from "./JobsLimitBadge";
 
 interface JobsTableToolbarProps {
   query: string | null;
@@ -66,6 +67,8 @@ export default function JobsTableToolbar({
           isDisabled={isStatusChanged}
           handleSearch={(e) => setQuery(e.target.value)}
         />
+
+        <JobsLimitBadge />
       </div>
 
       {/* Resumes */}
@@ -105,9 +108,9 @@ export default function JobsTableToolbar({
         className={`md:flex grid gap-5 md:gap-0 mt-2 items-center w-full md:justify-end`}
       >
         <div className="grid gap-2 w-full">
-          {/* <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-muted-foreground">
             {t("profiles_label")}
-          </span> */}
+          </span>
           <div className="flex gap-3 items-center">
             <Button
               onClick={() => {setSelectedProfile(null); toggleSmoothMode();}}
