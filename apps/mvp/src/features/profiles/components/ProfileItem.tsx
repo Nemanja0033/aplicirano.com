@@ -43,7 +43,7 @@ export const ProfileItem = ({
             <button
               onClick={() => onDelete({ id: profile.id, name: profile.name })}
               disabled={isDeleting}
-              className="text-sm text-muted-foreground flex gap-2 items-center cursor-pointer"
+              className="text-sm flex gap-2 items-center cursor-pointer"
               aria-label={`Delete profile ${profile.name}`}
             >
               <Trash2 size={15} />

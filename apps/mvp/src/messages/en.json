@@ -111,7 +111,8 @@
     "delete_modal_title": "Delete job",
     "delete_modal_message": "Are you sure want to delete this job?",
     "delete_modal_close": "Close",
-    "delete_modal_action": "Delete job"
+    "delete_modal_action": "Delete job",
+    "delete_modal_succes": "Job deleted successfully"
   },
   "FileImport": {
     "button_import": "Import",

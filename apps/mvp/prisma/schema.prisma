@@ -24,6 +24,7 @@ model Job {
   salarly   Int?
   location  String?
   notes     String?
+  priority  Boolean @default(false)
 }
 
 model resume {

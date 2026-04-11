@@ -91,6 +91,11 @@ const ManuelJobImport = ({
     }
   };
 
+  const resetSelected = () => {
+    setSelectedProfile(undefined);
+    setSelectedResume(undefined);
+  }
+
   const isOutOfCredits = isDisabled || currentUser.jobsLimit === 0;
 
   return (
@@ -382,7 +387,7 @@ const ManuelJobImport = ({
 
             {/* Footer - Fixed at bottom */}
             <div className="flex justify-end gap-3 pt-6 border-t mt-6">
-              <AlertDialogCancel disabled={isSubmitting}>
+              <AlertDialogCancel onClick={() => resetSelected()} disabled={isSubmitting}>
                 {t("form_cancel")}
               </AlertDialogCancel>
               <Button type="submit" disabled={isSubmitting}>

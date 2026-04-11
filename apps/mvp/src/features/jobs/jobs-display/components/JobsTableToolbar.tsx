@@ -65,7 +65,7 @@ export default function JobsTableToolbar({
           changeStatus={setStatus}
           searchTerm={query as any}
           isDisabled={isStatusChanged}
-          handleSearch={(e) => setQuery(e.target.value)}
+          handleSearch={(e: any) => setQuery(e.target.value)}
         />
 
         <JobsLimitBadge />

@@ -212,7 +212,7 @@ export function JobsTable({
                         checked={
                           selectedRows.length >= jobs.length && jobs.length > 0
                         }
-                        onChange={(e) => checkAllRows(e, jobs)}
+                        onChange={(e) => checkAllRows(e, jobs as any)}
                         type="checkbox"
                       />
                       {t("table_columns_company")}

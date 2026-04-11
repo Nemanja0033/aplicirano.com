@@ -4,7 +4,7 @@ import { TableCell, TableRow } from "@/src/components/ui/table";
 import { getBadgeLightColor } from "@/helpers";
 import { Job } from "../types";
 import { useTranslations } from "next-intl";
-import { Edit2, EllipsisVertical, Trash } from "lucide-react";
+import { ArrowBigUpDash, Edit2, EllipsisVertical, Star, Trash } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +19,7 @@ interface JobRowProps {
   checkSingleRow: (e: any, id: string) => void;
   handleOpenModal: (job: Job) => void;
   handleOpenDeleteJobModal: (job: Job) => void;
+  handleJobPriority: (priority: boolean) => void;
   isMobile: boolean;
   setIsStatusChanged: (changed: boolean) => void;
   checkRowsWithStatus: (data: { id: string; status: any }) => void;
@@ -31,6 +32,7 @@ export default function JobRow({
   checkSingleRow,
   handleOpenModal,
   handleOpenDeleteJobModal,
+  handleJobPriority,
   isMobile,
   setIsStatusChanged,
   checkRowsWithStatus,
@@ -101,6 +103,7 @@ export default function JobRow({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => handleOpenModal(job)} className="cursor-pointer"><Edit2 /> Edit application</DropdownMenuItem>
+            <DropdownMenuItem><ArrowBigUpDash/> Add job to priorites</DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleOpenDeleteJobModal(job)} className="cursor-pointer"><Trash /> Delete application</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -27,7 +27,7 @@ export const ProfileList = ({
           />
         ))
       ) : (
-        <div className="p-4 rounded-md bg-white dark:bg-background">
+        <div className="p-4 rounded-md w-full bg-white dark:bg-background">
           {t("no_profiles")}
         </div>
       )}
