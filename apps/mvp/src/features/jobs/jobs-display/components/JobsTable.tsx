@@ -26,6 +26,7 @@ import { deleteRecords } from "../services/batch-actions-service";
 import { useCurrentUser } from "@/src/features/user/hooks/useCurrentUser";
 import { useAuthContext } from "@/src/context/AuthProvider";
 import { useQueryClient } from "@tanstack/react-query";
+import { updateJobPriority } from "../services/job-actions-service";
 
 interface JobsTableProps {
   jobs: Job[];
@@ -148,6 +149,17 @@ export function JobsTable({
     }
   }
 
+  async function handleJobPriority(jobId: string, priority: boolean){
+    try{
+      await updateJobPriority(jobId, priority);
+      toast.success("Job added to priority");
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    }
+    catch(err){
+      toast.error("Error");
+    }
+  }
+
   return (
     <main className="w-full md:py-4 md:px-8">
       <JobsTableToolbar
@@ -256,13 +268,14 @@ export function JobsTable({
                       key={job.id}
                       index={i}
                       job={job}
+                      isMobile={isMobile}
                       selectedRows={selectedRows}
                       checkSingleRow={checkSingleRow}
                       handleOpenModal={handleOpenEditJobModal}
                       handleOpenDeleteJobModal={handleOpenDeleteJobModal}
-                      isMobile={isMobile}
                       setIsStatusChanged={setIsStatusChanged}
                       checkRowsWithStatus={checkRowsWithStatus}
+                      handleJobPriority={handleJobPriority}
                     />
                   ))}
                 </TableBody>

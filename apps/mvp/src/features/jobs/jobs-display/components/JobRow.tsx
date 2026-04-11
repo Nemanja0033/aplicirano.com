@@ -4,7 +4,14 @@ import { TableCell, TableRow } from "@/src/components/ui/table";
 import { getBadgeLightColor } from "@/helpers";
 import { Job } from "../types";
 import { useTranslations } from "next-intl";
-import { ArrowBigUpDash, Edit2, EllipsisVertical, Star, Trash } from "lucide-react";
+import {
+  ArrowBigDownDash,
+  ArrowBigUpDash,
+  Edit2,
+  EllipsisVertical,
+  Star,
+  Trash,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,11 +23,11 @@ interface JobRowProps {
   job: Job;
   index: number;
   selectedRows: string[];
+  isMobile: boolean;
   checkSingleRow: (e: any, id: string) => void;
   handleOpenModal: (job: Job) => void;
   handleOpenDeleteJobModal: (job: Job) => void;
-  handleJobPriority: (priority: boolean) => void;
-  isMobile: boolean;
+  handleJobPriority: (jobId: string, priority: boolean) => void;
   setIsStatusChanged: (changed: boolean) => void;
   checkRowsWithStatus: (data: { id: string; status: any }) => void;
 }
@@ -33,7 +40,6 @@ export default function JobRow({
   handleOpenModal,
   handleOpenDeleteJobModal,
   handleJobPriority,
-  isMobile,
   setIsStatusChanged,
   checkRowsWithStatus,
 }: JobRowProps) {
@@ -92,8 +98,12 @@ export default function JobRow({
           ) : null}
         </select>
       </TableCell>
-      <TableCell className="max-sm:hidden">{job.position ?? t("unknown")}</TableCell>
-      <TableCell className="max-sm:hidden">{job.location ?? t("unknown")}</TableCell>
+      <TableCell className="max-sm:hidden">
+        {job.position ?? t("unknown")}
+      </TableCell>
+      <TableCell className="max-sm:hidden">
+        {job.location ?? t("unknown")}
+      </TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -102,9 +112,29 @@ export default function JobRow({
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => handleOpenModal(job)} className="cursor-pointer"><Edit2 /> Edit application</DropdownMenuItem>
-            <DropdownMenuItem><ArrowBigUpDash/> Add job to priorites</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleOpenDeleteJobModal(job)} className="cursor-pointer"><Trash /> Delete application</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => handleOpenModal(job)}
+              className="cursor-pointer"
+            >
+              <Edit2 /> Edit application
+            </DropdownMenuItem>
+            {!job.priority ? (
+              <DropdownMenuItem onClick={() => handleJobPriority(job.id, true)}>
+                <ArrowBigUpDash /> Add job to priorites
+              </DropdownMenuItem>
+            ) : (
+              <DropdownMenuItem
+                onClick={() => handleJobPriority(job.id, false)}
+              >
+                <ArrowBigDownDash /> Remove job from priorites
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuItem
+              onClick={() => handleOpenDeleteJobModal(job)}
+              className="cursor-pointer"
+            >
+              <Trash /> Delete application
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>

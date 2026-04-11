@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function handleJobPriority(jobId: string, priority: boolean){
+export async function updateJobPriority(jobId: string, priority: boolean){
     try{
         axios.patch(
             "/api/jobs/priority",

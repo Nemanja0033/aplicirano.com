@@ -15,5 +15,6 @@ export interface Job {
     resume?: {
         title: string
         resumeUrl: string
-    } | null
+    } | null;
+    priority: boolean;
 }
